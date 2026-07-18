@@ -4,6 +4,156 @@
    in your page, and this script will inject the site chrome.
    Uses auth.js and cart.js for interactive bits.
    ============================================================ */
+
+/* ============================================================
+   TRACKING CONFIG  —  paste IDs here, deploy, done.
+   ------------------------------------------------------------
+   Where to get each ID:
+     GA4_MEASUREMENT_ID  → analytics.google.com → Admin → Data
+                           Streams → Web → Measurement ID (G-XXXXXXXXXX)
+     GSC_VERIFICATION    → search.google.com/search-console → Add
+                           property (URL prefix) → HTML tag method →
+                           copy the content=""  value (only the token,
+                           NOT the whole <meta> tag). Leave blank if
+                           you verify via DNS TXT instead (preferred).
+     CLARITY_PROJECT_ID  → clarity.microsoft.com (optional heatmaps)
+     BING_UET_TAG_ID     → ads.microsoft.com (optional Bing UET)
+
+   Nothing fires on admin / dashboard / dealer / login / checkout /
+   order-success / my-orders because those pages don't include
+   layout.js. Consent-mode defaults to DENIED — the banner below
+   flips it to granted only after the user clicks "Accept".
+   ============================================================ */
+window.NISHANA_TRACKING = {
+  GA4_MEASUREMENT_ID: "G-JHG79FYL48",
+  GSC_VERIFICATION:   "",              // GSC verified via DNS/domain property — no meta needed
+  CLARITY_PROJECT_ID: "",
+  BING_UET_TAG_ID:    "",
+};
+
+/* ------------------------------------------------------------
+   Injector — runs immediately (before DOMContentLoaded) so the
+   GSC meta lands in <head> before Google's bot inspects it, and
+   so gtag.js starts loading in parallel with the rest of the
+   page. Every load is guarded so pasting an empty ID = no-op.
+   ------------------------------------------------------------ */
+(() => {
+  const cfg = window.NISHANA_TRACKING || {};
+  const head = document.head || document.documentElement;
+  const CONSENT_KEY = "nishana_consent_v1";
+  const consent = (() => {
+    try { return localStorage.getItem(CONSENT_KEY); } catch { return null; }
+  })();
+
+  // 1. GSC verification META (safe: if you also verify via DNS, this is redundant but harmless)
+  if (cfg.GSC_VERIFICATION && !document.querySelector('meta[name="google-site-verification"]')) {
+    const m = document.createElement("meta");
+    m.name = "google-site-verification";
+    m.content = cfg.GSC_VERIFICATION;
+    head.appendChild(m);
+  }
+
+  // 2. Google Consent Mode v2 — MUST be set BEFORE gtag.js loads.
+  //    Defaults everything to "denied" so no cookies/pixels fire without opt-in.
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  const granted = consent === "granted";
+  gtag("consent", "default", {
+    ad_storage:          granted ? "granted" : "denied",
+    ad_user_data:        granted ? "granted" : "denied",
+    ad_personalization:  granted ? "granted" : "denied",
+    analytics_storage:   granted ? "granted" : "denied",
+    functionality_storage: "granted",
+    security_storage:      "granted",
+    wait_for_update: 500,
+  });
+  gtag("js", new Date());
+
+  // 3. GA4 gtag.js
+  if (cfg.GA4_MEASUREMENT_ID && /^G-[A-Z0-9]+$/i.test(cfg.GA4_MEASUREMENT_ID)) {
+    const s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(cfg.GA4_MEASUREMENT_ID);
+    head.appendChild(s);
+    gtag("config", cfg.GA4_MEASUREMENT_ID, {
+      anonymize_ip: true,
+      allow_google_signals: false,      // no ad-personalisation until consent
+      transport_type: "beacon",
+    });
+    // Fire a synthetic organic_landing event so we can slice traffic by
+    // first-touch source in GA4 exploration reports (falls back to referrer).
+    try {
+      const ref = document.referrer || "";
+      const src = /google\./i.test(ref) ? "google"
+                : /bing\./i.test(ref)   ? "bing"
+                : /duckduckgo\./i.test(ref) ? "duckduckgo"
+                : /perplexity\.ai/i.test(ref) ? "perplexity"
+                : /chat\.openai\.com|chatgpt\.com/i.test(ref) ? "chatgpt"
+                : "";
+      if (src) gtag("event", "organic_landing", { engine: src, page_path: location.pathname });
+    } catch {}
+  }
+
+  // 4. Microsoft Clarity (optional)
+  if (cfg.CLARITY_PROJECT_ID) {
+    (function(c,l,a,r,i){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      const t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      const y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window,document,"clarity","script",cfg.CLARITY_PROJECT_ID);
+  }
+
+  // 5. Bing UET (optional)
+  if (cfg.BING_UET_TAG_ID) {
+    (function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:cfg.BING_UET_TAG_ID,enableAutoSpaTracking:true};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},
+      n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},
+      i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i);
+    })(window,document,"script","//bat.bing.com/bat.js","uetq");
+  }
+
+  // 6. Public helper — call from cart.js / checkout to fire GA4 events.
+  //    Safe no-op if GA4 isn't configured.
+  window.nishanaTrack = function(name, params){ try { gtag("event", name, params || {}); } catch {} };
+
+  // 7. Consent banner (renders only if consent is unset AND any tracking ID is configured).
+  //    Minimal by design — one line + Accept / Decline. Legal-review recommended before launch.
+  if (consent === null && (cfg.GA4_MEASUREMENT_ID || cfg.CLARITY_PROJECT_ID || cfg.BING_UET_TAG_ID)) {
+    const mount = () => {
+      if (document.getElementById("nishana-consent")) return;
+      const bar = document.createElement("div");
+      bar.id = "nishana-consent";
+      bar.setAttribute("role", "dialog");
+      bar.setAttribute("aria-label", "Cookie consent");
+      bar.style.cssText = "position:fixed;left:12px;right:12px;bottom:12px;z-index:9998;background:#141b26;color:#efe9db;border:1px solid #2c3646;border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 24px 60px -12px rgba(0,0,0,.7);font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:13.5px;line-height:1.5;max-width:900px;margin-left:auto;margin-right:auto";
+      bar.innerHTML = `
+        <div style="flex:1;min-width:220px">
+          <b style="font-family:'Big Shoulders Display',Impact,sans-serif;text-transform:uppercase;letter-spacing:.03em;color:#c9a227">Cookies</b><br>
+          We use analytics cookies to understand how the site is used. Reject and only strictly-necessary cookies run.
+          <a href="about.html" style="color:#c9a227;text-decoration:underline">Learn more</a>
+        </div>
+        <button data-consent="denied"  style="background:transparent;border:1px solid #2c3646;color:#cdc7ba;padding:9px 14px;border-radius:8px;font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer">Reject</button>
+        <button data-consent="granted" style="background:#c9a227;border:1px solid #c9a227;color:#0b0e13;padding:9px 14px;border-radius:8px;font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;cursor:pointer">Accept</button>
+      `;
+      bar.addEventListener("click", (e) => {
+        const b = e.target.closest("[data-consent]");
+        if (!b) return;
+        const decision = b.dataset.consent;
+        try { localStorage.setItem(CONSENT_KEY, decision); } catch {}
+        gtag("consent", "update", {
+          ad_storage:         decision === "granted" ? "granted" : "denied",
+          ad_user_data:       decision === "granted" ? "granted" : "denied",
+          ad_personalization: decision === "granted" ? "granted" : "denied",
+          analytics_storage:  decision === "granted" ? "granted" : "denied",
+        });
+        bar.remove();
+      });
+      document.body.appendChild(bar);
+    };
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount);
+    else mount();
+  }
+})();
+
 (() => {
   const LOGO_SVG = `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.4" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="5.6" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="1.9" fill="currentColor"/></svg>`;
   const WA_NUMBER = "918329618409";
