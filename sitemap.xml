@@ -1,19 +1,190 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://nishanaairguns.com/</loc><lastmod>2026-07-18</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://nishanaairguns.com/products.html</loc><lastmod>2026-07-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://nishanaairguns.com/air-pistols.html</loc><lastmod>2026-07-18</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://nishanaairguns.com/spare-parts.html</loc><lastmod>2026-07-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://nishanaairguns.com/accessories.html</loc><lastmod>2026-07-18</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://nishanaairguns.com/product-rx-gen3.html</loc><lastmod>2026-07-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://nishanaairguns.com/blog.html</loc><lastmod>2026-07-18</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://nishanaairguns.com/blog-rx-gen3-price-india.html</loc><lastmod>2026-07-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://nishanaairguns.com/blog-rx-gen3-buying-guide.html</loc><lastmod>2026-07-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://nishanaairguns.com/blog-rx-gen3-running-cost.html</loc><lastmod>2026-07-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://nishanaairguns.com/blog-legal-no-licence-airguns-india.html</loc><lastmod>2026-07-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://nishanaairguns.com/blog-star-rx-gen3-review.html</loc><lastmod>2026-07-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://nishanaairguns.com/blog-airgun-maintenance.html</loc><lastmod>2026-07-18</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://nishanaairguns.com/blog-home-range-setup.html</loc><lastmod>2026-07-18</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://nishanaairguns.com/about.html</loc><lastmod>2026-07-18</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://nishanaairguns.com/contact.html</loc><lastmod>2026-07-18</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemaps/image/1.1">
+
+  <url>
+    <loc>https://nishanaairguns.com/</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://camstarsports.com/products/star-rx-gen3-1.webp</image:loc>
+      <image:title>Camstar Star RX Gen 3 — .177 CO₂ semi-automatic air pistol</image:title>
+      <image:caption>The Star RX Gen 3 semi-automatic air pistol featured on the Nishana Airguns homepage.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/products.html</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://camstarsports.com/products/star-rx-gen3-1.webp</image:loc>
+      <image:title>Star RX Gen 3, CO₂ cylinders, .177 pellets and replacement magazine</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/air-pistols.html</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://camstarsports.com/products/star-rx-gen3-1.webp</image:loc>
+      <image:title>Star RX Gen 3 — the only air pistol in Nishana's catalogue</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/spare-parts.html</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://camstarsports.com/products/star-rx-gen3-1.webp</image:loc>
+      <image:title>Genuine Star RX Gen 3 replacement CO₂ magazine</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/accessories.html</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://camstarsports.com/products/star-match-diabolo.png</image:loc>
+      <image:title>Star Match .177 diabolo pellets</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://camstarsports.com/products/co2-cylinders.jpg</image:loc>
+      <image:title>12 g CO₂ cylinders for the Star RX Gen 3</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/product-rx-gen3.html</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://camstarsports.com/products/star-rx-gen3-1.webp</image:loc>
+      <image:title>Camstar Star RX Gen 3 — hero product photo</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://camstarsports.com/products/star-rx-gen3-hd-1.png</image:loc>
+      <image:title>Camstar Star RX Gen 3 — high-resolution studio view 1</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://camstarsports.com/products/star-rx-gen3-hd-2.png</image:loc>
+      <image:title>Camstar Star RX Gen 3 — high-resolution studio view 2</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://camstarsports.com/products/star-rx-gen3-hd-3.png</image:loc>
+      <image:title>Camstar Star RX Gen 3 — high-resolution studio view 3</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/blog.html</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://camstarsports.com/products/star-rx-gen3-1.webp</image:loc>
+      <image:title>Nishana Airguns blog — Star RX Gen 3 knowledge desk</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/blog-rx-gen3-price-india.html</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://camstarsports.com/products/star-rx-gen3-hd-1.png</image:loc>
+      <image:title>Star RX Gen 3 price comparison — dated 18 July 2026</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/blog-rx-gen3-buying-guide.html</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://camstarsports.com/products/star-rx-gen3-1.webp</image:loc>
+      <image:title>Star RX Gen 3 buyer guide 2026</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/blog-rx-gen3-running-cost.html</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://camstarsports.com/products/star-rx-gen3-hd-1.png</image:loc>
+      <image:title>Star RX Gen 3 running costs — CO₂, pellets and care</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/blog-legal-no-licence-airguns-india.html</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://camstarsports.com/products/star-rx-gen3-1.webp</image:loc>
+      <image:title>Licence-exempt airguns in India — Arms Rules 2016 guide</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/blog-star-rx-gen3-review.html</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://camstarsports.com/products/star-rx-gen3-1.webp</image:loc>
+      <image:title>Camstar Star RX Gen 3 hands-on review — 2026</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/blog-airgun-maintenance.html</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://camstarsports.com/products/star-rx-gen3-1.webp</image:loc>
+      <image:title>Airgun maintenance 101 — pellets, CO₂, O-rings and storage</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/blog-home-range-setup.html</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://camstarsports.com/products/star-rx-gen3-1.webp</image:loc>
+      <image:title>Safe 10-metre airgun range setup at home in India</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/about.html</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/contact.html</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
 </urlset>

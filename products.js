@@ -16,7 +16,7 @@ window.NISHANA_PRODUCTS = [
   /* ---------------- AIR PISTOLS ---------------- */
   {
     id: "star-rx-gen3", brand: "Camstar", name: "Star RX Gen 3",
-    category: "air-pistols", price: 24000, mrp: 27500, badge: "India's №1",
+    category: "air-pistols", price: 24000, mrp: 27500, badge: "Semi-auto CO₂",
     chips: [".177 CAL", "400 FPS", "CO₂ SEMI-AUTO", "32 RND MAG"],
     desc: "India's first semi-automatic CO₂ air pistol. 32-round rotary magazine, five colourways, ships with hard case + holster.",
     image: "https://camstarsports.com/products/star-rx-gen3-1.webp",

@@ -1,3 +1,7 @@
+# Nishana Airguns — https://nishanaairguns.com
+# Every rule below is intentional. AI answer engines are explicitly
+# allowed so RX Gen 3 pages remain eligible for citations.
+
 User-agent: *
 Allow: /
 Disallow: /dashboard.html
@@ -6,5 +10,61 @@ Disallow: /login.html
 Disallow: /checkout.html
 Disallow: /order-success.html
 Disallow: /my-orders.html
+Disallow: /api/
+
+# ---- AI answer engines & training crawlers ----
+# These get an explicit Allow so nothing accidentally blocks them
+# when we tighten wildcard rules in future.
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
 
 Sitemap: https://nishanaairguns.com/sitemap.xml
