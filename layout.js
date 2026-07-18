@@ -25,7 +25,7 @@
    flips it to granted only after the user clicks "Accept".
    ============================================================ */
 window.NISHANA_TRACKING = {
-  GA4_MEASUREMENT_ID: "G-JHG79FYL48",
+  GA4_MEASUREMENT_ID: "G-X5YCH0M7GP",
   GSC_VERIFICATION:   "",              // GSC verified via DNS/domain property — no meta needed
   CLARITY_PROJECT_ID: "",
   BING_UET_TAG_ID:    "",
