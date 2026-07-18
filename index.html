@@ -772,6 +772,10 @@ document.querySelectorAll('[data-count]').forEach(n=>countIO.observe(n));
 <!-- Cart, cart drawer, and login modal (shared across pages) -->
 <script src="auth.js"></script>
 <script src="cart.js"></script>
+<!-- layout.js: no header/footer on the homepage (it has its own inline chrome),
+     but this file also carries the shared GA4 + consent-banner + tracking
+     IIFE, so it must be loaded on every public page. -->
+<script src="layout.js"></script>
 <script type="module">
   // Homepage user chip — shows the user's NAME (not email) and opens a hover
   // menu with My orders / Admin / Dealer / Sign out. Same behaviour as the
