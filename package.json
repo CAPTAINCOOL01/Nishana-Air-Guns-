@@ -1,0 +1,13 @@
+{
+  "name": "nishana-airguns",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Nishana Airguns storefront — static HTML + Vercel serverless functions for Razorpay + Supabase",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "razorpay": "^2.9.4"
+  }
+}

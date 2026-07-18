@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>About — Nishana Airguns</title>
+<meta name="description" content="Nishana Airguns — India's multi-brand airgun retailer. Camstar, Precihole, SDB and more. Licence-exempt airguns under Arms Rules 2016, genuine stock, GST invoice, pan-India delivery." />
+<meta name="theme-color" content="#0b0e13" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="nishana.css" />
+<style>
+.about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:60px;padding:80px 0;align-items:center}
+.about-grid .img{background:linear-gradient(135deg,var(--steel),var(--panel));border:1px solid var(--edge);border-radius:var(--r);aspect-ratio:1;padding:40px;display:grid;place-items:center;position:relative;overflow:hidden}
+.about-grid .img svg{width:60%;color:var(--brass);opacity:.7}
+.about-grid .img::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,rgba(201,162,39,.1),transparent 60%)}
+.about-grid h2{font-family:var(--font-d);font-weight:800;text-transform:uppercase;letter-spacing:.02em;font-size:44px;line-height:1;margin:14px 0 20px}
+.about-grid p{color:var(--bone-dim);font-size:16px;line-height:1.7;margin-bottom:16px}
+.about-grid .accent{color:var(--brass)}
+@media(max-width:800px){.about-grid{grid-template-columns:1fr;gap:32px;padding:44px 0}}
+
+.pillars{padding:60px 0;border-top:1px solid var(--edge)}
+.pillars .head{text-align:center;max-width:640px;margin:0 auto 40px}
+.pillars .head h2{font-family:var(--font-d);font-weight:800;text-transform:uppercase;font-size:34px;margin:6px 0 8px;line-height:1}
+.pillars .head p{color:var(--smoke);margin:0}
+.pillars .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pillar{background:var(--steel);border:1px solid var(--edge);border-radius:var(--r);padding:28px;position:relative;overflow:hidden;transition:.3s var(--ease)}
+.pillar::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;background:linear-gradient(90deg,var(--brass),transparent)}
+.pillar:hover{border-color:rgba(201,162,39,.5);transform:translateY(-3px)}
+.pillar .num{font-family:var(--font-m);font-size:11px;letter-spacing:.24em;color:var(--brass)}
+.pillar h3{font-family:var(--font-d);font-weight:700;text-transform:uppercase;font-size:20px;margin:8px 0 8px}
+.pillar p{color:var(--smoke);font-size:14px;line-height:1.65;margin:0}
+@media(max-width:800px){.pillars .grid{grid-template-columns:1fr}}
+
+.stats-row{background:var(--steel-2);border-block:1px solid var(--edge);padding:44px 0}
+.stats-row .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center;max-width:960px;margin-inline:auto;padding-inline:24px}
+.stats-row .n{font-family:var(--font-d);font-weight:800;font-size:44px;color:var(--brass);line-height:1}
+.stats-row .l{font-family:var(--font-m);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--smoke);margin-top:6px}
+@media(max-width:600px){.stats-row .grid{grid-template-columns:repeat(2,1fr);gap:32px}.stats-row .n{font-size:34px}}
+
+.legal{background:var(--panel);border:1px solid var(--edge);border-radius:var(--r);padding:30px;margin:60px auto;max-width:800px;position:relative;overflow:hidden}
+.legal::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;background:linear-gradient(90deg,var(--brass),transparent)}
+.legal h3{font-family:var(--font-d);font-weight:800;text-transform:uppercase;font-size:22px;margin:0 0 12px}
+.legal p{color:var(--bone-dim);font-size:14.5px;line-height:1.7;margin:0}
+</style>
+</head>
+<body data-page="about">
+<div data-nishana-header></div>
+
+<nav class="n-crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>›</span>About</nav>
+
+<section class="n-hero">
+  <div class="wrap">
+    <p class="eyebrow">Nishana (निशाना) · Hindi for "target"</p>
+    <h1>Airguns done <span class="accent">honestly.</span></h1>
+    <p class="lede">A multi-brand airgun retailer for India — legal, licenced-exempt, and priced without games. Everything we sell sits under 20 joules in .177, comes with a GST invoice, and ships pan-India with a real human on WhatsApp when you need one.</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="about-grid">
+    <div>
+      <p class="eyebrow">Our story</p>
+      <h2>Built for the <span class="accent">Indian shooter.</span></h2>
+      <p>Nishana was started because buying an airgun in India shouldn't feel like a treasure hunt. Between grey-market marketplaces, unclear licensing rules, and dealers who ghost you after payment — most first-time buyers give up before they ever put a pellet through paper.</p>
+      <p>So we built a shop that carries only <b>licence-exempt airguns</b>, gives you a <b>GST invoice</b> and <b>manufacturer warranty</b> on every unit, and lets you <b>talk to a human on WhatsApp</b> before and after you buy.</p>
+      <p>We're multi-brand by design — Camstar, Precihole, SDB and more — because you shouldn't have to browse five separate sites to compare a rifle you actually want.</p>
+    </div>
+    <div class="img">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.6"><circle cx="12" cy="12" r="10.4"/><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3.5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg>
+    </div>
+  </div>
+</div>
+
+<section class="stats-row">
+  <div class="grid">
+    <div><div class="n">100%</div><div class="l">Genuine stock</div></div>
+    <div><div class="n">≤20 J</div><div class="l">Licence-exempt</div></div>
+    <div><div class="n">.177</div><div class="l">Calibre</div></div>
+    <div><div class="n">24 h</div><div class="l">Dispatch window</div></div>
+  </div>
+</section>
+
+<section class="pillars">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">What we stand for</p>
+      <h2>Three lines. No fine print.</h2>
+      <p>Every promise below is on every sale — it's the whole business.</p>
+    </div>
+    <div class="grid">
+      <div class="pillar">
+        <span class="num">01</span>
+        <h3>Legal-first</h3>
+        <p>Only .177 cal, ≤20 J airguns — licence-exempt under Arms Rules 2016. We tell you exactly what a product legally is and isn't before you pay a rupee.</p>
+      </div>
+      <div class="pillar">
+        <span class="num">02</span>
+        <h3>Genuine or nothing</h3>
+        <p>Factory-sealed units from authorised dealers we've vetted. Every sale carries the manufacturer's own warranty and a GST invoice. If we can't source it clean, we don't list it.</p>
+      </div>
+      <div class="pillar">
+        <span class="num">03</span>
+        <h3>Humans on WhatsApp</h3>
+        <p>Real answers on stock, pellets, spares and setup — before and after you buy. Not a ticket queue, not a chatbot. If we can't help, we tell you and point you to who can.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="legal">
+    <h3>The legal bit — in plain English</h3>
+    <p>Under India's <b>Arms Rules 2016</b>, airguns with a muzzle energy of 20 joules or less, in .177" (4.5 mm) calibre, are exempt from licensing. Every product Nishana sells sits inside that exemption. We do not sell to buyers under 18, and we do not sell any airgun that requires a licence. If you have a question about the legal status of a specific product, ask us on WhatsApp before ordering — we'd rather over-explain than have you own something you shouldn't.</p>
+  </div>
+</div>
+
+<div data-nishana-footer></div>
+
+<script src="auth.js"></script>
+<script src="cart.js"></script>
+<script src="layout.js"></script>
+</body>
+</html>

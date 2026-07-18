@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sign in — Nishana Ops Console</title>
+<meta name="theme-color" content="#0b0e13" />
+<meta name="robots" content="noindex,nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --ink:#0b0e13; --steel:#131923; --steel-2:#161d28; --panel:#141b26;
+  --edge:#232b38; --edge-2:#2c3646;
+  --brass:#c9a227; --brass-hi:#e6c453;
+  --bone:#efe9db; --bone-dim:#cdc7ba;
+  --smoke:#8b94a3; --smoke-2:#6b7482;
+  --signal:#e4572e; --ok:#4bb381;
+  --font-d:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --font-b:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  --font-m:"IBM Plex Mono",ui-monospace,SFMono-Regular,monospace;
+  --r:14px; --r-sm:9px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--ink);color:var(--bone);
+  font-family:var(--font-b);font-size:15px;line-height:1.55;
+  min-height:100vh;display:grid;place-items:center;padding:24px;
+  -webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(60% 40% at 50% 0%, rgba(201,162,39,.08), transparent 70%),
+    radial-gradient(50% 50% at 100% 100%, rgba(90,141,214,.06), transparent 70%);
+}
+::selection{background:var(--brass);color:var(--ink)}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-radius:4px}
+a{color:var(--brass);text-decoration:none}
+a:hover{color:var(--brass-hi)}
+
+.card{
+  width:100%;max-width:420px;
+  background:var(--panel);border:1px solid var(--edge);border-radius:var(--r);
+  padding:32px 30px 26px;
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.7);
+  position:relative;overflow:hidden;
+}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;background:linear-gradient(90deg,var(--brass),transparent)}
+
+.brand{display:flex;align-items:center;gap:11px;margin-bottom:22px}
+.brand svg{width:28px;height:28px;color:var(--brass)}
+.brand .name{font-family:var(--font-d);font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:22px;line-height:1}
+.brand .tag{font-family:var(--font-m);font-size:9px;letter-spacing:.2em;color:var(--smoke);display:block;margin-top:3px}
+
+h1{font-family:var(--font-d);font-weight:800;text-transform:uppercase;letter-spacing:.02em;font-size:26px;margin:0 0 6px;line-height:1.05}
+.sub{color:var(--smoke);font-size:13px;margin:0 0 22px}
+
+.google-btn{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:10px;
+  background:var(--bone);color:#1f1f1f;border:1px solid var(--bone);
+  padding:11px 14px;border-radius:var(--r-sm);cursor:pointer;
+  font-family:var(--font-b);font-weight:600;font-size:14px;
+  transition:.18s var(--ease);
+}
+.google-btn:hover{background:var(--bone-dim);border-color:var(--bone-dim)}
+.google-btn:disabled{opacity:.6;cursor:not-allowed}
+.google-btn svg{width:18px;height:18px}
+
+.divider{display:flex;align-items:center;gap:12px;margin:20px 0 18px;color:var(--smoke-2);font-family:var(--font-m);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--edge)}
+
+form{display:flex;flex-direction:column;gap:14px}
+label{font-family:var(--font-m);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--smoke);display:block;margin-bottom:6px}
+input[type=email],input[type=password]{
+  width:100%;background:var(--steel);border:1px solid var(--edge);border-radius:var(--r-sm);
+  padding:11px 13px;color:var(--bone);font-family:var(--font-b);font-size:14px;
+  transition:.18s var(--ease);
+}
+input:focus{border-color:var(--brass);outline:none}
+input::placeholder{color:var(--smoke-2)}
+
+.primary{
+  width:100%;background:var(--brass);color:var(--ink);border:1px solid var(--brass);
+  padding:12px 14px;border-radius:var(--r-sm);cursor:pointer;
+  font-family:var(--font-d);font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:14px;
+  transition:.18s var(--ease);margin-top:4px;
+}
+.primary:hover{background:var(--brass-hi);border-color:var(--brass-hi)}
+.primary:disabled{opacity:.6;cursor:not-allowed}
+
+.row{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--smoke);margin-top:2px}
+.link-btn{background:none;border:none;color:var(--brass);cursor:pointer;font-family:inherit;font-size:inherit;padding:0}
+.link-btn:hover{color:var(--brass-hi);text-decoration:underline}
+
+.msg{
+  margin-top:14px;padding:10px 12px;border-radius:var(--r-sm);
+  font-family:var(--font-m);font-size:12px;line-height:1.45;
+  display:none;
+}
+.msg.err{display:block;background:rgba(228,87,46,.12);border:1px solid rgba(228,87,46,.35);color:#f7b7a0}
+.msg.ok {display:block;background:rgba(75,179,129,.12);border:1px solid rgba(75,179,129,.35);color:#a9e4c6}
+
+.foot{margin-top:20px;text-align:center;font-family:var(--font-m);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--smoke-2)}
+.foot a{color:var(--smoke)}
+.foot a:hover{color:var(--bone-dim)}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="brand">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.4" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="5.6" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="1.9" fill="currentColor"/></svg>
+    <div><div class="name">NISHANA</div><span class="tag">OPS CONSOLE</span></div>
+  </div>
+
+  <h1>Sign in</h1>
+  <p class="sub">Restricted access. Store admins only.</p>
+
+  <button class="google-btn" id="googleBtn" type="button">
+    <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+    Continue with Google
+  </button>
+
+  <div class="divider">or</div>
+
+  <form id="loginForm" autocomplete="on">
+    <div id="nameFld" style="display:none">
+      <label for="fullname">Full name</label>
+      <input id="fullname" name="fullname" type="text" autocomplete="name" placeholder="As on your ID" />
+    </div>
+    <div id="phoneFld" style="display:none">
+      <label for="phone">Mobile (10 digits)</label>
+      <input id="phone" name="phone" type="tel" inputmode="numeric" pattern="[0-9]{10}" autocomplete="tel" placeholder="98XXXXXXXX" />
+    </div>
+    <div>
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" required placeholder="you@gmail.com" autocomplete="email" />
+    </div>
+    <div>
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" required minlength="8" placeholder="Minimum 8 characters" autocomplete="current-password" />
+    </div>
+    <button class="primary" type="submit" id="submitBtn">Sign in</button>
+    <div class="row">
+      <button type="button" class="link-btn" id="toggleMode">Create an account</button>
+      <button type="button" class="link-btn" id="forgotBtn">Forgot password?</button>
+    </div>
+  </form>
+
+  <div class="msg" id="msg" role="status" aria-live="polite"></div>
+
+  <div class="foot">
+    <a href="index.html">← Back to storefront</a>
+  </div>
+</div>
+
+<script src="auth.js"></script>
+<script type="module">
+const cfg = window.NISHANA_AUTH || {};
+const configured = cfg.SUPABASE_URL && !cfg.SUPABASE_URL.startsWith("PASTE_");
+
+const msgEl = document.getElementById("msg");
+const submitBtn = document.getElementById("submitBtn");
+const googleBtn = document.getElementById("googleBtn");
+const toggleBtn = document.getElementById("toggleMode");
+const forgotBtn = document.getElementById("forgotBtn");
+const form = document.getElementById("loginForm");
+const emailEl = document.getElementById("email");
+const pwEl = document.getElementById("password");
+
+let mode = "signin"; // "signin" | "signup"
+
+function show(kind, text){
+  msgEl.className = "msg " + kind;
+  msgEl.textContent = text;
+}
+function setBusy(busy){
+  submitBtn.disabled = busy;
+  googleBtn.disabled = busy;
+  submitBtn.textContent = busy ? "Please wait…" : (mode === "signin" ? "Sign in" : "Create account");
+}
+function applyMode(){
+  submitBtn.textContent = mode === "signin" ? "Sign in" : "Create account";
+  toggleBtn.textContent = mode === "signin" ? "Create an account" : "Have an account? Sign in";
+  pwEl.autocomplete = mode === "signin" ? "current-password" : "new-password";
+  document.getElementById("nameFld").style.display  = mode === "signup" ? "" : "none";
+  document.getElementById("phoneFld").style.display = mode === "signup" ? "" : "none";
+  document.getElementById("fullname").required = mode === "signup";
+  document.getElementById("phone").required    = mode === "signup";
+  forgotBtn.style.display = mode === "signup" ? "none" : "";
+}
+
+if (!configured) {
+  show("err", "Supabase is not configured yet. Paste your project URL and anon key into auth.js, then reload.");
+  submitBtn.disabled = true;
+  googleBtn.disabled = true;
+} else {
+  let supabase;
+  try { supabase = await window.getNishanaSupabase(); }
+  catch (e) {
+    show("err", "Could not load the sign-in library. Check your connection or ad-blocker, then reload.");
+    throw e;
+  }
+
+  async function routeByRole() {
+    const role = await window.getNishanaRole(supabase);
+    if (role === "admin")  window.location.replace("dashboard.html");
+    else if (role === "dealer") window.location.replace("dealer.html");
+    else window.location.replace("index.html");
+  }
+
+  // Already signed in? Send them straight to their landing page.
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session) await routeByRole();
+
+  toggleBtn.addEventListener("click", () => { mode = mode === "signin" ? "signup" : "signin"; applyMode(); msgEl.className = "msg"; });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    setBusy(true);
+    const email = emailEl.value.trim();
+    const password = pwEl.value;
+    try {
+      if (mode === "signin") {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        await routeByRole();
+      } else {
+        const fullname = document.getElementById("fullname").value.trim();
+        const phone    = document.getElementById("phone").value.trim();
+        if (!fullname) throw new Error("Full name is required.");
+        if (!/^[0-9]{10}$/.test(phone)) throw new Error("Enter a valid 10-digit mobile number.");
+        const { data, error } = await supabase.auth.signUp({
+          email, password,
+          options: {
+            emailRedirectTo: window.location.origin + "/login.html",
+            data: { full_name: fullname, phone }
+          }
+        });
+        if (error) throw error;
+        if (data.session) await routeByRole();
+        else show("ok", "Account created. Check your inbox to confirm the email, then come back and sign in.");
+      }
+    } catch (err) {
+      show("err", err?.message || "Something went wrong. Try again.");
+    } finally {
+      setBusy(false);
+    }
+  });
+
+  forgotBtn.addEventListener("click", async () => {
+    const email = emailEl.value.trim();
+    if (!email) { show("err", "Enter your email above first, then click 'Forgot password?'"); return; }
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin + "/login.html"
+      });
+      if (error) throw error;
+      show("ok", "Password reset email sent. Check your inbox.");
+    } catch (err) { show("err", err?.message || "Could not send reset email."); }
+  });
+
+  googleBtn.addEventListener("click", async () => {
+    setBusy(true);
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: window.location.origin + "/login.html" }
+      });
+      if (error) throw error;
+    } catch (err) {
+      show("err", err?.message || "Google sign-in failed.");
+      setBusy(false);
+    }
+  });
+}
+</script>
+
+</body>
+</html>

@@ -3,3 +3,13 @@ Thumbs.db
 node_modules/
 .vercel/
 *.zip
+
+.vercel
+
+# Env files — NEVER commit. Razorpay secret + any server keys live here.
+.env
+.env.local
+.env.*.local
+
+# Claude Code local session cache — machine-specific, do not commit.
+.claude/

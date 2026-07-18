@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en" class="auth-checking">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nishana — Dealer Orders</title>
+<meta name="theme-color" content="#0b0e13" />
+<meta name="robots" content="noindex,nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --ink:#0b0e13; --steel:#131923; --steel-2:#161d28; --panel:#141b26;
+  --edge:#232b38; --edge-2:#2c3646;
+  --brass:#c9a227; --brass-hi:#e6c453;
+  --bone:#efe9db; --bone-dim:#cdc7ba; --smoke:#8b94a3; --smoke-2:#6b7482;
+  --signal:#e4572e; --ok:#4bb381; --warn:#d9a441; --info:#5a8dd6;
+  --font-d:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --font-b:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  --font-m:"IBM Plex Mono",ui-monospace,SFMono-Regular,monospace;
+  --r:12px; --r-sm:8px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--ink);color:var(--bone);
+  font-family:var(--font-b);font-size:14.5px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;padding-bottom:60px;
+}
+::selection{background:var(--brass);color:var(--ink)}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-radius:4px}
+a{color:inherit;text-decoration:none}
+
+html.auth-checking body>*{visibility:hidden}
+html.auth-checking body::before{content:"";position:fixed;inset:0;background:var(--ink);z-index:9999}
+
+/* topbar */
+.top{
+  position:sticky;top:0;z-index:20;
+  background:rgba(11,14,19,.94);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--edge);
+  display:flex;align-items:center;gap:10px;padding:12px 16px;
+}
+.top .brand{display:flex;align-items:center;gap:8px}
+.top .brand svg{width:22px;height:22px;color:var(--brass)}
+.top .brand b{font-family:var(--font-d);font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:16px;line-height:1}
+.top .brand small{font-family:var(--font-m);font-size:9px;letter-spacing:.2em;color:var(--smoke);display:block;margin-top:2px}
+.top .spacer{flex:1}
+.top button{
+  background:var(--steel);border:1px solid var(--edge);color:var(--bone-dim);
+  padding:8px 10px;border-radius:var(--r-sm);cursor:pointer;font-family:var(--font-m);
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;transition:.18s var(--ease);
+}
+.top button:hover{border-color:var(--brass);color:var(--brass)}
+
+.wrap{max-width:640px;margin-inline:auto;padding:14px 14px 40px}
+
+/* stat pills */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.stat{background:var(--panel);border:1px solid var(--edge);border-radius:var(--r-sm);padding:12px 10px;text-align:center}
+.stat b{font-family:var(--font-d);font-weight:800;font-size:22px;line-height:1;display:block;color:var(--bone)}
+.stat small{font-family:var(--font-m);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--smoke);display:block;margin-top:4px}
+.stat.pending b{color:var(--warn)}
+.stat.shipped b{color:var(--info)}
+.stat.delivered b{color:var(--ok)}
+
+/* tabs */
+.tabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  flex:none;background:var(--steel);border:1px solid var(--edge);
+  padding:9px 13px;border-radius:20px;cursor:pointer;
+  font-family:var(--font-m);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--smoke);transition:.18s var(--ease);
+}
+.tab.on{background:var(--brass);border-color:var(--brass);color:var(--ink);font-weight:600}
+.tab .n{margin-left:6px;background:var(--ink);color:var(--brass);border-radius:20px;padding:1px 6px;font-size:10px}
+.tab.on .n{background:var(--ink);color:var(--brass)}
+
+.search{display:flex;gap:8px;margin-bottom:12px}
+.search input{
+  flex:1;background:var(--steel);border:1px solid var(--edge);border-radius:var(--r-sm);
+  padding:10px 12px;color:var(--bone);font-family:var(--font-b);font-size:13.5px;outline:none;
+}
+.search input:focus{border-color:var(--brass)}
+
+/* order cards */
+.list{display:flex;flex-direction:column;gap:10px}
+.o{background:var(--panel);border:1px solid var(--edge);border-radius:var(--r);overflow:hidden}
+.oh{padding:12px 14px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;cursor:pointer}
+.oh .lft{min-width:0}
+.oh .ref{font-family:var(--font-m);font-size:11px;color:var(--smoke);letter-spacing:.08em}
+.oh .who{font-family:var(--font-d);font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:17px;line-height:1.1;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.oh .meta{font-family:var(--font-m);font-size:11px;color:var(--smoke);margin-top:3px}
+.oh .rt{text-align:right;flex:none}
+.oh .amt{font-family:var(--font-d);font-weight:800;font-size:17px;color:var(--brass);line-height:1}
+.oh .badge{display:inline-block;margin-top:6px;font-family:var(--font-m);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:20px;border:1px solid transparent}
+.badge.new       {color:#a1a8b3;border-color:rgba(255,255,255,.14);background:rgba(255,255,255,.04)}
+.badge.confirmed {color:#7ca8dd;border-color:rgba(90,141,214,.35);background:rgba(90,141,214,.12)}
+.badge.shipped   {color:#e6b972;border-color:rgba(217,164,65,.4);background:rgba(217,164,65,.12)}
+.badge.delivered {color:#8fd8b3;border-color:rgba(75,179,129,.4);background:rgba(75,179,129,.12)}
+.badge.cancelled {color:#e78e6f;border-color:rgba(228,87,46,.4);background:rgba(228,87,46,.12)}
+
+.ob{border-top:1px solid var(--edge);padding:12px 14px 14px;display:none;background:var(--steel-2)}
+.o.open .ob{display:block}
+.ob h4{font-family:var(--font-m);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--smoke);margin:0 0 6px}
+.ob .grid{display:grid;grid-template-columns:1fr;gap:12px}
+.ob .grid p{margin:0;font-size:13.5px;color:var(--bone-dim);line-height:1.5}
+.item{display:flex;gap:10px;align-items:center;background:var(--panel);border:1px solid var(--edge);border-radius:var(--r-sm);padding:8px;margin-top:6px}
+.item img{width:44px;height:44px;object-fit:contain;background:var(--steel);border:1px solid var(--edge);border-radius:6px;padding:4px}
+.item .in{flex:1;min-width:0}
+.item .in b{display:block;font-family:var(--font-d);font-weight:700;text-transform:uppercase;font-size:14px;color:var(--bone);letter-spacing:.02em}
+.item .in small{font-family:var(--font-m);font-size:11px;color:var(--smoke);letter-spacing:.06em}
+
+.actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.actions a, .actions button{
+  flex:1;min-width:120px;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  background:var(--steel);border:1px solid var(--edge);color:var(--bone);
+  padding:10px 12px;border-radius:var(--r-sm);cursor:pointer;
+  font-family:var(--font-m);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  transition:.18s var(--ease);
+}
+.actions .wa{background:#25D366;border-color:#25D366;color:#0b1a10;font-weight:600}
+.actions .wa:hover{background:#22c25f}
+.actions .call{border-color:var(--info);color:var(--info)}
+.actions .call:hover{background:rgba(90,141,214,.12)}
+
+/* status setters — admin only */
+.set{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.set button{
+  background:var(--steel);border:1px solid var(--edge);color:var(--smoke);
+  padding:7px 10px;border-radius:20px;cursor:pointer;font-family:var(--font-m);
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;transition:.18s var(--ease);
+}
+.set button:hover{border-color:var(--brass);color:var(--brass)}
+.set button.on{background:var(--brass);border-color:var(--brass);color:var(--ink);font-weight:600}
+
+.empty{text-align:center;color:var(--smoke);padding:40px 20px;font-family:var(--font-m);font-size:12px;letter-spacing:.1em}
+.spinner{width:32px;height:32px;border:3px solid var(--edge);border-top-color:var(--brass);border-radius:50%;animation:spin 1s linear infinite;margin:60px auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="brand">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.4" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="5.6" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="1.9" fill="currentColor"/></svg>
+    <div>
+      <b>NISHANA</b><small id="roleTag">DEALER</small>
+    </div>
+  </div>
+  <div class="spacer"></div>
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;background:var(--steel);border:1px solid var(--edge);color:var(--bone-dim);padding:8px 10px;border-radius:var(--r-sm);font-family:var(--font-m);font-size:11px;letter-spacing:.14em;text-transform:uppercase;transition:.18s var(--ease)" onmouseover="this.style.borderColor='var(--brass)';this.style.color='var(--brass)'" onmouseout="this.style.borderColor='var(--edge)';this.style.color='var(--bone-dim)'" title="Go to website">
+    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg>
+    Website
+  </a>
+  <button id="refreshBtn" title="Refresh">↻</button>
+  <button id="signoutBtn" title="Sign out">Sign out</button>
+</div>
+
+<div class="wrap">
+  <div class="stats">
+    <div class="stat pending"><b id="sPending">0</b><small id="sPendingLbl">Pending</small></div>
+    <div class="stat shipped"><b id="sShipped">0</b><small>Shipped</small></div>
+    <div class="stat delivered"><b id="sDelivered">0</b><small>Delivered</small></div>
+  </div>
+
+  <div class="search">
+    <input id="q" placeholder="Search name, phone, ref…" />
+  </div>
+
+  <div id="list" class="list"><div class="spinner"></div></div>
+</div>
+
+<script src="auth.js"></script>
+<script type="module">
+function reveal(){ document.documentElement.classList.remove("auth-checking"); }
+function fatal(msg) {
+  reveal();
+  document.querySelector(".wrap").innerHTML = `
+    <div style="padding:30px;background:var(--panel);border:1px solid rgba(228,87,46,.4);border-radius:14px;text-align:center;margin-top:20px">
+      <h2 style="font-family:var(--font-d);font-weight:800;text-transform:uppercase;color:var(--signal);margin:0 0 10px;font-size:20px">Can't load</h2>
+      <p style="color:var(--bone-dim);margin:0 0 8px;font-size:14px;line-height:1.55">${msg}</p>
+      <p style="color:var(--smoke);margin:0;font-size:12px">Ask admin to make sure supabase-schema.sql has been run.</p>
+      <button onclick="location.reload()" style="margin-top:16px;background:var(--brass);color:var(--ink);border:none;padding:9px 18px;border-radius:8px;font-family:var(--font-d);font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:12px;cursor:pointer">Try again</button>
+    </div>`;
+}
+
+const cfg = window.NISHANA_AUTH;
+if (!cfg?.SUPABASE_URL || cfg.SUPABASE_URL.startsWith("PASTE_")) { fatal("Supabase not configured."); throw new Error("no config"); }
+let supabase;
+try {
+  const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2");
+  supabase = createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
+} catch (e) {
+  fatal("Could not load the Supabase library — check your internet connection or disable ad-blockers for this site, then retry. (" + (e?.message || e) + ")");
+  throw e;
+}
+const goLogin = () => window.location.replace("login.html");
+
+// ---- AUTH GUARD ----
+let session, role;
+try {
+  const r = await supabase.auth.getSession();
+  session = r.data.session;
+  if (!session) { goLogin(); throw new Error("no session"); }
+  role = await window.getNishanaRole(supabase);
+} catch (e) { fatal("Auth failed: " + (e?.message || e)); throw e; }
+
+if (role !== "admin" && role !== "dealer") {
+  fatal("Your account (" + (session.user.email || "unknown") + ") is not authorised. Ask admin to add you to app_staff.");
+  setTimeout(() => supabase.auth.signOut(), 5000);
+  throw new Error("not staff");
+}
+document.getElementById("roleTag").textContent = role.toUpperCase();
+reveal();
+
+// ---- SIGN OUT / REFRESH ----
+document.getElementById("signoutBtn").addEventListener("click", async () => {
+  await supabase.auth.signOut(); goLogin();
+});
+document.getElementById("refreshBtn").addEventListener("click", loadOrders);
+
+// ---- STATE ----
+let orders = [];
+let query  = "";
+
+// This page shows ONLY orders the admin has CONFIRMED (or later stages) —
+// for EVERYONE, including admins viewing it. Unconfirmed ("new") orders live
+// exclusively on the admin dashboard. Also enforced for dealer accounts by
+// the Supabase RLS policy (defence in depth).
+const DEALER_VISIBLE = ["confirmed","shipped","delivered"];
+document.getElementById("sPendingLbl").textContent = "To ship";
+
+// Helpers — MUST be declared before any code path that can call render().
+const inr = n => "₹" + Number(n||0).toLocaleString("en-IN");
+const fmtDate = s => new Date(s).toLocaleString("en-IN",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});
+const ref = id => "#" + id.slice(0,8).toUpperCase();
+
+// ---- LOAD ----
+async function loadOrders() {
+  document.getElementById("list").innerHTML = '<div class="spinner"></div>';
+  const { data, error } = await supabase.from("orders").select("*")
+    .in("order_status", DEALER_VISIBLE)
+    .order("created_at",{ascending:false});
+  if (error) {
+    document.getElementById("list").innerHTML = `<div class="empty">Error: ${error.message}<br>(Have you run supabase-schema.sql?)</div>`;
+    return;
+  }
+  orders = (data || []).filter(o => DEALER_VISIBLE.includes(o.order_status));
+  try { render(); }
+  catch (e) {
+    document.getElementById("list").innerHTML = `<div class="empty">Render error: ${e.message}<br>Please refresh the page.</div>`;
+    console.error("[dealer render]", e);
+  }
+}
+await loadOrders();
+
+// realtime — refresh when a new order lands
+supabase.channel("orders-live")
+  .on("postgres_changes",{event:"*",schema:"public",table:"orders"}, loadOrders)
+  .subscribe();
+
+// ---- RENDER ----
+document.getElementById("q").addEventListener("input", e => { query = e.target.value.toLowerCase().trim(); render(); });
+
+function statusCount(s){ return orders.filter(o => o.order_status === s).length; }
+
+function render(){
+  document.getElementById("sPending").textContent   = statusCount("confirmed");
+  document.getElementById("sShipped").textContent   = statusCount("shipped");
+  document.getElementById("sDelivered").textContent = statusCount("delivered");
+
+  const filtered = orders.filter(o => {
+    if (query) {
+      const hay = [o.customer_name, o.customer_email, o.customer_phone, ref(o.id)].join(" ").toLowerCase();
+      if (!hay.includes(query)) return false;
+    }
+    return true;
+  });
+
+  const list = document.getElementById("list");
+  if (!filtered.length) { list.innerHTML = '<div class="empty">No confirmed orders yet.<br>Orders appear here once the admin confirms them.</div>'; return; }
+
+  list.innerHTML = filtered.map(o => {
+    const addr = o.shipping_address || {};
+    const items = (o.items||[]).map(i => `
+      <div class="item">
+        ${i.image ? `<img src="${i.image}" alt="" referrerpolicy="no-referrer">` : ""}
+        <div class="in"><b>${i.name}</b><small>Qty ${i.qty||1} · ${inr(i.price)}</small></div>
+      </div>`).join("");
+    const isAdmin = role === "admin";
+    const setBtns = isAdmin ? `
+      <h4 style="margin-top:14px">Set status</h4>
+      <div class="set">
+        ${["new","confirmed","shipped","delivered","cancelled"].map(s =>
+          `<button data-set="${o.id}" data-status="${s}" class="${o.order_status===s?"on":""}">${s}</button>`).join("")}
+      </div>` : "";
+    const phone = (o.customer_phone||"").replace(/\D/g,"");
+    const waMsg = encodeURIComponent(`Hi ${o.customer_name || ""}, this is Nishana Airguns about your order ${ref(o.id)}.`);
+    return `
+      <div class="o" data-id="${o.id}">
+        <div class="oh" data-toggle="${o.id}">
+          <div class="lft">
+            <div class="ref">${ref(o.id)} · ${fmtDate(o.created_at)}</div>
+            <div class="who">${o.customer_name || "—"}</div>
+            <div class="meta">${o.customer_phone || ""} · ${o.payment_method?.toUpperCase() || ""}</div>
+          </div>
+          <div class="rt">
+            <div class="amt">${inr(o.total)}</div>
+            <span class="badge ${o.order_status}">${o.order_status}</span>
+          </div>
+        </div>
+        <div class="ob">
+          <div class="grid">
+            <div>
+              <h4>Ship to</h4>
+              <p>${addr.address || "—"}<br>${addr.city || ""} ${addr.state ? ", " + addr.state : ""} — ${addr.pincode || ""}</p>
+            </div>
+            <div>
+              <h4>Contact</h4>
+              <p>${o.customer_email || "—"}<br>${o.customer_phone || "—"}</p>
+            </div>
+          </div>
+          <h4 style="margin-top:14px">Items</h4>
+          ${items}
+          <div class="actions">
+            ${phone ? `<a class="wa" href="https://wa.me/91${phone}?text=${waMsg}" target="_blank" rel="noopener">📲 WhatsApp</a>
+                       <a class="call" href="tel:+91${phone}">📞 Call</a>` : ""}
+          </div>
+          ${setBtns}
+        </div>
+      </div>`;
+  }).join("");
+
+  // toggle expand
+  list.querySelectorAll("[data-toggle]").forEach(el => el.addEventListener("click", () => {
+    el.parentElement.classList.toggle("open");
+  }));
+
+  // admin status setter — .select() exposes silent RLS rejections (0 rows)
+  list.querySelectorAll("[data-set]").forEach(el => el.addEventListener("click", async (e) => {
+    e.stopPropagation();
+    const id = el.dataset.set; const status = el.dataset.status;
+    el.textContent = "…";
+    const { data, error } = await supabase.from("orders").update({ order_status: status }).eq("id", id).select("id");
+    if (error) { alert("Update failed: " + error.message); }
+    else if (!data || data.length === 0) { alert("Change not applied — only admins can change status. If you ARE admin, re-run supabase-schema.sql and sign in again."); }
+    await loadOrders();
+  }));
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Checkout — Nishana Airguns</title>
+<meta name="theme-color" content="#0b0e13" />
+<meta name="robots" content="noindex,nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<!-- Razorpay Standard Checkout modal -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+:root{
+  --ink:#0b0e13; --steel:#131923; --steel-2:#161d28; --panel:#141b26;
+  --edge:#232b38; --edge-2:#2c3646;
+  --brass:#c9a227; --brass-hi:#e6c453;
+  --bone:#efe9db; --bone-dim:#cdc7ba;
+  --smoke:#8b94a3; --smoke-2:#6b7482;
+  --signal:#e4572e; --ok:#4bb381; --warn:#d9a441;
+  --r:14px; --r-sm:9px;
+  --font-d:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --font-b:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  --font-m:"IBM Plex Mono",ui-monospace,SFMono-Regular,monospace;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--ink);color:var(--bone);
+  font-family:var(--font-b);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(60% 40% at 50% 0%, rgba(201,162,39,.06), transparent 70%);
+  min-height:100vh;
+}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--brass);color:var(--ink)}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-radius:4px}
+
+.topbar{position:sticky;top:0;z-index:20;background:rgba(11,14,19,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--edge);display:flex;align-items:center;gap:12px;padding:14px 22px}
+.topbar .brand{display:flex;align-items:center;gap:10px}
+.topbar .brand svg{width:24px;height:24px;color:var(--brass)}
+.topbar .brand .name{font-family:var(--font-d);font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:19px}
+.topbar .spacer{flex:1}
+.topbar .icon-a{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:9px;border:1px solid var(--edge);background:var(--steel);color:var(--bone-dim);cursor:pointer;transition:.18s var(--ease);position:relative}
+.topbar .icon-a:hover{border-color:var(--brass);color:var(--brass)}
+.topbar .icon-a svg{width:17px;height:17px}
+.topbar .cart-badge{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 5px;background:var(--brass);color:var(--ink);border-radius:20px;font-family:var(--font-m);font-size:10px;font-weight:600;display:none;align-items:center;justify-content:center;line-height:1;border:2px solid var(--ink)}
+.topbar .user-chip{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 12px;border-radius:9px;border:1px solid var(--edge);background:var(--steel);color:var(--bone-dim);font-family:var(--font-m);font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:.18s var(--ease)}
+.topbar .user-chip:hover{border-color:var(--brass);color:var(--brass)}
+.topbar a.back{font-family:var(--font-m);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--smoke);display:inline-flex;align-items:center;gap:6px}
+.topbar a.back:hover{color:var(--brass)}
+
+.wrap{max-width:1120px;margin-inline:auto;padding:32px 22px 80px;display:grid;grid-template-columns:1.4fr 1fr;gap:28px}
+@media(max-width:860px){.wrap{grid-template-columns:1fr;padding:22px 16px 60px}}
+
+h1{font-family:var(--font-d);font-weight:800;text-transform:uppercase;letter-spacing:.02em;font-size:36px;margin:0 0 6px;line-height:1}
+.sub{color:var(--smoke);margin:0 0 22px;font-size:14px}
+
+.card{background:var(--panel);border:1px solid var(--edge);border-radius:var(--r);padding:22px;margin-bottom:18px;position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;background:linear-gradient(90deg,var(--brass),transparent)}
+h2{font-family:var(--font-d);font-weight:700;text-transform:uppercase;letter-spacing:.03em;font-size:19px;margin:0 0 14px;display:flex;align-items:center;gap:10px}
+h2 .stepnum{background:var(--brass);color:var(--ink);width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-m);font-size:12px;font-weight:600}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:500px){.row2{grid-template-columns:1fr}}
+
+label{font-family:var(--font-m);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--smoke);display:block;margin-bottom:6px}
+input, select, textarea{width:100%;background:var(--steel);border:1px solid var(--edge);border-radius:var(--r-sm);padding:11px 13px;color:var(--bone);font-family:var(--font-b);font-size:14px;transition:.18s var(--ease)}
+input:focus,select:focus,textarea:focus{border-color:var(--brass);outline:none}
+input::placeholder{color:var(--smoke-2)}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--smoke) 50%),linear-gradient(135deg,var(--smoke) 50%,transparent 50%);background-position:calc(100% - 18px) 55%,calc(100% - 12px) 55%;background-size:6px 6px;background-repeat:no-repeat}
+.field{margin-bottom:12px}
+
+/* auth banner */
+.auth-banner{background:linear-gradient(90deg,rgba(201,162,39,.12),transparent 90%);border:1px solid rgba(201,162,39,.32);color:var(--bone);padding:14px 16px;border-radius:var(--r-sm);margin-bottom:14px;display:flex;gap:12px;align-items:center}
+.auth-banner svg{width:20px;height:20px;color:var(--brass);flex:none}
+.auth-banner div{flex:1;font-size:13.5px}
+.auth-banner b{color:var(--brass)}
+.auth-banner button{background:var(--brass);color:var(--ink);border:1px solid var(--brass);padding:8px 14px;border-radius:7px;font-family:var(--font-d);font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:12px;cursor:pointer;transition:.18s var(--ease);flex:none}
+.auth-banner button:hover{background:var(--brass-hi);border-color:var(--brass-hi)}
+
+/* payment cards */
+.pay-list{display:flex;flex-direction:column;gap:10px}
+.pay-opt{border:1px solid var(--edge);border-radius:var(--r-sm);padding:14px;cursor:pointer;transition:.18s var(--ease);background:var(--steel);display:flex;gap:12px;align-items:flex-start}
+.pay-opt:hover{border-color:var(--edge-2)}
+.pay-opt.on{border-color:var(--brass);background:linear-gradient(90deg,rgba(201,162,39,.08),transparent 60%)}
+.pay-opt input[type=radio]{margin-top:3px;accent-color:var(--brass);width:16px;height:16px;flex:none}
+.pay-opt .pinfo b{font-family:var(--font-d);text-transform:uppercase;letter-spacing:.03em;font-weight:700;font-size:15px;color:var(--bone)}
+.pay-opt .pinfo p{margin:4px 0 0;color:var(--smoke);font-size:12.5px;line-height:1.45}
+.pay-opt .tag{font-family:var(--font-m);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin-left:auto;flex:none;padding-top:3px}
+
+/* summary */
+.sum{position:sticky;top:78px}
+.line-item{display:flex;gap:12px;align-items:center;border-bottom:1px solid var(--edge);padding:14px 0}
+.line-item img{width:60px;height:60px;object-fit:contain;background:var(--steel);border:1px solid var(--edge);border-radius:var(--r-sm);padding:6px}
+.li-info{flex:1;min-width:0}
+.li-info b{display:block;font-family:var(--font-d);font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;color:var(--bone)}
+.li-info small{color:var(--smoke);font-family:var(--font-m);font-size:11px;letter-spacing:.06em}
+.li-info .qc{display:inline-flex;align-items:center;background:var(--steel);border:1px solid var(--edge);border-radius:6px;overflow:hidden;margin-top:6px}
+.li-info .qc button{background:transparent;border:none;color:var(--bone);width:24px;height:24px;cursor:pointer;font-size:14px;line-height:1}
+.li-info .qc button:hover{background:var(--steel-2);color:var(--brass)}
+.li-info .qc span{padding:0 10px;font-family:var(--font-m);font-size:12px;min-width:20px;text-align:center}
+.li-price{font-family:var(--font-m);font-size:13.5px;color:var(--bone);text-align:right;flex:none}
+.li-rm{background:transparent;border:none;color:var(--smoke);cursor:pointer;padding:2px 6px;font-size:14px;align-self:flex-start}
+.li-rm:hover{color:var(--signal)}
+
+.totals{display:flex;flex-direction:column;gap:8px;font-family:var(--font-m);font-size:13.5px;color:var(--bone-dim);margin-top:12px}
+.totals .r{display:flex;justify-content:space-between}
+.totals .g{border-top:1px dashed var(--edge);padding-top:10px;margin-top:6px;font-family:var(--font-d);font-weight:800;text-transform:uppercase;letter-spacing:.03em;font-size:20px;color:var(--bone)}
+.totals .g span:last-child{color:var(--brass)}
+
+.assure{display:flex;flex-wrap:wrap;gap:8px;font-family:var(--font-m);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--smoke);margin-top:14px}
+.assure span{display:inline-flex;align-items:center;gap:4px;background:var(--steel);border:1px solid var(--edge);padding:5px 8px;border-radius:20px}
+.assure svg{width:11px;height:11px;color:var(--ok)}
+
+.primary{width:100%;background:var(--brass);color:var(--ink);border:1px solid var(--brass);padding:14px;border-radius:var(--r-sm);cursor:pointer;font-family:var(--font-d);font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:15px;transition:.18s var(--ease);margin-top:18px}
+.primary:hover{background:var(--brass-hi);border-color:var(--brass-hi)}
+.primary:disabled{opacity:.6;cursor:not-allowed}
+.legal-note{color:var(--smoke-2);font-size:11.5px;margin-top:12px;line-height:1.5}
+.legal-note b{color:var(--bone-dim)}
+
+.msg{margin-top:14px;padding:11px 13px;border-radius:var(--r-sm);font-family:var(--font-m);font-size:12.5px;line-height:1.5;display:none}
+.msg.err{display:block;background:rgba(228,87,46,.12);border:1px solid rgba(228,87,46,.35);color:#f7b7a0}
+.msg.ok {display:block;background:rgba(75,179,129,.12);border:1px solid rgba(75,179,129,.35);color:#a9e4c6}
+
+.upi-panel{margin-top:12px;padding:14px;background:var(--steel);border:1px dashed var(--edge-2);border-radius:var(--r-sm);display:none}
+.upi-panel.on{display:block}
+.upi-panel b{color:var(--brass);font-family:var(--font-m);letter-spacing:.06em}
+.upi-panel small{display:block;color:var(--smoke);margin-top:6px;font-size:12px}
+
+.empty-cart{padding:44px 20px;text-align:center;color:var(--smoke);font-family:var(--font-m);font-size:13px;letter-spacing:.06em}
+.empty-cart a{color:var(--brass);text-decoration:underline}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="brand" href="index.html">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.4" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="5.6" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="1.9" fill="currentColor"/></svg>
+    <div class="name">NISHANA</div>
+  </a>
+  <a class="back" href="index.html">← Continue shopping</a>
+  <div class="spacer"></div>
+  <button class="icon-a" data-cart-btn title="View cart" aria-label="Open cart">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2 3h3l2.6 13H19l2-9H6"/></svg>
+    <span class="cart-badge" data-cart-count>0</span>
+  </button>
+  <button class="user-chip" id="userChip" data-login-btn>
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span id="userChipText">Sign in</span>
+  </button>
+</div>
+
+<div class="wrap" id="wrap">
+  <!-- Populated by JS below -->
+</div>
+
+<script src="auth.js"></script>
+<script src="products.js"></script>
+<script src="cart.js"></script>
+<script type="module">
+const STATES = ['Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Delhi','Jammu & Kashmir','Ladakh','Puducherry','Chandigarh'];
+const inr = n => "₹" + Number(n||0).toLocaleString("en-IN");
+
+// If arriving with ?product=xxx (e.g. from a Buy Now link), auto-add that product.
+const params = new URLSearchParams(location.search);
+const seedProduct = params.get("product");
+if (seedProduct && !window.NishanaCart.items().find(i => i.id === seedProduct)) {
+  window.NishanaCart.add(seedProduct, 1);
+  history.replaceState({}, "", "checkout.html");
+}
+
+let supabase;
+try { supabase = await window.getNishanaSupabase(); }
+catch (e) {
+  document.getElementById("wrap").innerHTML = `<div style="grid-column:1/-1"><div class="card"><div class="empty-cart">Could not load checkout — check your internet connection or ad-blocker, then reload.</div></div></div>`;
+  throw e;
+}
+
+// Personalise user chip — repaint on every auth state change so the modal
+// login result is reflected instantly (fixes "Sign in stays visible" bug).
+const chipText = document.getElementById("userChipText");
+const chip = document.getElementById("userChip");
+function paintChip(session) {
+  if (session) {
+    const u = session.user;
+    const displayName = u.user_metadata?.full_name || u.user_metadata?.name || u.email?.split("@")[0] || "Account";
+    const short = displayName.length > 22 ? displayName.slice(0,20) + "…" : displayName;
+    chipText.textContent = short;
+    chip.title = u.email || displayName;
+    chip.removeAttribute("data-login-btn");
+    chip.onclick = async () => {
+      if (confirm("Sign out of " + (u.email || displayName) + "?")) { await supabase.auth.signOut(); }
+    };
+  } else {
+    chipText.textContent = "Sign in";
+    chip.title = "Sign in";
+    chip.setAttribute("data-login-btn","");
+    chip.onclick = null;
+  }
+}
+// Initial paint
+const { data: { session: initialSession } } = await supabase.auth.getSession();
+paintChip(initialSession);
+// Live repaint on sign-in / sign-out / token refresh
+supabase.auth.onAuthStateChange((_evt, session) => { paintChip(session); render(); });
+
+// ============ MAIN RENDER ============
+const wrap = document.getElementById("wrap");
+render();
+window.NishanaCart.onChange(render);
+
+function render() {
+  const items = window.NishanaCart.items();
+  if (!items.length) {
+    wrap.innerHTML = `
+      <div style="grid-column:1/-1">
+        <div class="card"><div class="empty-cart">Your cart is empty.<br>→ <a href="index.html">Head back to the storefront</a> to add a product.</div></div>
+      </div>`;
+    return;
+  }
+  const subtotal = window.NishanaCart.subtotal();
+  const savedForm = JSON.parse(sessionStorage.getItem("nishana_checkout_form") || "{}");
+  wrap.innerHTML = `
+    <div>
+      <h1>Checkout</h1>
+      <p class="sub">Delivered pan-India · 100% genuine · Manufacturer warranty</p>
+
+      <div class="auth-banner" id="authBanner" style="display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 15v2"/><path d="M5 21h14a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2z"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        <div><b>Sign in to place your order.</b> Faster checkout, order history and delivery updates on WhatsApp.</div>
+        <button id="loginNow">Sign in</button>
+      </div>
+
+      <div class="card">
+        <h2><span class="stepnum">1</span> Delivery details</h2>
+        <form id="checkoutForm" autocomplete="on" novalidate>
+          <div class="row2">
+            <div class="field"><label for="name">Full name</label><input id="name" name="name" type="text" required autocomplete="name" placeholder="As on your ID" value="${savedForm.name||''}"></div>
+            <div class="field"><label for="phone">Mobile (10 digits)</label><input id="phone" name="phone" type="tel" required inputmode="numeric" pattern="[0-9]{10}" autocomplete="tel" placeholder="98XXXXXXXX" value="${savedForm.phone||''}"></div>
+          </div>
+          <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" required autocomplete="email" placeholder="you@gmail.com" value="${savedForm.email||''}"></div>
+          <div class="field"><label for="address">Address (house, street, area)</label><input id="address" name="address" type="text" required autocomplete="street-address" placeholder="Flat 4B, Green Park, near XYZ market" value="${savedForm.address||''}"></div>
+          <div class="row2">
+            <div class="field"><label for="city">City</label><input id="city" name="city" type="text" required autocomplete="address-level2" value="${savedForm.city||''}"></div>
+            <div class="field"><label for="pincode">Pincode</label><input id="pincode" name="pincode" type="text" required inputmode="numeric" pattern="[0-9]{6}" autocomplete="postal-code" placeholder="6-digit" value="${savedForm.pincode||''}"></div>
+          </div>
+          <div class="field"><label for="state">State</label>
+            <select id="state" name="state" required autocomplete="address-level1">
+              <option value="">Select state</option>
+              ${STATES.map(s => `<option value="${s}" ${savedForm.state===s?'selected':''}>${s}</option>`).join('')}
+            </select>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2><span class="stepnum">2</span> Payment method</h2>
+        <div class="pay-list" id="payList">
+          <label class="pay-opt on"><input type="radio" name="pay" value="razorpay" checked>
+            <div class="pinfo"><b>Pay online — Card, UPI, Netbanking, Wallets</b><p>Secure Razorpay checkout. Order confirmed instantly on successful payment, dispatched within 24 h.</p></div>
+            <span class="tag">Recommended</span></label>
+          <label class="pay-opt"><input type="radio" name="pay" value="cod">
+            <div class="pinfo"><b>Cash on Delivery</b><p>Pay a ₹3,000 confirmation advance now (via Razorpay), balance in cash to the courier at delivery. Non-refundable if you refuse the parcel.</p></div>
+            <span class="tag">COD ₹3,000</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="sum">
+      <div class="card">
+        <h2>Order summary</h2>
+        <div id="items">
+          ${items.map(i => `
+            <div class="line-item" data-id="${i.id}">
+              <img src="${i.image}" alt="${i.name}" referrerpolicy="no-referrer">
+              <div class="li-info">
+                <b>${i.name}</b><small>${i.brand}</small>
+                <div class="qc"><button data-q="dec">−</button><span>${i.qty}</span><button data-q="inc">+</button></div>
+              </div>
+              <div class="li-price">${inr(i.price*i.qty)}</div>
+              <button class="li-rm" title="Remove">×</button>
+            </div>`).join('')}
+        </div>
+        <div class="totals">
+          <div class="r"><span>Subtotal</span><span id="tSubtotal">${inr(subtotal)}</span></div>
+          <div class="r"><span>Shipping</span><span>Free (India)</span></div>
+          <div class="r" id="rCod" style="display:none"><span>COD confirmation</span><span>₹3,000</span></div>
+          <div class="r g"><span>Total</span><span id="tTotal">${inr(subtotal)}</span></div>
+        </div>
+        <div class="assure">
+          
+        </div>
+        <button class="primary" id="placeBtn">Place order</button>
+        <div class="msg" id="msg" role="status" aria-live="polite"></div>
+        <p class="legal-note"><b>Legal notice.</b> Under India's Arms Rules 2016, airguns with muzzle energy up to 20 J in .177 cal are licence-exempt.</p>
+      </div>
+    </div>
+  `;
+  wireUp();
+}
+
+async function wireUp() {
+  // Cart line-item controls
+  document.querySelectorAll(".line-item").forEach(row => {
+    const id = row.dataset.id;
+    row.querySelector('[data-q="dec"]').onclick = () => window.NishanaCart.updateQty(id, (window.NishanaCart.items().find(x=>x.id===id)?.qty||1) - 1);
+    row.querySelector('[data-q="inc"]').onclick = () => window.NishanaCart.updateQty(id, (window.NishanaCart.items().find(x=>x.id===id)?.qty||1) + 1);
+    row.querySelector('.li-rm').onclick = () => window.NishanaCart.remove(id);
+  });
+
+  const payList = document.getElementById("payList");
+  const rCod = document.getElementById("rCod");
+  const tTotal = document.getElementById("tTotal");
+  const subtotal = window.NishanaCart.subtotal();
+  function recalc(){
+    const method = document.querySelector('input[name=pay]:checked').value;
+    payList.querySelectorAll(".pay-opt").forEach(l => l.classList.toggle("on", l.querySelector("input").checked));
+    const codFee = method === "cod" ? 3000 : 0;
+    rCod.style.display = codFee ? "flex" : "none";
+    tTotal.textContent = inr(subtotal + codFee);
+  }
+  payList.addEventListener("change", recalc); recalc();
+
+  // Prefill from logged-in session
+  const { data: { session } } = await supabase.auth.getSession();
+  const authBanner = document.getElementById("authBanner");
+  if (session) {
+    authBanner.style.display = "none";
+    if (!document.getElementById("email").value) document.getElementById("email").value = session.user.email || "";
+    if (!document.getElementById("name").value)  document.getElementById("name").value  = session.user.user_metadata?.full_name || session.user.user_metadata?.name || "";
+  } else {
+    authBanner.style.display = "flex";
+    document.getElementById("loginNow").onclick = async () => {
+      const user = await window.showNishanaLogin({ reason: "Sign in to save your address and place the order." });
+      if (user) { authBanner.style.display = "none"; render(); }
+    };
+  }
+
+  // ---- LEAD CAPTURE ----
+  // Persist the form on every keystroke so the customer doesn't lose it.
+  const fields = ["name","phone","email","address","city","state","pincode"];
+  const readForm = () => Object.fromEntries(fields.map(f => [f, document.getElementById(f)?.value.trim() || ""]));
+  const saveDraft = () => sessionStorage.setItem("nishana_checkout_form", JSON.stringify(readForm()));
+
+  // Session id for UPSERTing one lead row per browser session
+  let sid = localStorage.getItem("nishana_session_id");
+  if (!sid) { sid = crypto.randomUUID(); localStorage.setItem("nishana_session_id", sid); }
+
+  let leadTimer = null;
+  async function maybeCaptureLead() {
+    const f = readForm();
+    // Trigger: has phone (10 digits) AND at least one address field. Never write empty leads.
+    const hasPhone = /^[0-9]{10}$/.test(f.phone);
+    const hasAddr = f.address || f.city || f.pincode;
+    if (!hasPhone || !hasAddr) return;
+    const item = window.NishanaCart.items()[0];
+    try {
+      await supabase.from("leads").upsert({
+        session_id: sid,
+        name: f.name || null,
+        phone: f.phone,
+        email: f.email || null,
+        address: f.address || null,
+        city: f.city || null,
+        state: f.state || null,
+        pincode: f.pincode || null,
+        product_id: item?.id || null,
+        product_name: item?.name || null,
+        cart_value: window.NishanaCart.subtotal(),
+        source: "checkout_abandoned",
+        updated_at: new Date().toISOString(),
+      }, { onConflict: "session_id" });
+    } catch (_) { /* silent — lead capture never blocks checkout */ }
+  }
+
+  fields.forEach(f => {
+    const el = document.getElementById(f); if (!el) return;
+    el.addEventListener("input", () => { saveDraft(); clearTimeout(leadTimer); leadTimer = setTimeout(maybeCaptureLead, 1200); });
+    el.addEventListener("blur",  () => { saveDraft(); maybeCaptureLead(); });
+  });
+  // Last chance: capture on tab close
+  addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") maybeCaptureLead(); });
+
+  // ---- PLACE ORDER ----
+  const placeBtn = document.getElementById("placeBtn");
+  placeBtn.onclick = async () => {
+    const form = document.getElementById("checkoutForm");
+    if (!form.reportValidity()) return;
+
+    // Force login before letting them submit.
+    const { data: { session: cur } } = await supabase.auth.getSession();
+    if (!cur) {
+      const user = await window.showNishanaLogin({ reason: "Please sign in to place your order — it takes 5 seconds." });
+      if (!user) return;
+    }
+
+    const method   = document.querySelector('input[name=pay]:checked').value;
+    const subtotal = window.NishanaCart.subtotal();
+    const codFee   = method === "cod" ? 3000 : 0;
+    const shipping = 0;
+    const total    = subtotal + shipping + codFee;
+
+    if (!window.NishanaCart.items().length) { showMsg("err", "Cart is empty."); return; }
+
+    setBusy(true);
+    const { data: { user } } = await supabase.auth.getUser();
+    const f = readForm();
+    const items = window.NishanaCart.items().map(i => ({ id: i.id, name: i.name, price: i.price, qty: i.qty, image: i.image }));
+    const basePayload = {
+      user_id: user?.id ?? null,
+      customer_name: f.name, customer_email: f.email, customer_phone: f.phone,
+      shipping_address: { address: f.address, city: f.city, state: f.state, pincode: f.pincode },
+      items, subtotal, shipping, discount: 0, cod_fee: codFee, total,
+      payment_method: method,
+      order_status: "new",
+    };
+
+    // ============ ROUTE BY PAYMENT METHOD ============
+    if (method === "razorpay") {
+      // Full online payment via Razorpay Standard Checkout.
+      await payWithRazorpay(basePayload, total);
+    } else {
+      // COD: collect the ₹3,000 advance via Razorpay now, balance in cash at delivery.
+      await payWithRazorpay(basePayload, codFee);
+    }
+  };
+
+  function setBusy(busy) {
+    placeBtn.disabled = busy;
+    placeBtn.textContent = busy ? "Placing…" : "Place order";
+  }
+
+  // ---- OFFLINE FLOW (UPI-manual / WhatsApp) ----
+  async function placeOfflineOrder(payload) {
+    payload.payment_status = "pending";
+    const { data, error } = await supabase.from("orders").insert(payload).select("id").single();
+    if (error) { showMsg("err", "Could not place order: " + error.message); setBusy(false); return; }
+    try { await supabase.from("leads").update({ status: "converted", updated_at: new Date().toISOString() }).eq("session_id", sid); } catch (_) {}
+    handoff(data.id, payload);
+  }
+
+  // ---- RAZORPAY FLOW ----
+  // Two use cases:
+  //   1. Full online payment (payload.payment_method === 'razorpay')
+  //   2. COD advance (payload.payment_method === 'cod', amountRupees === 1000)
+  async function payWithRazorpay(payload, amountRupees) {
+    if (typeof window.Razorpay !== "function") {
+      showMsg("err", "Razorpay checkout script failed to load. Refresh the page and try again.");
+      setBusy(false); return;
+    }
+    if (!amountRupees || amountRupees < 1) {
+      showMsg("err", "Invalid amount for online payment."); setBusy(false); return;
+    }
+
+    // Step A: insert the Supabase order as pending so we have a stable receipt ID.
+    payload.payment_status = "pending";
+    const insertResp = await supabase.from("orders").insert(payload).select("id").single();
+    if (insertResp.error) { showMsg("err", "Could not place order: " + insertResp.error.message); setBusy(false); return; }
+    const orderId = insertResp.data.id;
+    const orderRef = orderId.slice(0, 8).toUpperCase();
+
+    // Step B: ask our serverless function to create a Razorpay order.
+    let rzpOrder;
+    try {
+      const r = await fetch("/api/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount:  Math.round(amountRupees * 100), // paise
+          receipt: `nis_${orderRef}`,
+          notes:   { supabase_order_id: orderId, payment_method: payload.payment_method },
+        }),
+      });
+      rzpOrder = await r.json();
+      if (!r.ok || !rzpOrder.order_id) throw new Error(rzpOrder.error || "Order creation failed");
+    } catch (err) {
+      showMsg("err", "Payment gateway error: " + err.message);
+      await supabase.from("orders").update({ payment_status: "failed", notes: "create-order failed: " + err.message }).eq("id", orderId);
+      setBusy(false); return;
+    }
+
+    // Step C: open the Razorpay modal.
+    const rzp = new window.Razorpay({
+      key:       rzpOrder.key_id,
+      order_id:  rzpOrder.order_id,
+      amount:    rzpOrder.amount,
+      currency:  rzpOrder.currency,
+      name:      "Nishana Airguns",
+      description: payload.payment_method === "cod"
+        ? `COD ₹3,000 advance · Order #${orderRef}`
+        : `Order #${orderRef} · ${payload.items.map(i => i.name).join(", ").slice(0, 60)}`,
+      image: "https://nishanaairguns.com/favicon.ico",
+      prefill: {
+        name:    payload.customer_name,
+        email:   payload.customer_email,
+        contact: payload.customer_phone,
+      },
+      theme: { color: "#c9a227" },
+      notes: { supabase_order_id: orderId },
+      // Successful payment handler
+      handler: async (response) => {
+        // Step D: verify the signature server-side.
+        try {
+          const v = await fetch("/api/verify-payment", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(response),
+          });
+          const vj = await v.json();
+          if (!v.ok || !vj.verified) throw new Error(vj.error || "Signature verification failed");
+
+          // Verified → mark the Supabase order as paid.
+          await supabase.from("orders").update({
+            payment_status: "paid",
+            razorpay_order_id:   response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+          }).eq("id", orderId);
+
+          try { await supabase.from("leads").update({ status: "converted", updated_at: new Date().toISOString() }).eq("session_id", sid); } catch (_) {}
+          handoff(orderId, payload);
+        } catch (err) {
+          showMsg("err", "Payment received but verification failed: " + err.message + ". We'll reach out on WhatsApp — do not pay again.");
+          await supabase.from("orders").update({ payment_status: "failed", notes: "verify failed: " + err.message }).eq("id", orderId);
+          setBusy(false);
+        }
+      },
+      modal: {
+        // User closed the modal without paying
+        ondismiss: async () => {
+          await supabase.from("orders").update({ payment_status: "failed", notes: "modal dismissed" }).eq("id", orderId);
+          showMsg("err", "Payment cancelled. Your order was not confirmed — click Place order to try again.");
+          setBusy(false);
+        },
+      },
+    });
+
+    rzp.on("payment.failed", async (resp) => {
+      const msg = resp?.error?.description || "Payment failed";
+      await supabase.from("orders").update({ payment_status: "failed", notes: "razorpay: " + msg }).eq("id", orderId);
+      showMsg("err", "Payment failed: " + msg + ". Try a different card / method.");
+      setBusy(false);
+    });
+
+    rzp.open();
+    // Note: setBusy(false) intentionally NOT called here — the modal is now
+    // in charge; the handler/ondismiss above will re-enable the button.
+  }
+
+  // ---- POST-ORDER HANDOFF (redirect to success page) ----
+  function handoff(orderId, payload) {
+    const orderRef = orderId.slice(0, 8).toUpperCase();
+    const summary = encodeURIComponent(
+`Hi Nishana! I've just placed order #${orderRef}.
+
+${payload.items.map(i => `- ${i.name} × ${i.qty}`).join("\n")}
+Total: ${inr(payload.total)}
+Payment: ${payload.payment_method.toUpperCase()}
+Name: ${payload.customer_name}
+Phone: ${payload.customer_phone}
+
+Please confirm dispatch.`);
+    const waHref = `https://wa.me/918329618409?text=${summary}`;
+    window.NishanaCart.clear();
+    sessionStorage.removeItem("nishana_checkout_form");
+    location.href = `order-success.html?ref=${orderRef}&wa=${encodeURIComponent(waHref)}&pay=${payload.payment_method}`;
+  }
+}
+
+function showMsg(kind, text) { const m = document.getElementById("msg"); if (m) { m.className = "msg " + kind; m.textContent = text; } }
+</script>
+</body>
+</html>

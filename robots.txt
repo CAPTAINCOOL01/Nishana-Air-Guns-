@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard.html
+Disallow: /dealer.html
+Disallow: /login.html
+Disallow: /checkout.html
+Disallow: /order-success.html
+Disallow: /my-orders.html
+
+Sitemap: https://nishanaairguns.com/sitemap.xml
