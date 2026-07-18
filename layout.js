@@ -156,7 +156,9 @@ window.NISHANA_TRACKING = {
 
 (() => {
   const LOGO_SVG = `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.4" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="5.6" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="1.9" fill="currentColor"/></svg>`;
-  const WA_NUMBER = "918329618409";
+  const WA_LOCAL_NUMBER = "8329618409";
+  const WA_NUMBER = `91${WA_LOCAL_NUMBER}`;
+  const WA_DISPLAY_NUMBER = "+91 83296 18409";
   const wa = t => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(t)}`;
 
   const CATEGORIES = [
@@ -175,6 +177,97 @@ window.NISHANA_TRACKING = {
   ];
 
   const currentPage = (document.body.dataset.page || "").toLowerCase();
+
+  // ---------- WHATSAPP LEAD CAPTURE ----------
+  // Keep every public WhatsApp CTA on the same business number while
+  // preserving the page-specific pre-filled message.
+  function normalizeWhatsAppLinks() {
+    document.querySelectorAll('a[href*="wa.me/"]').forEach(link => {
+      try {
+        const url = new URL(link.href, location.href);
+        if (url.hostname === "wa.me") {
+          url.pathname = `/${WA_NUMBER}`;
+          link.href = url.toString();
+        }
+      } catch {}
+    });
+  }
+
+  function wireWhatsAppLeadTracking() {
+    if (document.documentElement.dataset.nishanaWaTracking === "on") return;
+    document.documentElement.dataset.nishanaWaTracking = "on";
+    document.addEventListener("click", event => {
+      const link = event.target.closest('a[href*="wa.me/"]');
+      if (!link) return;
+      window.nishanaTrack?.("generate_lead", {
+        method: "whatsapp",
+        placement: link.closest(".n-wa-lead") ? "floating_banner" : "site_cta",
+        link_text: (link.textContent || "WhatsApp").trim().slice(0, 80),
+        page_path: location.pathname,
+      });
+    });
+  }
+
+  function renderWhatsAppLead() {
+    if (document.getElementById("nWaLead")) return;
+    try {
+      if (sessionStorage.getItem("nishana_wa_lead_dismissed") === "1") return;
+    } catch {}
+
+    if (!document.getElementById("nWaLeadStyle")) {
+      const style = document.createElement("style");
+      style.id = "nWaLeadStyle";
+      style.textContent = `
+        .n-wa-lead{position:fixed;right:18px;bottom:18px;z-index:65;width:min(520px,calc(100vw - 36px));display:grid;grid-template-columns:56px minmax(0,1fr) auto;align-items:center;gap:14px;padding:16px 16px 16px 14px;background:linear-gradient(125deg,rgba(20,27,38,.98),rgba(11,14,19,.98));border:1px solid #2c3646;border-radius:14px;box-shadow:0 24px 70px -18px rgba(0,0,0,.9),0 0 0 1px rgba(201,162,39,.06);font-family:var(--font-b,'IBM Plex Sans',system-ui,sans-serif);color:#efe9db;opacity:0;transform:translateY(18px);transition:opacity .35s ease,transform .35s ease;overflow:hidden}
+        .n-wa-lead::before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,#c9a227 0 45%,#25d366 80%,transparent)}
+        .n-wa-lead.is-visible{opacity:1;transform:translateY(0)}
+        .n-wa-lead__signal{position:relative;width:52px;height:52px;display:grid;place-items:center;border-radius:50%;color:#25d366;background:#0e1515;border:1px solid rgba(37,211,102,.36);isolation:isolate}
+        .n-wa-lead__signal::before,.n-wa-lead__signal::after{content:"";position:absolute;border:1px solid rgba(201,162,39,.23);border-radius:50%;z-index:-1}
+        .n-wa-lead__signal::before{inset:5px}.n-wa-lead__signal::after{inset:11px}
+        .n-wa-lead__signal svg{width:24px;height:24px}
+        .n-wa-lead__eyebrow{display:flex;align-items:center;gap:7px;margin-bottom:3px;font-family:var(--font-m,'IBM Plex Mono',monospace);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#8b94a3;white-space:nowrap}
+        .n-wa-lead__live{width:6px;height:6px;border-radius:50%;background:#25d366;box-shadow:0 0 0 4px rgba(37,211,102,.11);animation:n-wa-pulse 2s ease-in-out infinite}
+        .n-wa-lead__copy strong{display:block;font-family:var(--font-d,'Big Shoulders Display',Impact,sans-serif);font-size:20px;line-height:1.05;letter-spacing:.025em;text-transform:uppercase;color:#efe9db}
+        .n-wa-lead__copy p{margin:4px 0 0;color:#8b94a3;font-size:12.5px;line-height:1.35}
+        .n-wa-lead__cta{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:0 14px;border-radius:9px;background:#25d366;color:#07130b;font-family:var(--font-m,'IBM Plex Mono',monospace);font-size:10px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;text-decoration:none;white-space:nowrap;transition:background .18s ease,transform .18s ease}
+        .n-wa-lead__cta:hover{background:#31e371;transform:translateY(-1px)}
+        .n-wa-lead__cta svg{width:15px;height:15px}
+        .n-wa-lead__close{position:absolute;top:4px;right:5px;width:25px;height:25px;display:grid;place-items:center;padding:0;border:0;background:transparent;color:#6b7482;font-size:18px;line-height:1;cursor:pointer;border-radius:6px}
+        .n-wa-lead__close:hover{background:#1a222f;color:#efe9db}
+        @keyframes n-wa-pulse{50%{box-shadow:0 0 0 7px rgba(37,211,102,0)}}
+        @media(max-width:640px){.n-wa-lead{left:12px;right:12px;bottom:12px;width:auto;grid-template-columns:48px minmax(0,1fr);gap:11px;padding:13px}.n-wa-lead__signal{width:44px;height:44px}.n-wa-lead__copy strong{font-size:18px}.n-wa-lead__copy p{font-size:11.5px}.n-wa-lead__cta{grid-column:1/-1;width:100%;box-sizing:border-box}.n-wa-lead__close{top:3px;right:4px}}
+        @media(prefers-reduced-motion:reduce){.n-wa-lead,.n-wa-lead__cta{transition:none}.n-wa-lead__live{animation:none}}
+      `;
+      document.head.appendChild(style);
+    }
+
+    const lead = document.createElement("aside");
+    lead.id = "nWaLead";
+    lead.className = "n-wa-lead";
+    lead.setAttribute("aria-label", "WhatsApp support");
+    lead.innerHTML = `
+      <button class="n-wa-lead__close" type="button" aria-label="Dismiss WhatsApp support banner">×</button>
+      <div class="n-wa-lead__signal" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.8 5-1.3A10 10 0 1 0 12 2Zm4.4 12c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5 0a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-1 2.2 5.3 5.3 0 0 0 1.1 2.7 12 12 0 0 0 4.6 4c2.1.9 2.1.6 2.5.6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3Z"/></svg>
+      </div>
+      <div class="n-wa-lead__copy">
+        <span class="n-wa-lead__eyebrow"><i class="n-wa-lead__live"></i> Open line · ${WA_DISPLAY_NUMBER}</span>
+        <strong>Got a doubt? Talk to a human.</strong>
+        <p>Licence rules, live stock, delivery or the right model — ask us directly.</p>
+      </div>
+      <a class="n-wa-lead__cta" href="${wa("Hi Nishana! I have a question and would like some help.")}" target="_blank" rel="noopener" aria-label="Chat with Nishana on WhatsApp at ${WA_DISPLAY_NUMBER}">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.8 5-1.3A10 10 0 1 0 12 2Zm4.4 12c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5 0a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-1 2.2 5.3 5.3 0 0 0 1.1 2.7 12 12 0 0 0 4.6 4c2.1.9 2.1.6 2.5.6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3Z"/></svg>
+        Chat on WhatsApp
+      </a>`;
+
+    lead.querySelector(".n-wa-lead__close").addEventListener("click", () => {
+      try { sessionStorage.setItem("nishana_wa_lead_dismissed", "1"); } catch {}
+      lead.classList.remove("is-visible");
+      setTimeout(() => lead.remove(), 360);
+    });
+    document.body.appendChild(lead);
+    requestAnimationFrame(() => setTimeout(() => lead.classList.add("is-visible"), 700));
+  }
 
   // ---------- HEADER ----------
   function renderHeader(host) {
@@ -498,6 +591,9 @@ window.NISHANA_TRACKING = {
     if (h) renderHeader(h);
     const f = document.querySelector("[data-nishana-footer]");
     if (f) renderFooter(f);
+    normalizeWhatsAppLinks();
+    wireWhatsAppLeadTracking();
+    renderWhatsAppLead();
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount);
   else mount();
