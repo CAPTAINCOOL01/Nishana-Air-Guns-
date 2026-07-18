@@ -2,7 +2,7 @@
    NISHANA — shared product catalog + card renderer
    ============================================================
    ONE place to edit products & prices. Used by:
-   - category pages (air-pistols, air-rifles, spare-parts, accessories)
+   - category pages (air-pistols, spare-parts, accessories)
    - products.html (all products)
    - index.html (featured)
    - cart.js (cart line items are built from this catalog)
@@ -22,71 +22,12 @@ window.NISHANA_PRODUCTS = [
     image: "https://camstarsports.com/products/star-rx-gen3-1.webp",
     href: "product-rx-gen3.html", buy: true,
   },
-  {
-    id: "mauser-x-matte", brand: "Camstar", name: "Mauser X Matte",
-    category: "air-pistols", price: 7999, badge: "Gen 2 Bestseller",
-    chips: [".177 CAL", "SPRING PISTON", "MATTE FINISH"],
-    desc: "India's first Gen 2 air pistol — the best-selling spring pistol in a tough matte finish. Zero consumables, just pellets.",
-    image: "https://camstarsports.com/products/star-mauser-x-1.png",
-    href: "product-mauser-x-matte.html", buy: true,
-  },
-  {
-    id: "star-leo", brand: "Camstar", name: "Star Leo",
-    category: "air-pistols", price: 6900, badge: "Beginner pick",
-    chips: [".177 CAL", "480 FPS", "SPRING PISTON"],
-    desc: "The ideal first pistol — affordable, simple to cock and shoot, and built to survive thousands of plinking sessions.",
-    image: "https://camstarsports.com/products/star-leo-1.webp",
-    href: "product-star-leo.html", buy: true,
-  },
-
-  /* ---------------- AIR RIFLES ---------------- */
-  {
-    id: "star-zxi", brand: "Camstar", name: "Star ZXi",
-    category: "air-rifles", price: 11999, mrp: 12999,
-    chips: [".177 CAL", "870 FPS", "SPRING BREAK-BARREL", "6 COLOURS"],
-    desc: "Spring-action break barrel with 870 FPS punch at an entry-friendly price. Six factory colours including Camo and Wooden.",
-    image: "https://camstarsports.com/products/star-zxi-new-1.webp",
-    href: "product-star-zxi.html", buy: true,
-  },
-  {
-    id: "star-matrix-gold", brand: "Camstar", name: "Star Matrix Gold",
-    category: "air-rifles", price: 12999, mrp: 14999, badge: "Best seller",
-    chips: [".177 CAL", "870 FPS", "NITRO PISTON", "AUTO SAFETY"],
-    desc: "Camstar's best-value nitro-piston rifle — 20 J of smooth, spring-free power with automatic trigger safety.",
-    image: "https://camstarsports.com/products/star-matrix-gold-new-1.webp",
-    href: "product-star-matrix-gold.html", buy: true,
-  },
-  {
-    id: "star-hercules-rf", brand: "Camstar", name: "Star Hercules RF",
-    category: "air-rifles", price: 13999, mrp: 14999,
-    chips: [".177 CAL", "870 FPS", "SPRING BREAK-BARREL", "20 J"],
-    desc: "A powerful spring rifle for demanding field and target use. Full-power 20 J platform with metallic rear sight.",
-    image: "https://camstarsports.com/products/star-matrix-rf-new-1.webp",
-    href: "product-star-hercules-rf.html", buy: true,
-  },
-  {
-    id: "star-px", brand: "Camstar", name: "Star PX (PCP)",
-    category: "air-rifles", price: 28999, mrp: 30999,
-    chips: [".177 CAL", "PCP", "10-RND MAG", "90 SHOTS/FILL", "SUPPRESSED"],
-    desc: "Pre-charged pneumatic with integrated suppressor, two-stage trigger and 90 consistent shots per fill. Spare magazine included.",
-    image: "https://camstarsports.com/products/star-px-new-1.webp",
-    href: "product-star-px.html", buy: true,
-  },
-  {
-    id: "star-pxi-combo", brand: "Camstar", name: "Star PXi — Complete Combo",
-    category: "air-rifles", price: 31000, badge: "Best value combo",
-    chips: [".177 CAL", "PCP", "SCOPE + PUMP + BAG"],
-    desc: "The everything-included PCP kit: Star PXi rifle + telescopic scope + PCP hand pump + padded rifle bag. Shoot the day it arrives.",
-    image: "https://camstarsports.com/products/star-pxi-1.webp",
-    href: "product-star-pxi-combo.html", buy: true,
-  },
-
   /* ---------------- ACCESSORIES ---------------- */
   {
     id: "co2-cylinders-5", brand: "Camstar", name: "CO₂ Cylinders — Pack of 5",
     category: "accessories", price: 550,
-    chips: ["12 G", "PACK OF 5", "FITS ALL CO₂ GUNS"],
-    desc: "Standard 12 g CO₂ cylinders, pack of five. Compatible with the Star RX Gen 3 and every CO₂ airgun sold here.",
+    chips: ["12 G", "PACK OF 5", "RX GEN 3 READY"],
+    desc: "Standard 12 g CO₂ cylinders, pack of five, selected for the Star RX Gen 3.",
     image: "https://camstarsports.com/products/co2-cylinders.jpg",
     href: null, buy: true,
   },
@@ -94,7 +35,7 @@ window.NISHANA_PRODUCTS = [
     id: "star-match-pellets", brand: "Camstar", name: "Star Match Diabolo Pellets",
     category: "accessories", price: 450,
     chips: [".177 CAL", "0.524 G", "300 PCS/TIN"],
-    desc: "Match-grade .177 (4.5 mm) diabolo pellets, 300 per tin. Universal fit — feed them to any airgun on this site.",
+    desc: "Match-grade .177 (4.5 mm) diabolo pellets, 300 per tin, suited to the Star RX Gen 3.",
     image: "https://camstarsports.com/products/star-match-diabolo.png",
     href: null, buy: true,
   },
@@ -108,33 +49,10 @@ window.NISHANA_PRODUCTS = [
     image: "https://camstarsports.com/products/star-rx-gen3-1.webp",
     href: null, buy: false,
   },
-  {
-    id: "pcp-magazine-x", brand: "Camstar", name: "PCP Magazine — Star X Series",
-    category: "spare-parts", price: 1099,
-    chips: ["GENUINE", "10 RND", "FITS PX / PXi"],
-    desc: "Genuine 10-round replacement magazine for the Star PX and Star PXi PCP rifles.",
-    image: "https://camstarsports.com/products/star-px-new-1.webp",
-    href: null, buy: false,
-  },
 ];
 
-/* Small parts ordered over WhatsApp (prices confirmed on chat with live stock) */
-window.NISHANA_SMALL_PARTS = [
-  { name: "Nitro Piston 40 Bar",        price: 2500, fits: "Spring-action models" },
-  { name: "Nitro Piston 60 Bar",        price: 3000, fits: "Star Matrix Gold, Hercules RF" },
-  { name: "PCP Suppressor",             price: 2000, fits: "Star PX / PXi" },
-  { name: "PCP Lever",                  price: 1499, fits: "Star PX / PXi" },
-  { name: "Metal Muzzle",               price: 599,  fits: "Camstar rifles" },
-  { name: "Spring Piston",              price: 599,  fits: "Star Hercules models" },
-  { name: "Rear Sight (adjustable)",    price: 499,  fits: "Camstar rifles" },
-  { name: "Hercules Mainspring",        price: 249,  fits: "Star Hercules RF" },
-  { name: "Spring 60 Bar",              price: 180,  fits: "Camstar spring rifles" },
-  { name: "Spring 40 Bar",              price: 160,  fits: "Camstar spring rifles" },
-  { name: "Front / Rifle Sight",        price: 99,   fits: "Camstar air rifles" },
-  { name: "Butt O-Ring (Red/Black)",    price: 99,   fits: "Camstar rifles" },
-  { name: "Rifle Muzzle",               price: 89,   fits: "Camstar air rifles" },
-  { name: "Leo Lever / Leo Muzzle",     price: 79,   fits: "Star Leo pistol" },
-];
+/* Additional RX Gen 3 parts are confirmed directly with the sales team. */
+window.NISHANA_SMALL_PARTS = [];
 
 /* ------------------------------------------------------------
    Card renderer
@@ -160,8 +78,8 @@ window.NISHANA_SMALL_PARTS = [
       : `<h3>${p.name}</h3>`;
     const cta = p.buy
       ? `<button class="buy" data-add-to-cart="${p.id}">Buy now ${ARROW}</button>
-         <a class="wa" href="${wa(`Hi Nishana! I'm interested in the ${p.name} (${inr(p.price)}). Please confirm live stock.`)}" target="_blank" rel="noopener">${WA_SVG} WhatsApp</a>`
-      : `<a class="wa wa-wide" href="${wa(`Hi Nishana! I'd like to order: ${p.name} (${inr(p.price)}). Please confirm availability.`)}" target="_blank" rel="noopener">${WA_SVG} Order on WhatsApp</a>`;
+         <a class="wa" href="${wa(`Hi Nishana! I'd like to talk to your sales team about the ${p.name} (${inr(p.price)}). Please confirm live stock.`)}" target="_blank" rel="noopener">${WA_SVG} Sales team</a>`
+      : `<a class="wa wa-wide" href="${wa(`Hi Nishana! I'd like to talk to your sales team about ${p.name} (${inr(p.price)}). Please confirm availability.`)}" target="_blank" rel="noopener">${WA_SVG} Talk to our sales team</a>`;
     return `
     <article class="n-card">
       ${imgWrap}

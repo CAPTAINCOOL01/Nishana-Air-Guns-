@@ -21,10 +21,21 @@
   window.NISHANA_CATALOG = CATALOG;
 
   // ---------- STATE ----------
-  const load = () => { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; } };
+  const load = () => {
+    try {
+      const stored = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      if (!Array.isArray(stored)) return [];
+      return stored.flatMap(item => {
+        const product = CATALOG[item?.id];
+        const qty = Math.max(1, Math.min(9, Number(item?.qty) || 1));
+        return product ? [{ ...product, qty }] : [];
+      });
+    } catch { return []; }
+  };
   const save = (items) => { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); emit(); };
 
   let items = load();
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch {}
   const listeners = new Set();
   const emit = () => listeners.forEach(fn => { try { fn(items); } catch (_) {} });
 

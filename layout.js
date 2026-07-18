@@ -162,9 +162,8 @@ window.NISHANA_TRACKING = {
   const wa = t => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(t)}`;
 
   const CATEGORIES = [
-    { id:"air-pistols",  label:"Air Pistols",  href:"air-pistols.html",  count:"3 models", icon:'<path d="M4 12c0-1 .5-2 2-2h10l4-3v9h-4v3l-4-3H6c-1 0-2-.5-2-2z"/>' },
-    { id:"air-rifles",   label:"Air Rifles",   href:"air-rifles.html",   count:"5 models", icon:'<path d="M2 12l4-2h9l3-2 5 2v3l-5 2-3-2H6l-4-1z"/>' },
-    { id:"spare-parts",  label:"Spare Parts",  href:"spare-parts.html",  count:"Genuine Camstar", icon:'<circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.2 4.2l4.3 4.3M15.5 15.5l4.3 4.3M1 12h6M17 12h6M4.2 19.8l4.3-4.3M15.5 8.5l4.3-4.3"/>' },
+    { id:"air-pistols",  label:"Star RX Gen 3", href:"product-rx-gen3.html", count:"Our only airgun", icon:'<path d="M4 12c0-1 .5-2 2-2h10l4-3v9h-4v3l-4-3H6c-1 0-2-.5-2-2z"/>' },
+    { id:"spare-parts",  label:"RX Gen 3 Spares", href:"spare-parts.html", count:"Magazine & support", icon:'<circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.2 4.2l4.3 4.3M15.5 15.5l4.3 4.3M1 12h6M17 12h6M4.2 19.8l4.3-4.3M15.5 8.5l4.3-4.3"/>' },
     { id:"accessories",  label:"Accessories",  href:"accessories.html",  count:"Pellets & CO₂", icon:'<path d="M4 7l8-4 8 4-8 4z"/><path d="M4 12l8 4 8-4"/><path d="M4 17l8 4 8-4"/>' },
   ];
 
@@ -210,9 +209,6 @@ window.NISHANA_TRACKING = {
 
   function renderWhatsAppLead() {
     if (document.getElementById("nWaLead")) return;
-    try {
-      if (sessionStorage.getItem("nishana_wa_lead_dismissed") === "1") return;
-    } catch {}
 
     if (!document.getElementById("nWaLeadStyle")) {
       const style = document.createElement("style");
@@ -232,10 +228,8 @@ window.NISHANA_TRACKING = {
         .n-wa-lead__cta{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:0 14px;border-radius:9px;background:#25d366;color:#07130b;font-family:var(--font-m,'IBM Plex Mono',monospace);font-size:10px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;text-decoration:none;white-space:nowrap;transition:background .18s ease,transform .18s ease}
         .n-wa-lead__cta:hover{background:#31e371;transform:translateY(-1px)}
         .n-wa-lead__cta svg{width:15px;height:15px}
-        .n-wa-lead__close{position:absolute;top:4px;right:5px;width:25px;height:25px;display:grid;place-items:center;padding:0;border:0;background:transparent;color:#6b7482;font-size:18px;line-height:1;cursor:pointer;border-radius:6px}
-        .n-wa-lead__close:hover{background:#1a222f;color:#efe9db}
         @keyframes n-wa-pulse{50%{box-shadow:0 0 0 7px rgba(37,211,102,0)}}
-        @media(max-width:640px){.n-wa-lead{left:12px;right:12px;bottom:12px;width:auto;grid-template-columns:48px minmax(0,1fr);gap:11px;padding:13px}.n-wa-lead__signal{width:44px;height:44px}.n-wa-lead__copy strong{font-size:18px}.n-wa-lead__copy p{font-size:11.5px}.n-wa-lead__cta{grid-column:1/-1;width:100%;box-sizing:border-box}.n-wa-lead__close{top:3px;right:4px}}
+        @media(max-width:640px){.n-wa-lead{left:12px;right:12px;bottom:12px;width:auto;grid-template-columns:38px minmax(0,1fr);gap:8px;padding:10px}.n-wa-lead__signal{width:36px;height:36px}.n-wa-lead__signal svg{width:19px;height:19px}.n-wa-lead__copy strong{font-size:16px}.n-wa-lead__copy p{display:none}.n-wa-lead__eyebrow{font-size:8px;margin-bottom:2px}.n-wa-lead__cta{grid-column:1/-1;width:100%;min-height:38px;box-sizing:border-box}}
         @media(prefers-reduced-motion:reduce){.n-wa-lead,.n-wa-lead__cta{transition:none}.n-wa-lead__live{animation:none}}
       `;
       document.head.appendChild(style);
@@ -244,27 +238,20 @@ window.NISHANA_TRACKING = {
     const lead = document.createElement("aside");
     lead.id = "nWaLead";
     lead.className = "n-wa-lead";
-    lead.setAttribute("aria-label", "WhatsApp support");
+    lead.setAttribute("aria-label", "Talk to the Nishana sales team on WhatsApp");
     lead.innerHTML = `
-      <button class="n-wa-lead__close" type="button" aria-label="Dismiss WhatsApp support banner">×</button>
       <div class="n-wa-lead__signal" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.8 5-1.3A10 10 0 1 0 12 2Zm4.4 12c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5 0a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-1 2.2 5.3 5.3 0 0 0 1.1 2.7 12 12 0 0 0 4.6 4c2.1.9 2.1.6 2.5.6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3Z"/></svg>
       </div>
       <div class="n-wa-lead__copy">
         <span class="n-wa-lead__eyebrow"><i class="n-wa-lead__live"></i> Open line · ${WA_DISPLAY_NUMBER}</span>
-        <strong>Got a doubt? Talk to a human.</strong>
-        <p>Licence rules, live stock, delivery or the right model — ask us directly.</p>
+        <strong>Questions about the RX Gen 3?</strong>
+        <p>Price, live stock, licence rules or delivery — get a clear answer from our team.</p>
       </div>
-      <a class="n-wa-lead__cta" href="${wa("Hi Nishana! I have a question and would like some help.")}" target="_blank" rel="noopener" aria-label="Chat with Nishana on WhatsApp at ${WA_DISPLAY_NUMBER}">
+      <a class="n-wa-lead__cta" href="${wa("Hi Nishana! I'd like to talk to your sales team about the Star RX Gen 3.")}" target="_blank" rel="noopener" aria-label="Talk to the Nishana sales team on WhatsApp at ${WA_DISPLAY_NUMBER}">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.8 5-1.3A10 10 0 1 0 12 2Zm4.4 12c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5 0a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-1 2.2 5.3 5.3 0 0 0 1.1 2.7 12 12 0 0 0 4.6 4c2.1.9 2.1.6 2.5.6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3Z"/></svg>
-        Chat on WhatsApp
+        Talk to our sales team
       </a>`;
-
-    lead.querySelector(".n-wa-lead__close").addEventListener("click", () => {
-      try { sessionStorage.setItem("nishana_wa_lead_dismissed", "1"); } catch {}
-      lead.classList.remove("is-visible");
-      setTimeout(() => lead.remove(), 360);
-    });
     document.body.appendChild(lead);
     requestAnimationFrame(() => setTimeout(() => lead.classList.add("is-visible"), 700));
   }
@@ -314,9 +301,9 @@ window.NISHANA_TRACKING = {
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
               <span id="nUserChipText">Sign in</span>
             </button>
-            <a class="wa-btn" href="${wa("Hi Nishana! I'd like to enquire about an airgun.")}" target="_blank" rel="noopener">
+            <a class="wa-btn" href="${wa("Hi Nishana! I'd like to talk to your sales team about the Star RX Gen 3.")}" target="_blank" rel="noopener" aria-label="Talk to our sales team on WhatsApp">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.8 5-1.3A10 10 0 1 0 12 2Zm4.4 12c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5 0a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-1 2.2 5.3 5.3 0 0 0 1.1 2.7 12 12 0 0 0 4.6 4c2.1.9 2.1.6 2.5.6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3Z"/></svg>
-              <span>WhatsApp</span>
+              <span>Sales team</span>
             </a>
             <button class="burger" id="nBurger" aria-label="Open menu">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -352,7 +339,7 @@ window.NISHANA_TRACKING = {
         <a href="blog.html">Blog &amp; guides</a>
         <h4>Support</h4>
         <a href="contact.html">Contact</a>
-        <a href="${wa("Hi Nishana! I'd like to enquire.")}" target="_blank" rel="noopener">WhatsApp us</a>
+        <a href="${wa("Hi Nishana! I'd like to talk to your sales team about the Star RX Gen 3.")}" target="_blank" rel="noopener">Talk to our sales team</a>
         <h4>Your account</h4>
         <a href="my-orders.html">My orders</a>
         <a href="#" data-login-btn>Sign in / register</a>
@@ -548,17 +535,16 @@ window.NISHANA_TRACKING = {
               ${LOGO_SVG}
               <div><div class="name">NISHANA</div><small>AIRGUNS · INDIA</small></div>
             </div>
-            <p class="about">Multi-brand airgun retailer for India. Genuine stock, GST invoice, manufacturer warranty, pan-India delivery. Everything sold here is licence-exempt under Arms Rules 2016.</p>
-            <a class="n-btn n-btn--wa" href="${wa("Hi Nishana! I'd like to enquire about an airgun.")}" target="_blank" rel="noopener">
+            <p class="about">Star RX Gen 3 specialist for India, with GST invoice, manufacturer warranty and pan-India delivery. Our .177-calibre, approximately 3-joule air pistol is licence-exempt under the Arms Rules 2016.</p>
+            <a class="n-btn n-btn--wa" href="${wa("Hi Nishana! I'd like to talk to your sales team about the Star RX Gen 3.")}" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.8 5-1.3A10 10 0 1 0 12 2Zm4.4 12c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5 0a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-1 2.2 5.3 5.3 0 0 0 1.1 2.7 12 12 0 0 0 4.6 4c2.1.9 2.1.6 2.5.6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3Z"/></svg>
-              Chat on WhatsApp
+              Talk to our sales team
             </a>
           </div>
           <div class="col">
             <h5>Shop</h5>
             <a href="products.html">All products</a>
-            <a href="air-pistols.html">Air pistols</a>
-            <a href="air-rifles.html">Air rifles</a>
+            <a href="product-rx-gen3.html">Star RX Gen 3</a>
             <a href="spare-parts.html">Spare parts</a>
             <a href="accessories.html">Accessories</a>
           </div>
@@ -575,7 +561,7 @@ window.NISHANA_TRACKING = {
           </div>
           <div class="col">
             <h5>Legal</h5>
-            <p style="color:var(--smoke);font-size:13px;line-height:1.55">All airguns sold are .177 cal, ≤20 J, licence-exempt under India's Arms Rules 2016.</p>
+            <p style="color:var(--smoke);font-size:13px;line-height:1.55">The Star RX Gen 3 configuration sold here is .177 cal, approximately 3 J, and licence-exempt under India's Arms Rules 2016. Buyer verification still applies.</p>
           </div>
         </div>
         <div class="bot">

@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    { "source": "/air-rifles.html", "destination": "/products.html", "permanent": true },
+    { "source": "/product-mauser-x-matte.html", "destination": "/products.html", "permanent": true },
+    { "source": "/product-star-leo.html", "destination": "/products.html", "permanent": true },
+    { "source": "/product-star-zxi.html", "destination": "/products.html", "permanent": true },
+    { "source": "/product-star-matrix-gold.html", "destination": "/products.html", "permanent": true },
+    { "source": "/product-star-hercules-rf.html", "destination": "/products.html", "permanent": true },
+    { "source": "/product-star-px.html", "destination": "/products.html", "permanent": true },
+    { "source": "/product-star-pxi-combo.html", "destination": "/products.html", "permanent": true },
+    { "source": "/blog-airgun-laws-india.html", "destination": "/blog-legal-no-licence-airguns-india.html", "permanent": true },
+    { "source": "/blog-best-air-pistols-india.html", "destination": "/blog-rx-gen3-buying-guide.html", "permanent": true },
+    { "source": "/blog-co2-vs-spring-vs-pcp.html", "destination": "/blog-rx-gen3-running-cost.html", "permanent": true }
+  ]
+}
