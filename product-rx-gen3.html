@@ -92,6 +92,13 @@
 .faq summary::after{content:"+";color:var(--brass);font-size:20px;font-family:var(--font-d)}
 .faq details[open] summary::after{content:"−"}
 .faq .a{color:var(--bone-dim);font-size:14px;line-height:1.65;padding-top:10px}
+.owner-guides .guide-links{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.owner-guides .guide-link{display:block;background:var(--steel);border:1px solid var(--edge);border-radius:var(--r-sm);padding:17px 18px;text-decoration:none;transition:.2s var(--ease)}
+.owner-guides .guide-link:hover{transform:translateY(-2px);border-color:rgba(201,162,39,.55)}
+.owner-guides .guide-link span{display:block;font-family:var(--font-m);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin-bottom:7px}
+.owner-guides .guide-link b{display:block;font-family:var(--font-d);font-size:20px;text-transform:uppercase;color:var(--bone);line-height:1.08;margin-bottom:6px}
+.owner-guides .guide-link small{display:block;color:var(--smoke);font-size:12.5px;line-height:1.55}
+@media(max-width:620px){.owner-guides .guide-links{grid-template-columns:1fr}}
 .related{max-width:1200px;margin:56px auto 20px;padding:0 24px}
 .related h2{font-family:var(--font-d);font-weight:800;text-transform:uppercase;font-size:30px;margin:0}
 </style>
@@ -171,6 +178,16 @@
     <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Hard case</span>
     <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Do's & don'ts card</span>
     <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> User manual + warranty card</span>
+  </div>
+</div>
+
+<div class="section owner-guides">
+  <h2>Guides before and after delivery</h2>
+  <div class="guide-links">
+    <a class="guide-link" href="blog-rx-gen3-hindi-guide.html" lang="hi-IN"><span>हिंदी गाइड</span><b>RX Gen 3 को सही तरह समझें</b><small>लाइसेंस की सीमा, कीमत, CO₂, चार मैगज़ीन, सुरक्षा, वारंटी और डिलीवरी।</small></a>
+    <a class="guide-link" href="blog-rx-gen3-first-100-shots.html"><span>Owner setup</span><b>Your first 100 shots</b><small>A controlled 5 m to 10 m baseline for magazines, seals, CO₂ behaviour and early fault detection.</small></a>
+    <a class="guide-link" href="blog-airgun-safety-india.html"><span>Safety</span><b>Four rules. Every time.</b><small>Backstops, clearing, locked storage, children, CO₂ faults and covered transport in India.</small></a>
+    <a class="guide-link" href="blog-rx-gen3-buying-guide.html"><span>Complete guide</span><b>Know the RX before checkout</b><small>Pellets, box contents, running costs, warranty questions and whether this ownership pattern fits.</small></a>
   </div>
 </div>
 
