@@ -232,6 +232,10 @@ create table if not exists public.coupons (
 create unique index if not exists coupons_code_upper_idx on public.coupons (upper(code));
 create index if not exists coupons_active_idx on public.coupons (active) where active = true;
 
+-- Restricted-email list (idempotent add for existing DBs). Null = coupon is
+-- valid for everyone. Non-empty array = only these emails can redeem.
+alter table public.coupons add column if not exists restricted_emails text[];
+
 alter table public.coupons enable row level security;
 
 -- Anonymous SELECT is BLOCKED — checkout must go through the RPC below.
@@ -243,14 +247,20 @@ drop policy if exists "coupons_write_admin" on public.coupons;
 create policy "coupons_write_admin" on public.coupons
   for all using (public.is_admin()) with check (public.is_admin());
 
--- Public RPC — takes a coupon code + cart subtotal, returns the effective
--- discount if valid, or a diagnostic error. Runs as SECURITY DEFINER so
--- guests can call it without READ access to the table (no enumeration).
+-- Public RPC — takes a coupon code + cart subtotal + optional customer
+-- email, returns the effective discount if valid, or a diagnostic error.
+-- Runs as SECURITY DEFINER so guests can call it without READ access to
+-- the table (no enumeration).
 -- Does NOT increment uses_count — validation must not burn a redemption
 -- if the customer abandons checkout. When we later enforce max_uses,
 -- add a separate redeem_coupon(code) RPC that increments and is called
 -- from api/create-order.js right after the order INSERT succeeds.
-create or replace function public.apply_coupon(p_code text, p_subtotal numeric)
+--
+-- Older 2-arg overload dropped so callers migrate cleanly. Checkout code
+-- should always pass the customer's email (even for guest checkouts, it
+-- collects one during the form) so email-restricted coupons work.
+drop function if exists public.apply_coupon(text, numeric);
+create or replace function public.apply_coupon(p_code text, p_subtotal numeric, p_email text default null)
 returns table (ok boolean, discount numeric, message text)
 language plpgsql
 security definer
@@ -258,6 +268,7 @@ set search_path = public
 as $$
 declare
   c record;
+  norm_email text := lower(coalesce(trim(p_email), ''));
 begin
   if p_code is null or length(trim(p_code)) = 0 then
     return query select false, 0::numeric, 'Please enter a coupon code.';
@@ -289,6 +300,15 @@ begin
     return;
   end if;
 
+  if c.restricted_emails is not null and array_length(c.restricted_emails, 1) > 0 then
+    if norm_email = '' or not (
+      exists (select 1 from unnest(c.restricted_emails) e where lower(trim(e)) = norm_email)
+    ) then
+      return query select false, 0::numeric, 'This coupon is not available for your account.';
+      return;
+    end if;
+  end if;
+
   -- Never let the discount exceed the cart subtotal.
   return query select true,
                       least(c.discount_amount, p_subtotal),
@@ -297,7 +317,7 @@ end;
 $$;
 
 -- Anyone (including guests) can CALL the RPC (but not read the table).
-grant execute on function public.apply_coupon(text, numeric) to anon, authenticated;
+grant execute on function public.apply_coupon(text, numeric, text) to anon, authenticated;
 
 
 -- =============================================================
