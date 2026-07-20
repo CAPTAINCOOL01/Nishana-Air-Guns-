@@ -199,6 +199,79 @@ code{font-family:var(--font-m);font-size:.88em;background:var(--steel);border:1p
 
 .seo-formula{margin:14px 0 0;padding:12px 14px;background:var(--steel);border:1px solid var(--edge);border-radius:var(--r-sm);color:var(--bone-dim);font-size:12.5px;line-height:1.6}
 .seo-formula .mono{color:var(--bone)}
+
+/* ==================== Products tab ==================== */
+.prod-filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.prod-filters input[type="search"]{flex:1;min-width:220px;background:var(--steel);border:1px solid var(--edge);border-radius:var(--r-sm);padding:9px 12px;color:var(--bone);font-family:var(--font-b);font-size:13px;outline:none}
+.prod-filters input[type="search"]:focus{border-color:var(--brass)}
+.prod-filters select{background:var(--steel);border:1px solid var(--edge);border-radius:var(--r-sm);padding:9px 12px;color:var(--bone);font-family:var(--font-b);font-size:13px;outline:none;cursor:pointer}
+
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.prod-card{background:var(--steel);border:1px solid var(--edge);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;cursor:pointer;transition:.2s var(--ease);position:relative}
+.prod-card:hover{border-color:var(--brass);transform:translateY(-2px);box-shadow:0 8px 24px -12px rgba(0,0,0,.6)}
+.prod-card .pshot{aspect-ratio:1;background:radial-gradient(120% 120% at 50% 0%,var(--steel-2),var(--ink));display:grid;place-items:center;padding:20px;position:relative;overflow:hidden}
+.prod-card .pshot img{max-width:100%;max-height:100%;object-fit:contain}
+.prod-card .pshot .pnoimg{color:var(--smoke-2);font-family:var(--font-m);font-size:10px;letter-spacing:.18em;text-transform:uppercase}
+.prod-card .pstatus{position:absolute;top:8px;right:8px;font-family:var(--font-m);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:20px;font-weight:600}
+.prod-card .pstatus.pub{color:var(--ok);background:rgba(75,179,129,.15);border:1px solid rgba(75,179,129,.4)}
+.prod-card .pstatus.draft{color:var(--warn);background:rgba(217,164,65,.12);border:1px solid rgba(217,164,65,.4)}
+.prod-card .pbody{padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px}
+.prod-card .pbrand{font-family:var(--font-m);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass)}
+.prod-card .pname{font-family:var(--font-d);font-weight:800;text-transform:uppercase;font-size:15px;color:var(--bone);line-height:1.1}
+.prod-card .pmeta{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;font-family:var(--font-m);font-size:10.5px;color:var(--smoke)}
+.prod-card .pmeta .pprice{color:var(--brass);font-weight:600}
+.prod-card .pmeta .pmrp{text-decoration:line-through;color:var(--smoke-2)}
+.prod-card .pmeta .pcat{padding:2px 7px;border:1px solid var(--edge);border-radius:20px;letter-spacing:.08em;text-transform:uppercase}
+
+/* Editor modal */
+.prod-mod{position:fixed;inset:0;background:rgba(11,14,19,.9);z-index:100;display:none;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
+.prod-mod.on{display:flex}
+.prod-mod-box{background:var(--panel);border:1px solid var(--edge);border-radius:var(--r);max-width:960px;width:100%;position:relative;box-shadow:0 24px 60px -12px rgba(0,0,0,.8)}
+.prod-mod-box::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;background:linear-gradient(90deg,var(--brass),transparent);border-radius:var(--r) var(--r) 0 0}
+.prod-mod .phd{padding:18px 22px;border-bottom:1px solid var(--edge);display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+.prod-mod .phd h3{font-family:var(--font-d);font-weight:800;text-transform:uppercase;font-size:22px;margin:0;line-height:1}
+.prod-mod .phd p{margin:4px 0 0;color:var(--smoke);font-size:12.5px}
+.prod-mod .pclose{background:transparent;border:none;color:var(--smoke);font-size:24px;line-height:1;cursor:pointer;padding:2px 8px}
+.prod-mod .pclose:hover{color:var(--bone)}
+.prod-mod .pbd{padding:22px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:780px){.prod-mod .pbd{grid-template-columns:1fr}}
+.prod-mod .pcol{display:flex;flex-direction:column;gap:14px}
+.prod-mod label{display:flex;flex-direction:column;gap:5px;font-family:var(--font-m);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--smoke)}
+.prod-mod input[type="text"],.prod-mod input[type="number"],.prod-mod textarea,.prod-mod select{background:var(--steel);border:1px solid var(--edge);border-radius:var(--r-sm);padding:10px 12px;color:var(--bone);font-family:var(--font-b);font-size:13.5px;outline:none}
+.prod-mod input:focus,.prod-mod textarea:focus,.prod-mod select:focus{border-color:var(--brass)}
+.prod-mod textarea{min-height:78px;resize:vertical;line-height:1.5}
+.prod-mod .prow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.prod-mod .prow-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.prod-mod .legal{border:1px dashed rgba(217,164,65,.4);border-radius:var(--r-sm);padding:14px;background:rgba(217,164,65,.05)}
+.prod-mod .legal .lhd{font-family:var(--font-m);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--warn);margin-bottom:10px;font-weight:600}
+.prod-mod .publish-row{display:flex;align-items:center;gap:14px;padding:12px 14px;background:var(--steel);border:1px solid var(--edge);border-radius:var(--r-sm)}
+.prod-mod .publish-row .toggle{display:inline-flex;align-items:center;gap:8px;cursor:pointer;flex-direction:row}
+.prod-mod .publish-row input[type="checkbox"]{width:18px;height:18px;accent-color:var(--brass);cursor:pointer}
+.prod-mod .pfoot{padding:18px 22px;border-top:1px solid var(--edge);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:var(--steel-2);border-radius:0 0 var(--r) var(--r)}
+.prod-mod .pfoot .left{display:flex;gap:8px}
+.prod-mod .pfoot button{padding:10px 18px;border-radius:var(--r-sm);font-family:var(--font-m);font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:.18s var(--ease);border:1px solid var(--edge);background:var(--steel);color:var(--bone-dim)}
+.prod-mod .pfoot .save{background:var(--brass);color:var(--ink);border-color:var(--brass);font-weight:700}
+.prod-mod .pfoot .save:hover{background:var(--brass-hi)}
+.prod-mod .pfoot .del{color:var(--signal);border-color:rgba(228,87,46,.45)}
+.prod-mod .pfoot .del:hover{background:rgba(228,87,46,.14)}
+.prod-mod .pfoot .cancel:hover{color:var(--bone)}
+.prod-mod .perr{padding:10px 14px;background:rgba(228,87,46,.14);border:1px solid rgba(228,87,46,.4);color:#ffcbb9;border-radius:var(--r-sm);font-size:13px;line-height:1.5}
+.prod-mod .pok{padding:10px 14px;background:rgba(75,179,129,.14);border:1px solid rgba(75,179,129,.4);color:#c8f0da;border-radius:var(--r-sm);font-size:13px;line-height:1.5}
+
+/* Photo gallery inside editor */
+.pgal{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+.pgtile{position:relative;aspect-ratio:1;background:var(--steel-2);border:1px solid var(--edge);border-radius:var(--r-sm);overflow:hidden;cursor:pointer;transition:.18s var(--ease)}
+.pgtile:hover{border-color:var(--brass)}
+.pgtile img{width:100%;height:100%;object-fit:cover}
+.pgtile.primary{border-color:var(--brass);box-shadow:0 0 0 2px rgba(201,162,39,.3)}
+.pgtile .pgprim{position:absolute;top:4px;left:4px;background:var(--brass);color:var(--ink);font-family:var(--font-m);font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;padding:2px 7px;border-radius:20px;font-weight:700}
+.pgtile .pgdel{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.65);border:none;color:var(--signal);cursor:pointer;font-size:12px;line-height:1;padding:0;display:none}
+.pgtile:hover .pgdel{display:block}
+.pgtile.uploading::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.55) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'%3E%3Cpath fill='%23c9a227' d='M12 4V2a10 10 0 0 0 0 20v-2a8 8 0 1 1 0-16z'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 12 12' to='360 12 12' dur='0.9s' repeatCount='indefinite'/%3E%3C/path%3E%3C/svg%3E") center/32px no-repeat}
+
+.pgdrop{grid-column:1/-1;border:2px dashed var(--edge);border-radius:var(--r-sm);padding:22px;text-align:center;color:var(--smoke);cursor:pointer;transition:.18s var(--ease);font-size:13px;background:rgba(255,255,255,.02)}
+.pgdrop:hover,.pgdrop.dragover{border-color:var(--brass);color:var(--brass);background:rgba(201,162,39,.05)}
+.pgdrop small{display:block;margin-top:4px;font-family:var(--font-m);font-size:10.5px;letter-spacing:.14em;color:var(--smoke-2)}
 </style>
 </head>
 <body>
@@ -213,6 +286,8 @@ code{font-family:var(--font-m);font-size:.88em;background:var(--steel);border:1p
     <nav class="nav">
       <div class="grp">Overview</div>
       <a data-route="orders" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg>Dashboard</a>
+      <a data-route="products"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 7L12 3 4 7v10l8 4 8-4V7z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg>Products</a>
+      <a data-route="coupons"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 12a2 2 0 0 1 2-2V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2 2 2 0 0 1-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 1-2-2z"/><path d="M13 5v2M13 17v2M13 11v2"/></svg>Coupons</a>
       <a href="dealer.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>Dealer view</a>
 
       <div class="grp">SEO + GEO</div>
@@ -325,6 +400,68 @@ code{font-family:var(--font-m);font-size:.88em;background:var(--steel);border:1p
       </section>
 
       </div><!-- /orders view -->
+
+      <!-- ==================== PRODUCTS VIEW ==================== -->
+      <div data-view="products" hidden>
+        <section class="panel">
+          <div class="phead">
+            <div>
+              <h2 id="prodTitle">Products</h2>
+              <p id="prodSub">Every SKU on the storefront · admin-editable · Supabase</p>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <span class="chip" id="prodCount">— total</span>
+              <button class="top-btn" id="prodNewBtn">+ New product</button>
+            </div>
+          </div>
+          <div id="prodListWrap">
+            <div class="prod-filters">
+              <input type="search" id="prodSearch" placeholder="Search name / brand / slug…" />
+              <select id="prodCatFilter">
+                <option value="">All categories</option>
+                <option value="air-pistols">Air pistols</option>
+                <option value="air-rifles">Air rifles</option>
+                <option value="accessories">Accessories</option>
+                <option value="spare-parts">Spare parts</option>
+              </select>
+              <select id="prodStatusFilter">
+                <option value="">Any status</option>
+                <option value="published">Published</option>
+                <option value="draft">Draft</option>
+              </select>
+            </div>
+            <div id="prodGrid" class="prod-grid">
+              <div class="empty">Loading products…</div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Product editor modal — a full-screen overlay so it doesn't
+           fight for space with the sidebar/topbar. -->
+      <div class="prod-mod" id="prodMod">
+        <div class="prod-mod-box" id="prodModBox">
+          <!-- injected by JS -->
+        </div>
+      </div>
+
+      <!-- ==================== COUPONS VIEW (stub — full UI in next turn) ==================== -->
+      <div data-view="coupons" hidden>
+        <section class="panel">
+          <div class="phead">
+            <div>
+              <h2>Coupons</h2>
+              <p>Flat ₹ discount codes for the checkout · admin-only</p>
+            </div>
+            <span class="chip src src-seed" style="text-transform:uppercase;letter-spacing:.14em;font-size:10.5px">Coming next commit</span>
+          </div>
+          <div class="empty">
+            SQL migration for <code>coupons</code> + <code>apply_coupon()</code> RPC has shipped in <code>supabase-schema.sql</code>.<br>
+            Create/list/toggle UI + checkout code entry field land in the next commit.
+          </div>
+        </section>
+      </div>
+
 
       <!-- ==================== SEO + GEO VIEWS ==================== -->
       <!-- Every module is an empty-state shell that renders on hash change.
@@ -471,6 +608,8 @@ code{font-family:var(--font-m);font-size:.88em;background:var(--steel);border:1p
 (() => {
   const TITLES = {
     "orders":          ["Good day",           "Live orders and revenue from Supabase"],
+    "products":        ["Products",           "Catalogue · photos · publish"],
+    "coupons":         ["Coupons",            "Flat ₹ discount codes · admin-only"],
     "seo-overview":    ["SEO + GEO",          "Executive overview · organic + AI-search KPIs"],
     "seo-keywords":    ["Keyword intelligence","Master keyword database + rankings"],
     "seo-pages":       ["Page inventory",     "Every indexable URL, meta and score"],
@@ -664,6 +803,440 @@ async function loadLeads() {
 await loadLeads();
 supabase.channel("leads-admin")
   .on("postgres_changes",{event:"*",schema:"public",table:"leads"}, loadLeads)
+  .subscribe();
+
+// ============================================================
+// PRODUCTS TAB — catalog CRUD + Supabase Storage photo upload
+// Storefront reads published rows via products.js on the public
+// site, so any change here is live once saved.
+// ============================================================
+const PRODUCTS_BUCKET = "product-photos";
+const CATS = [
+  { v:"air-pistols",  l:"Air pistols" },
+  { v:"air-rifles",   l:"Air rifles" },
+  { v:"accessories",  l:"Accessories" },
+  { v:"spare-parts",  l:"Spare parts" },
+];
+let productsList = [];
+let productSearch = "";
+let productCatFilter = "";
+let productStatusFilter = "";
+
+async function loadProducts(){
+  const grid = document.getElementById("prodGrid");
+  if (!grid) return;
+  const { data, error } = await supabase.from("products").select("*").order("category").order("sort_order").order("name");
+  if (error) {
+    grid.innerHTML = `<div class="empty" style="color:var(--signal)">Error loading products: ${error.message}<br><small>Have you run the products/product_photos migration in supabase-schema.sql?</small></div>`;
+    return;
+  }
+  productsList = data || [];
+  document.getElementById("prodCount").textContent = productsList.length + " total · " + productsList.filter(p=>p.is_published).length + " published";
+  renderProducts();
+}
+
+function renderProducts(){
+  const grid = document.getElementById("prodGrid");
+  if (!grid) return;
+  const q = productSearch.trim().toLowerCase();
+  const filtered = productsList.filter(p => {
+    if (productCatFilter && p.category !== productCatFilter) return false;
+    if (productStatusFilter === "published" && !p.is_published) return false;
+    if (productStatusFilter === "draft" && p.is_published) return false;
+    if (q) {
+      const hay = [p.name, p.brand, p.slug, p.short_desc].filter(Boolean).join(" ").toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+  if (!filtered.length) {
+    grid.innerHTML = `<div class="empty">No products match. Try clearing filters or creating a new one.</div>`;
+    return;
+  }
+  grid.innerHTML = filtered.map(p => `
+    <div class="prod-card" data-slug="${p.slug}">
+      <div class="pshot">
+        ${p.hero_photo_url ? `<img src="${p.hero_photo_url}" alt="${p.name}" referrerpolicy="no-referrer">` : `<span class="pnoimg">no photo yet</span>`}
+        <span class="pstatus ${p.is_published?"pub":"draft"}">${p.is_published?"Live":"Draft"}</span>
+      </div>
+      <div class="pbody">
+        <div class="pbrand">${p.brand || "&nbsp;"}</div>
+        <div class="pname">${p.name}</div>
+        <div class="pmeta">
+          ${p.price ? `<span class="pprice">₹${Number(p.price).toLocaleString("en-IN")}</span>` : `<span style="color:var(--smoke-2)">no price</span>`}
+          ${p.mrp && p.mrp > p.price ? `<span class="pmrp">₹${Number(p.mrp).toLocaleString("en-IN")}</span>` : ""}
+          ${p.category ? `<span class="pcat">${p.category}</span>` : ""}
+        </div>
+      </div>
+    </div>
+  `).join("");
+  grid.querySelectorAll("[data-slug]").forEach(el => el.addEventListener("click", () => openProductEditor(el.dataset.slug)));
+}
+
+// Wire filters/search/new
+document.getElementById("prodSearch")?.addEventListener("input", e => { productSearch = e.target.value; renderProducts(); });
+document.getElementById("prodCatFilter")?.addEventListener("change", e => { productCatFilter = e.target.value; renderProducts(); });
+document.getElementById("prodStatusFilter")?.addEventListener("change", e => { productStatusFilter = e.target.value; renderProducts(); });
+document.getElementById("prodNewBtn")?.addEventListener("click", () => openProductEditor(null));
+
+// -------- Editor --------
+const prodMod = document.getElementById("prodMod");
+const prodModBox = document.getElementById("prodModBox");
+prodMod?.addEventListener("click", e => { if (e.target === prodMod) closeProductEditor(); });
+
+function closeProductEditor(){ prodMod.classList.remove("on"); prodModBox.innerHTML = ""; }
+
+async function openProductEditor(slug){
+  const isNew = !slug;
+  let product = isNew
+    ? { slug:"", name:"", brand:"", category:"air-pistols", price:"", mrp:"", badge:"", chips:[], short_desc:"", long_desc:"", pdp_url:"", hero_photo_url:"", buy_enabled:true, is_published:false, sort_order:100,
+        legal_muzzle_energy_j:"", legal_calibre_mm:"", legal_projectile:"", legal_action:"", legal_licence_exempt:false, legal_notes:"", provenance_attestation:"" }
+    : productsList.find(p => p.slug === slug);
+  if (!product) return;
+
+  let photos = [];
+  if (!isNew) {
+    const { data } = await supabase.from("product_photos").select("*").eq("product_slug", slug).order("sort_order");
+    photos = data || [];
+  }
+
+  renderEditor(product, photos, isNew);
+  prodMod.classList.add("on");
+}
+
+function renderEditor(p, photos, isNew){
+  const chipsStr = Array.isArray(p.chips) ? p.chips.join(", ") : (p.chips || "");
+  prodModBox.innerHTML = `
+    <div class="phd">
+      <div>
+        <h3>${isNew ? "New product" : p.name || p.slug}</h3>
+        <p>${isNew ? "Fill in what you have; provenance attestation is required to publish." : `Slug: <code>${p.slug}</code>${p.is_published ? ' · <span style="color:var(--ok)">Live on storefront</span>' : ' · <span style="color:var(--warn)">Draft</span>'}`}</p>
+      </div>
+      <button class="pclose" aria-label="Close">×</button>
+    </div>
+    <div class="pbd">
+      <div class="pcol">
+        <label>Slug (URL-safe, e.g. star-rx-gen3)
+          <input type="text" id="pfSlug" value="${escAttr(p.slug)}" ${isNew ? "" : "disabled"}>
+        </label>
+        <label>Name
+          <input type="text" id="pfName" value="${escAttr(p.name)}">
+        </label>
+        <div class="prow">
+          <label>Brand
+            <input type="text" id="pfBrand" value="${escAttr(p.brand)}">
+          </label>
+          <label>Category
+            <select id="pfCat">
+              ${CATS.map(c => `<option value="${c.v}" ${c.v===p.category?"selected":""}>${c.l}</option>`).join("")}
+            </select>
+          </label>
+        </div>
+        <div class="prow">
+          <label>Price ₹
+            <input type="number" id="pfPrice" value="${p.price ?? ""}" min="0" step="1">
+          </label>
+          <label>MRP ₹ (optional, crossed-out)
+            <input type="number" id="pfMrp" value="${p.mrp ?? ""}" min="0" step="1">
+          </label>
+        </div>
+        <label>Badge (e.g. "Semi-auto CO₂", max ~24 chars)
+          <input type="text" id="pfBadge" value="${escAttr(p.badge)}" maxlength="30">
+        </label>
+        <label>Chips (comma-separated, e.g. ".177 CAL, 400 FPS, 32 RND MAG")
+          <input type="text" id="pfChips" value="${escAttr(chipsStr)}">
+        </label>
+        <label>Short description (1-3 sentences, shown on cards)
+          <textarea id="pfShort">${escHtml(p.short_desc)}</textarea>
+        </label>
+        <label>PDP URL (leave blank → card links to WhatsApp)
+          <input type="text" id="pfPdp" value="${escAttr(p.pdp_url)}" placeholder="product-star-rx-gen3.html">
+        </label>
+        <div class="prow">
+          <label>Sort order (lower = earlier)
+            <input type="number" id="pfSort" value="${p.sort_order ?? 100}">
+          </label>
+          <label style="justify-content:center">Buy button
+            <div class="toggle" style="display:flex;align-items:center;gap:8px;margin-top:6px">
+              <input type="checkbox" id="pfBuy" ${p.buy_enabled?"checked":""}>
+              <span style="text-transform:none;letter-spacing:0;color:var(--bone-dim);font-size:13px">Show "Buy now" (else "Enquire on WhatsApp")</span>
+            </div>
+          </label>
+        </div>
+      </div>
+      <div class="pcol">
+        <label>Photos
+          <div class="pgal" id="pfPhotos"></div>
+        </label>
+
+        <div class="legal">
+          <div class="lhd">⚖ Legal metadata (optional, but visible on storefront where applicable)</div>
+          <div class="prow-3">
+            <label>Muzzle energy (J)
+              <input type="number" id="pfEnergy" value="${p.legal_muzzle_energy_j ?? ""}" step="0.1" min="0">
+            </label>
+            <label>Calibre (mm)
+              <input type="text" id="pfCal" value="${escAttr(p.legal_calibre_mm)}" placeholder="4.5">
+            </label>
+            <label>Projectile
+              <select id="pfProj">
+                <option value="">—</option>
+                <option value="lead-diabolo" ${p.legal_projectile==="lead-diabolo"?"selected":""}>Lead diabolo</option>
+                <option value="steel-bb" ${p.legal_projectile==="steel-bb"?"selected":""}>Steel BB</option>
+                <option value="other" ${p.legal_projectile==="other"?"selected":""}>Other</option>
+              </select>
+            </label>
+          </div>
+          <div class="prow" style="margin-top:10px">
+            <label>Action
+              <select id="pfAction">
+                <option value="">—</option>
+                <option value="spring" ${p.legal_action==="spring"?"selected":""}>Spring</option>
+                <option value="co2" ${p.legal_action==="co2"?"selected":""}>CO₂</option>
+                <option value="pcp" ${p.legal_action==="pcp"?"selected":""}>PCP</option>
+                <option value="other" ${p.legal_action==="other"?"selected":""}>Other</option>
+              </select>
+            </label>
+            <label style="justify-content:center">Licence-exempt?
+              <div class="toggle" style="display:flex;align-items:center;gap:8px;margin-top:6px">
+                <input type="checkbox" id="pfExempt" ${p.legal_licence_exempt?"checked":""}>
+                <span style="text-transform:none;letter-spacing:0;color:var(--bone-dim);font-size:13px">≤ 20 J under Arms Rules 2016</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <label>Provenance attestation <span style="color:var(--signal);text-transform:none;letter-spacing:0">(required to publish · min 10 chars)</span>
+          <textarea id="pfProv" placeholder="e.g. Photos taken by me of my own inventory purchased from [distributor] on [date]. I own copyright.">${escHtml(p.provenance_attestation)}</textarea>
+        </label>
+
+        <div class="publish-row">
+          <label class="toggle" style="flex:1;margin:0">
+            <input type="checkbox" id="pfPublish" ${p.is_published?"checked":""}>
+            <span style="text-transform:none;letter-spacing:0;color:var(--bone);font-size:14px;font-weight:600">Publish to storefront</span>
+          </label>
+          <span style="font-family:var(--font-m);font-size:10.5px;color:var(--smoke);letter-spacing:.12em;text-transform:uppercase">${p.is_published?"Live":"Draft"}</span>
+        </div>
+
+        <div id="pfMsg"></div>
+      </div>
+    </div>
+    <div class="pfoot">
+      <div class="left">
+        ${isNew ? "" : `<button class="del" id="pfDel">🗑 Delete product</button>`}
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="cancel" id="pfCancel">Cancel</button>
+        <button class="save" id="pfSave">${isNew ? "Create draft" : "Save changes"}</button>
+      </div>
+    </div>`;
+
+  prodModBox.querySelector(".pclose").addEventListener("click", closeProductEditor);
+  document.getElementById("pfCancel").addEventListener("click", closeProductEditor);
+  document.getElementById("pfSave").addEventListener("click", () => saveProduct(p, isNew));
+  document.getElementById("pfDel")?.addEventListener("click", () => deleteProduct(p));
+  renderPhotos(p.slug, photos);
+
+  // Only accept the slug on new. Autogenerate from name if left blank.
+  if (isNew) {
+    const nameEl = document.getElementById("pfName");
+    const slugEl = document.getElementById("pfSlug");
+    nameEl.addEventListener("blur", () => {
+      if (!slugEl.value.trim() && nameEl.value.trim()) {
+        slugEl.value = nameEl.value.toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,60);
+      }
+    });
+  }
+}
+
+function escHtml(s){ return String(s ?? "").replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+function escAttr(s){ return String(s ?? "").replace(/"/g, "&quot;"); }
+
+function renderPhotos(slug, photos){
+  const wrap = document.getElementById("pfPhotos");
+  if (!wrap) return;
+  wrap.innerHTML = photos.map(ph => `
+    <div class="pgtile ${ph.is_primary?"primary":""}" data-photo-id="${ph.id}" data-slug="${slug}" title="Click to set as primary">
+      <img src="${ph.public_url}" alt="${escAttr(ph.alt_text || slug)}" referrerpolicy="no-referrer">
+      ${ph.is_primary ? `<span class="pgprim">Primary</span>` : ""}
+      <button class="pgdel" title="Delete photo">×</button>
+    </div>
+  `).join("") + `
+    <label class="pgdrop" id="pgDrop">
+      + Drop or click to upload
+      <small>JPEG / PNG / WEBP</small>
+      <input type="file" accept="image/*" multiple hidden id="pgFile">
+    </label>`;
+
+  wrap.querySelectorAll(".pgtile").forEach(t => {
+    t.addEventListener("click", (e) => {
+      if (e.target.classList.contains("pgdel")) return;
+      setPrimaryPhoto(slug, t.dataset.photoId);
+    });
+    t.querySelector(".pgdel").addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (confirm("Delete this photo?")) deletePhoto(slug, t.dataset.photoId);
+    });
+  });
+
+  const drop = document.getElementById("pgDrop");
+  const file = document.getElementById("pgFile");
+  drop.addEventListener("click", () => file.click());
+  file.addEventListener("change", (e) => uploadPhotos(slug, [...e.target.files]));
+  drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("dragover"); });
+  drop.addEventListener("dragleave", () => drop.classList.remove("dragover"));
+  drop.addEventListener("drop", (e) => {
+    e.preventDefault(); drop.classList.remove("dragover");
+    if (!slug) { alert("Save the product first (needs a slug) before uploading photos."); return; }
+    uploadPhotos(slug, [...e.dataTransfer.files]);
+  });
+}
+
+async function uploadPhotos(slug, files){
+  if (!slug) { alert("Save the product first — need a slug to attach photos to."); return; }
+  const msgEl = document.getElementById("pfMsg");
+  msgEl.innerHTML = "";
+  for (const file of files) {
+    if (!file.type.startsWith("image/")) { console.warn("Skipping non-image:", file.name); continue; }
+    const ext = (file.name.split(".").pop() || "webp").toLowerCase().replace(/[^a-z0-9]/g,"");
+    const path = `${slug}/${crypto.randomUUID()}.${ext}`;
+    const { error: upErr } = await supabase.storage.from(PRODUCTS_BUCKET).upload(path, file, {
+      cacheControl: "31536000", contentType: file.type, upsert: false,
+    });
+    if (upErr) {
+      msgEl.innerHTML = `<div class="perr">Upload failed: ${upErr.message}<br><small>Tip: run the products migration in supabase-schema.sql, and verify the product-photos storage bucket exists.</small></div>`;
+      continue;
+    }
+    const { data: urlData } = supabase.storage.from(PRODUCTS_BUCKET).getPublicUrl(path);
+    const publicUrl = urlData.publicUrl;
+    // Insert photo record
+    const { data: photoRow, error: insErr } = await supabase.from("product_photos").insert({
+      product_slug: slug,
+      storage_path: path,
+      public_url: publicUrl,
+      alt_text: slug,
+      bytes: file.size,
+      uploaded_by: session.user.email,
+    }).select().single();
+    if (insErr) {
+      msgEl.innerHTML = `<div class="perr">Uploaded but couldn't index: ${insErr.message}</div>`;
+      continue;
+    }
+    // If this is the only photo, make it primary + set hero_photo_url on product
+    const { data: existing } = await supabase.from("product_photos").select("id, is_primary").eq("product_slug", slug);
+    if ((existing || []).length === 1 || !(existing || []).some(x => x.is_primary)) {
+      await supabase.from("product_photos").update({ is_primary: true }).eq("id", photoRow.id);
+      await supabase.from("products").update({ hero_photo_url: publicUrl, updated_at: new Date().toISOString(), updated_by: session.user.email }).eq("slug", slug);
+    }
+  }
+  // Reload gallery
+  const { data: fresh } = await supabase.from("product_photos").select("*").eq("product_slug", slug).order("sort_order");
+  renderPhotos(slug, fresh || []);
+  await loadProducts();
+}
+
+async function setPrimaryPhoto(slug, photoId){
+  const photo = (await supabase.from("product_photos").select("*").eq("id", photoId).single()).data;
+  if (!photo) return;
+  await supabase.from("product_photos").update({ is_primary: false }).eq("product_slug", slug);
+  await supabase.from("product_photos").update({ is_primary: true }).eq("id", photoId);
+  await supabase.from("products").update({ hero_photo_url: photo.public_url, updated_at: new Date().toISOString(), updated_by: session.user.email }).eq("slug", slug);
+  const { data: fresh } = await supabase.from("product_photos").select("*").eq("product_slug", slug).order("sort_order");
+  renderPhotos(slug, fresh || []);
+  await loadProducts();
+}
+
+async function deletePhoto(slug, photoId){
+  const photo = (await supabase.from("product_photos").select("*").eq("id", photoId).single()).data;
+  if (!photo) return;
+  await supabase.storage.from(PRODUCTS_BUCKET).remove([photo.storage_path]);
+  await supabase.from("product_photos").delete().eq("id", photoId);
+  if (photo.is_primary) {
+    // Promote whatever's next, or clear hero
+    const { data: rest } = await supabase.from("product_photos").select("*").eq("product_slug", slug).order("sort_order").limit(1);
+    if (rest && rest[0]) {
+      await supabase.from("product_photos").update({ is_primary: true }).eq("id", rest[0].id);
+      await supabase.from("products").update({ hero_photo_url: rest[0].public_url }).eq("slug", slug);
+    } else {
+      await supabase.from("products").update({ hero_photo_url: null }).eq("slug", slug);
+    }
+  }
+  const { data: fresh } = await supabase.from("product_photos").select("*").eq("product_slug", slug).order("sort_order");
+  renderPhotos(slug, fresh || []);
+  await loadProducts();
+}
+
+async function saveProduct(orig, isNew){
+  const msgEl = document.getElementById("pfMsg");
+  msgEl.innerHTML = "";
+  const chipsRaw = document.getElementById("pfChips").value;
+  const chips = chipsRaw.split(",").map(s => s.trim()).filter(Boolean);
+  const publish = document.getElementById("pfPublish").checked;
+  const provenance = document.getElementById("pfProv").value.trim();
+  if (publish && provenance.length < 10) {
+    msgEl.innerHTML = `<div class="perr">Provenance attestation is required (min 10 chars) before you can publish. Explain in a sentence where these photos came from and who owns them.</div>`;
+    return;
+  }
+  const slug = (document.getElementById("pfSlug").value || orig.slug || "").trim();
+  if (!slug) { msgEl.innerHTML = `<div class="perr">Slug is required.</div>`; return; }
+  const payload = {
+    slug,
+    name:            document.getElementById("pfName").value.trim(),
+    brand:           document.getElementById("pfBrand").value.trim() || null,
+    category:        document.getElementById("pfCat").value,
+    price:           parseFloat(document.getElementById("pfPrice").value) || null,
+    mrp:             parseFloat(document.getElementById("pfMrp").value) || null,
+    badge:           document.getElementById("pfBadge").value.trim() || null,
+    chips:           chips,
+    short_desc:      document.getElementById("pfShort").value.trim() || null,
+    pdp_url:         document.getElementById("pfPdp").value.trim() || null,
+    sort_order:      parseInt(document.getElementById("pfSort").value) || 100,
+    buy_enabled:     document.getElementById("pfBuy").checked,
+    is_published:    publish,
+    legal_muzzle_energy_j:  parseFloat(document.getElementById("pfEnergy").value) || null,
+    legal_calibre_mm:       document.getElementById("pfCal").value.trim() || null,
+    legal_projectile:       document.getElementById("pfProj").value || null,
+    legal_action:           document.getElementById("pfAction").value || null,
+    legal_licence_exempt:   document.getElementById("pfExempt").checked || null,
+    provenance_attestation: provenance || null,
+    provenance_by:          publish ? session.user.email : orig.provenance_by,
+    provenance_at:          publish ? new Date().toISOString() : orig.provenance_at,
+    updated_at:             new Date().toISOString(),
+    updated_by:             session.user.email,
+  };
+  const { error } = isNew
+    ? await supabase.from("products").insert(payload)
+    : await supabase.from("products").update(payload).eq("slug", orig.slug);
+  if (error) {
+    msgEl.innerHTML = `<div class="perr">Save failed: ${error.message}</div>`;
+    return;
+  }
+  msgEl.innerHTML = `<div class="pok">Saved. ${isNew ? "Now upload photos and publish when ready." : ""}</div>`;
+  await loadProducts();
+  if (isNew) {
+    // Re-open editor for the new product so photo uploads have a slug to attach to
+    setTimeout(() => openProductEditor(slug), 200);
+  } else {
+    setTimeout(closeProductEditor, 700);
+  }
+}
+
+async function deleteProduct(p){
+  if (!confirm(`Delete "${p.name}" and ALL its photos? This cannot be undone.`)) return;
+  // Delete storage files first
+  const { data: photos } = await supabase.from("product_photos").select("storage_path").eq("product_slug", p.slug);
+  if (photos && photos.length) {
+    await supabase.storage.from(PRODUCTS_BUCKET).remove(photos.map(x => x.storage_path));
+  }
+  const { error } = await supabase.from("products").delete().eq("slug", p.slug);
+  if (error) { alert("Delete failed: " + error.message); return; }
+  closeProductEditor();
+  await loadProducts();
+}
+
+await loadProducts();
+supabase.channel("products-admin")
+  .on("postgres_changes", { event:"*", schema:"public", table:"products" }, loadProducts)
   .subscribe();
 
 // ---- FILTERS ----

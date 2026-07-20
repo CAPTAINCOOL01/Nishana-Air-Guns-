@@ -210,6 +210,303 @@ exception
 end $$;
 
 
+-- -------- COUPONS -----------------------------------------------
+-- Admin-created discount codes. Kept minimal on purpose: flat ₹
+-- discount only, no expiry, no per-use cap. `min_cart_value` and
+-- `max_uses` columns exist so we can lock things down later without
+-- another migration.
+create table if not exists public.coupons (
+  id             uuid primary key default gen_random_uuid(),
+  created_at     timestamptz not null default now(),
+  code           text not null,
+  discount_amount numeric(10,2) not null check (discount_amount > 0),
+  active         boolean not null default true,
+  min_cart_value numeric(10,2),                 -- reserved; null = no minimum
+  max_uses       int,                           -- reserved; null = unlimited
+  uses_count     int not null default 0,        -- incremented by apply_coupon on redemption
+  notes          text,
+  created_by     text
+);
+
+-- Case-insensitive uniqueness so "PARVI500" and "parvi500" can't both exist.
+create unique index if not exists coupons_code_upper_idx on public.coupons (upper(code));
+create index if not exists coupons_active_idx on public.coupons (active) where active = true;
+
+alter table public.coupons enable row level security;
+
+-- Anonymous SELECT is BLOCKED — checkout must go through the RPC below.
+drop policy if exists "coupons_select_admin" on public.coupons;
+create policy "coupons_select_admin" on public.coupons
+  for select using (public.is_admin());
+
+drop policy if exists "coupons_write_admin" on public.coupons;
+create policy "coupons_write_admin" on public.coupons
+  for all using (public.is_admin()) with check (public.is_admin());
+
+-- Public RPC — takes a coupon code + cart subtotal, returns the effective
+-- discount if valid, or a diagnostic error. Runs as SECURITY DEFINER so
+-- guests can call it without READ access to the table (no enumeration).
+-- Does NOT increment uses_count — validation must not burn a redemption
+-- if the customer abandons checkout. When we later enforce max_uses,
+-- add a separate redeem_coupon(code) RPC that increments and is called
+-- from api/create-order.js right after the order INSERT succeeds.
+create or replace function public.apply_coupon(p_code text, p_subtotal numeric)
+returns table (ok boolean, discount numeric, message text)
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  c record;
+begin
+  if p_code is null or length(trim(p_code)) = 0 then
+    return query select false, 0::numeric, 'Please enter a coupon code.';
+    return;
+  end if;
+
+  select * into c from public.coupons
+    where upper(code) = upper(trim(p_code))
+    limit 1;
+
+  if not found then
+    return query select false, 0::numeric, 'Coupon not found.';
+    return;
+  end if;
+
+  if not c.active then
+    return query select false, 0::numeric, 'This coupon is no longer active.';
+    return;
+  end if;
+
+  if c.min_cart_value is not null and p_subtotal < c.min_cart_value then
+    return query select false, 0::numeric,
+      'Add more to your cart to use this coupon (minimum ₹' || c.min_cart_value::text || ').';
+    return;
+  end if;
+
+  if c.max_uses is not null and c.uses_count >= c.max_uses then
+    return query select false, 0::numeric, 'This coupon has been fully redeemed.';
+    return;
+  end if;
+
+  -- Never let the discount exceed the cart subtotal.
+  return query select true,
+                      least(c.discount_amount, p_subtotal),
+                      'Coupon applied.';
+end;
+$$;
+
+-- Anyone (including guests) can CALL the RPC (but not read the table).
+grant execute on function public.apply_coupon(text, numeric) to anon, authenticated;
+
+
+-- =============================================================
+-- PRODUCT CATALOGUE (admin-editable, storefront-visible)
+-- -------------------------------------------------------------
+-- Two tables + one Storage bucket. The storefront (products.js)
+-- merges published rows into window.NISHANA_PRODUCTS on load, so
+-- new SKUs added here appear as cards on the correct category
+-- page automatically. Existing hardcoded products.js entries are
+-- also seeded here so the storefront never regresses.
+-- =============================================================
+
+create table if not exists public.products (
+  slug              text primary key,           -- 'star-rx-gen3', URL-safe
+  name              text not null,              -- 'Star RX Gen 3'
+  brand             text,                       -- 'Camstar'
+  category          text check (category in ('air-pistols','air-rifles','accessories','spare-parts')),
+  price             numeric(10,2),              -- selling price on Nishana
+  mrp               numeric(10,2),              -- crossed-out MRP if present
+  badge             text,                       -- 'Semi-auto CO₂' etc. (max ~24 chars)
+  chips             jsonb default '[]'::jsonb,  -- ['.177 CAL','400 FPS',...]
+  short_desc        text,                       -- 1-3 sentence teaser
+  long_desc         text,                       -- optional multi-paragraph
+  specs             jsonb default '{}'::jsonb,  -- {calibre:'.177',velocity:'400 FPS',...}
+  pdp_url           text,                       -- 'product-<slug>.html' if a dedicated PDP exists; null = card links to WhatsApp enquire
+  hero_photo_url    text,                       -- convenience cache of the primary photo's public URL
+  buy_enabled       boolean default true,       -- false = Enquire on WhatsApp, no Buy Now button
+  is_published      boolean default false,      -- master switch; only published rows leak to storefront
+  sort_order        int default 100,            -- lower = earlier
+  -- Legal / compliance metadata (nullable, but strongly encouraged before publish)
+  legal_muzzle_energy_j     numeric(4,1),       -- ≤ 20 J to claim licence-exempt
+  legal_calibre_mm          text,               -- '4.5' etc.
+  legal_projectile          text check (legal_projectile in ('lead-diabolo','steel-bb','other') or legal_projectile is null),
+  legal_action              text check (legal_action in ('spring','co2','pcp','other') or legal_action is null),
+  legal_licence_exempt      boolean,            -- explicit admin attestation
+  legal_notes               text,
+  -- Provenance attestation — MANDATORY before is_published can flip to true.
+  -- This is the DMCA / trademark paper trail.
+  provenance_attestation    text,
+  provenance_by             text,               -- admin email
+  provenance_at             timestamptz,
+  created_at        timestamptz default now(),
+  updated_at        timestamptz default now(),
+  updated_by        text
+);
+
+create index if not exists products_category_sort_idx on public.products (category, sort_order) where is_published = true;
+
+create table if not exists public.product_photos (
+  id            uuid primary key default gen_random_uuid(),
+  product_slug  text references public.products(slug) on delete cascade,
+  storage_path  text not null,                            -- e.g. 'star-rx-gen3/abcdef.webp'
+  public_url    text not null,
+  alt_text      text,
+  is_primary    boolean default false,
+  sort_order    int default 100,
+  width         int,
+  height        int,
+  bytes         int,
+  created_at    timestamptz default now(),
+  uploaded_by   text
+);
+
+create index if not exists product_photos_slug_idx on public.product_photos (product_slug, sort_order);
+
+-- One primary per product (enforced at app level; add UI guardrails in dashboard.html).
+
+-- ---- Publish gate: enforce provenance_attestation before is_published = true ----
+create or replace function public.enforce_publish_provenance()
+returns trigger
+language plpgsql
+as $$
+begin
+  if new.is_published = true and (new.provenance_attestation is null or length(trim(new.provenance_attestation)) < 10) then
+    raise exception 'products.is_published cannot be true without provenance_attestation (minimum 10 chars). Attesting admin: %', coalesce(new.provenance_by, '(unknown)');
+  end if;
+  new.updated_at = now();
+  return new;
+end;
+$$;
+
+drop trigger if exists products_publish_gate on public.products;
+create trigger products_publish_gate
+  before insert or update on public.products
+  for each row execute function public.enforce_publish_provenance();
+
+-- ---- RLS ----
+alter table public.products enable row level security;
+alter table public.product_photos enable row level security;
+
+-- Storefront (anon or authenticated customer) reads only published products
+drop policy if exists products_public_read on public.products;
+create policy products_public_read on public.products
+  for select using (is_published = true);
+
+-- Admin can see everything, do everything
+drop policy if exists products_admin_all on public.products;
+create policy products_admin_all on public.products
+  for all using (public.is_admin()) with check (public.is_admin());
+
+-- Photos: public read (photos are attached to public products anyway; simplifies storefront)
+drop policy if exists photos_public_read on public.product_photos;
+create policy photos_public_read on public.product_photos
+  for select using (true);
+
+drop policy if exists photos_admin_all on public.product_photos;
+create policy photos_admin_all on public.product_photos
+  for all using (public.is_admin()) with check (public.is_admin());
+
+-- ---- Storage bucket + policies (requires postgres role — Supabase SQL Editor runs as postgres) ----
+insert into storage.buckets (id, name, public)
+values ('product-photos', 'product-photos', true)
+on conflict (id) do nothing;
+
+drop policy if exists "product_photos_public_read" on storage.objects;
+create policy "product_photos_public_read" on storage.objects
+  for select using (bucket_id = 'product-photos');
+
+drop policy if exists "product_photos_admin_insert" on storage.objects;
+create policy "product_photos_admin_insert" on storage.objects
+  for insert with check (bucket_id = 'product-photos' and public.is_admin());
+
+drop policy if exists "product_photos_admin_update" on storage.objects;
+create policy "product_photos_admin_update" on storage.objects
+  for update using (bucket_id = 'product-photos' and public.is_admin());
+
+drop policy if exists "product_photos_admin_delete" on storage.objects;
+create policy "product_photos_admin_delete" on storage.objects
+  for delete using (bucket_id = 'product-photos' and public.is_admin());
+
+-- ---- Seed existing and dealer-backed catalogue SKUs so the storefront never regresses ----
+-- Uses the existing hero_photo_url on camstarsports.com as the initial photo;
+-- admin can replace with own uploads via the Products tab.
+insert into public.products (
+  slug, name, brand, category, price, mrp, badge, chips, short_desc,
+  pdp_url, hero_photo_url, buy_enabled, is_published, sort_order,
+  legal_calibre_mm, legal_projectile, legal_action, legal_licence_exempt,
+  provenance_attestation, provenance_by, provenance_at
+) values
+  ('star-rx-gen3', 'Star RX Gen 3', 'Camstar', 'air-pistols', 24000, 27500, 'Semi-auto CO₂',
+   '[".177 CAL","400 FPS","CO₂ SEMI-AUTO","32 RND MAG"]'::jsonb,
+   'India''s first semi-automatic CO₂ air pistol. 32-round rotary magazine, five colourways, ships with hard case + holster.',
+   'product-rx-gen3.html', 'https://camstarsports.com/products/star-rx-gen3-1.webp', true, true, 1,
+   '4.5', 'lead-diabolo', 'co2', true,
+   'Existing SKU migrated from products.js on 2026-07-20; Camstar manufacturer marketing material.', 'ramayanaprav@gmail.com', now()),
+  ('co2-cylinders-5', 'CO₂ Cylinders — Pack of 5', 'Camstar', 'accessories', 550, null, null,
+   '["12 G","PACK OF 5","RX GEN 3 READY"]'::jsonb,
+   'Standard 12 g CO₂ cylinders, pack of five, selected for the Star RX Gen 3.',
+   null, 'https://camstarsports.com/products/co2-cylinders.jpg', true, true, 10,
+   null, null, null, null,
+   'Existing SKU migrated from products.js; consumable accessory (not an airgun).', 'ramayanaprav@gmail.com', now()),
+  ('star-match-pellets', 'Star Match Diabolo Pellets', 'Camstar', 'accessories', 450, null, null,
+   '[".177 CAL","0.524 G","300 PCS/TIN"]'::jsonb,
+   'Match-grade .177 (4.5 mm) diabolo pellets, 300 per tin, suited to the Star RX Gen 3.',
+   null, 'https://camstarsports.com/products/star-match-diabolo.png', true, true, 11,
+   '4.5', 'lead-diabolo', null, null,
+   'Existing SKU migrated from products.js; consumable ammunition (not an airgun).', 'ramayanaprav@gmail.com', now()),
+  ('rx-gen3-magazine', 'Star RX Gen 3 CO₂ Magazine', 'Camstar', 'spare-parts', 6499, null, null,
+   '["GENUINE","FITS RX GEN 3"]'::jsonb,
+   'Genuine replacement CO₂ rotary magazine for the Star RX Gen 3 semi-automatic pistol.',
+   null, 'https://camstarsports.com/products/star-rx-gen3-1.webp', false, true, 20,
+   null, null, null, null,
+   'Existing SKU migrated from products.js; spare part (not an airgun).', 'ramayanaprav@gmail.com', now()),
+  ('aerosoft-x1', 'Aerosoft X1 CO₂ Air Pistol', 'Aerosoft', 'air-pistols', 36000, 45000, 'Enquiry only',
+   '["CO₂","84FS STYLE","DEALER SUPPLY"]'::jsonb,
+   'Dealer-backed CO₂ air-pistol listing. Ask our sales team to confirm the current price, availability and order requirements.',
+   null, '/img/products/aerosoft-x1/1.webp', false, true, 2,
+   null, null, null, null,
+   'Owner-attested photo and dealer availability recorded on 2026-07-20; enquiry-only catalogue listing.', 'ramayanaprav@gmail.com', now()),
+  ('asg-x9-classic', 'ASG X9 Classic CO₂ Air Pistol', 'ASG', 'air-pistols', 57000, 65000, 'Enquiry only',
+   '["4.5 MM",".177 STEEL BB","BLOWBACK"]'::jsonb,
+   'Full-metal blowback CO₂ air-pistol configuration. Ask our sales team to confirm current availability and order requirements.',
+   null, '/img/products/asg-x9-classic/1.webp', false, true, 3,
+   '4.5', 'steel-bb', 'co2', null,
+   'Owner-attested photo and dealer availability recorded on 2026-07-20; enquiry-only catalogue listing.', 'ramayanaprav@gmail.com', now()),
+  ('beretta-84fs', 'Beretta Mod. 84 FS CO₂ Air Pistol', 'Beretta', 'air-pistols', 72000, 85000, 'Enquiry only',
+   '["4.5 MM","BB","CO₂"]'::jsonb,
+   '4.5 mm BB CO₂ air-pistol listing. Ask our sales team to confirm the current price, availability and order requirements.',
+   null, '/img/products/beretta-84fs/1.webp', false, true, 4,
+   '4.5', 'steel-bb', 'co2', null,
+   'Owner-attested photo and dealer availability recorded on 2026-07-20; enquiry-only catalogue listing.', 'ramayanaprav@gmail.com', now()),
+  ('beretta-m92-a1', 'Beretta M92 A1 CO₂ Air Pistol', 'Beretta', 'air-pistols', 73000, 85000, 'Enquiry only',
+   '["4.5 MM",".177 BB","CO₂"]'::jsonb,
+   '4.5 mm .177 BB CO₂ air-pistol listing. Ask our sales team to confirm the current price, availability and order requirements.',
+   null, '/img/products/beretta-m92-a1/1.webp', false, true, 5,
+   '4.5', 'steel-bb', 'co2', null,
+   'Owner-attested photo and dealer availability recorded on 2026-07-20; enquiry-only catalogue listing.', 'ramayanaprav@gmail.com', now()),
+  ('kwc-k18', 'KWC K18 4.5 mm BB CO₂ Pistol', 'KWC', 'air-pistols', 58000, 64000, 'Enquiry only',
+   '["4.5 MM","BB","CO₂"]'::jsonb,
+   'Dealer-backed K18 CO₂ BB-pistol listing. Availability and all order requirements are confirmed by our sales team before any sale.',
+   null, '/img/products/kwc-k18/FullSizeRender_5f838eab-803d-45e7-bfcf-87367fd94b79.webp', false, true, 6,
+   '4.5', 'steel-bb', 'co2', null,
+   'Dealer availability recorded on 2026-07-20; enquiry-only listing with no in-stock claim.', 'ramayanaprav@gmail.com', now()),
+  ('kwc-m92', 'KWC M92 4.5 mm BB CO₂ Pistol', 'KWC', 'air-pistols', 62000, 65000, 'Enquiry only',
+   '["4.5 MM","BB","CO₂"]'::jsonb,
+   'Dealer-backed M92 CO₂ BB-pistol listing. Availability and all order requirements are confirmed by our sales team before any sale.',
+   null, '/img/products/kwc-m92/FullSizeRender_b28aaf22-b99f-4a33-8ccb-8990e03e7c92.webp', false, true, 7,
+   '4.5', 'steel-bb', 'co2', null,
+   'Dealer availability recorded on 2026-07-20; enquiry-only listing with no in-stock claim.', 'ramayanaprav@gmail.com', now()),
+  ('hn-hornet-pellets', 'H&N Hornet Pellets', 'H&N', 'accessories', 1750, 1850, 'Enquiry only',
+   '[".177 CAL","9.57 GR","225 CT","POINTED"]'::jsonb,
+   'Pointed .177-calibre pellets, 225 per tin. Ask our sales team to confirm the current price and availability.',
+   null, '/img/products/hn-hornet-pellets/FullSizeRender_301a35f3-1d50-4557-97be-1cbd2492cab8.webp', false, true, 12,
+   '4.5', null, null, null,
+   'Dealer availability recorded on 2026-07-20; enquiry-only listing with no in-stock claim.', 'ramayanaprav@gmail.com', now())
+on conflict (slug) do update set
+  updated_at = now();
+
+
 -- =============================================================
 -- SEO + GEO admin domain
 -- -------------------------------------------------------------
