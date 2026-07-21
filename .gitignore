@@ -13,3 +13,7 @@ node_modules/
 
 # Claude Code local session cache — machine-specific, do not commit.
 .claude/
+
+# Bulk-publish user config (prices + provenance attestations) — stays local.
+# The .example.json template IS committed as documentation.
+scripts/bulk-config.json
