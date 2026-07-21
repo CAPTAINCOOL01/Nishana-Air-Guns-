@@ -248,19 +248,19 @@ window.NISHANA_TRACKING = {
     const lead = document.createElement("aside");
     lead.id = "nWaLead";
     lead.className = "n-wa-lead";
-    lead.setAttribute("aria-label", "Talk to the Nishana sales team on WhatsApp");
+    lead.setAttribute("aria-label", "Talk to Nishana on WhatsApp");
     lead.innerHTML = `
       <div class="n-wa-lead__signal" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.8 5-1.3A10 10 0 1 0 12 2Zm4.4 12c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5 0a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-1 2.2 5.3 5.3 0 0 0 1.1 2.7 12 12 0 0 0 4.6 4c2.1.9 2.1.6 2.5.6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3Z"/></svg>
       </div>
       <div class="n-wa-lead__copy">
         <span class="n-wa-lead__eyebrow"><i class="n-wa-lead__live"></i> Open line · ${WA_DISPLAY_NUMBER}</span>
-        <strong>Questions about the RX Gen 3?</strong>
-        <p>Price, live stock, licence rules or delivery — get a clear answer from our team.</p>
+        <strong>Questions before you buy?</strong>
+        <p>Usually replies within 2 mins · Ask about stock, compatibility, KYC or delivery.</p>
       </div>
-      <a class="n-wa-lead__cta" href="${wa("Hi Nishana! I'd like to talk to your sales team about the Star RX Gen 3.")}" target="_blank" rel="noopener" aria-label="Talk to the Nishana sales team on WhatsApp at ${WA_DISPLAY_NUMBER}">
+      <a class="n-wa-lead__cta" href="${wa("Hi Nishana! I'd like to talk to you about a product.")}" target="_blank" rel="noopener" aria-label="Talk to Nishana on WhatsApp at ${WA_DISPLAY_NUMBER}">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.8 5-1.3A10 10 0 1 0 12 2Zm4.4 12c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5 0a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-1 2.2 5.3 5.3 0 0 0 1.1 2.7 12 12 0 0 0 4.6 4c2.1.9 2.1.6 2.5.6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3Z"/></svg>
-        Talk to our sales team
+        Talk to us
       </a>`;
     document.body.appendChild(lead);
     requestAnimationFrame(() => setTimeout(() => lead.classList.add("is-visible"), 700));
@@ -311,9 +311,9 @@ window.NISHANA_TRACKING = {
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
               <span id="nUserChipText">Sign in</span>
             </button>
-            <a class="wa-btn" href="${wa("Hi Nishana! I'd like to talk to your sales team about the Star RX Gen 3.")}" target="_blank" rel="noopener" aria-label="Talk to our sales team on WhatsApp">
+            <a class="wa-btn" href="${wa("Hi Nishana! I'd like to talk to you about a product.")}" target="_blank" rel="noopener" aria-label="Talk to Nishana on WhatsApp">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.8 5-1.3A10 10 0 1 0 12 2Zm4.4 12c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5 0a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-1 2.2 5.3 5.3 0 0 0 1.1 2.7 12 12 0 0 0 4.6 4c2.1.9 2.1.6 2.5.6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3Z"/></svg>
-              <span>Sales team</span>
+              <span>Talk to us</span>
             </a>
             <button class="burger" id="nBurger" aria-label="Open menu">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -349,7 +349,7 @@ window.NISHANA_TRACKING = {
         <a href="blog.html">Blog &amp; guides</a>
         <h4>Support</h4>
         <a href="contact.html">Contact</a>
-        <a href="${wa("Hi Nishana! I'd like to talk to your sales team about the Star RX Gen 3.")}" target="_blank" rel="noopener">Talk to our sales team</a>
+        <a href="${wa("Hi Nishana! I'd like to talk to you about a product.")}" target="_blank" rel="noopener">Talk to us</a>
         <h4>Your account</h4>
         <a href="my-orders.html">My orders</a>
         <a href="#" data-login-btn>Sign in / register</a>
@@ -545,10 +545,10 @@ window.NISHANA_TRACKING = {
               ${LOGO_SVG}
               <div><div class="name">NISHANA</div><small>AIRGUNS · INDIA</small></div>
             </div>
-            <p class="about">Air pistols, shooting essentials and dedicated Star RX Gen 3 support for India. Prices, availability and order requirements are confirmed by our sales team before sale.</p>
-            <a class="n-btn n-btn--wa" href="${wa("Hi Nishana! I'd like to talk to your sales team about the Star RX Gen 3.")}" target="_blank" rel="noopener">
+            <p class="about">Researched air-pistol listings, shooting essentials and dedicated product support for India. Buy directly or ask us about stock, compatibility and order requirements.</p>
+            <a class="n-btn n-btn--wa" href="${wa("Hi Nishana! I'd like to talk to you about a product.")}" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.8 5-1.3A10 10 0 1 0 12 2Zm4.4 12c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5 0a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-1 2.2 5.3 5.3 0 0 0 1.1 2.7 12 12 0 0 0 4.6 4c2.1.9 2.1.6 2.5.6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3Z"/></svg>
-              Talk to our sales team
+              Talk to us
             </a>
           </div>
           <div class="col">
@@ -571,7 +571,7 @@ window.NISHANA_TRACKING = {
           </div>
           <div class="col">
             <h5>Legal</h5>
-            <p style="color:var(--smoke);font-size:13px;line-height:1.55">Individual product configurations and buyer verification requirements are confirmed before sale. Check each listing and speak with our sales team before ordering.</p>
+            <p style="color:var(--smoke);font-size:13px;line-height:1.55">Individual product configurations and buyer verification requirements are confirmed before dispatch. Check each listing or talk to us before ordering.</p>
           </div>
         </div>
         <div class="bot">

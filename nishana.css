@@ -170,27 +170,18 @@ img{display:block;max-width:100%}
 .n-card .save{font-family:var(--font-m);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ok);background:rgba(75,179,129,.12);border:1px solid rgba(75,179,129,.28);padding:4px 8px;border-radius:20px;white-space:nowrap}
 .n-card .trust{font-family:var(--font-m);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--smoke-2)}
 .n-card .cta-row{display:grid;grid-template-columns:1.35fr 1fr;gap:8px}
-.n-card .cta-row.single{grid-template-columns:1fr}
 .n-card .buy{background:var(--brass);color:var(--ink);border:1px solid var(--brass);border-radius:var(--r-sm);padding:12px 12px;text-align:center;font-family:var(--font-d);font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:13.5px;cursor:pointer;transition:.2s var(--ease);display:inline-flex;align-items:center;justify-content:center;gap:7px;box-shadow:0 6px 20px -8px rgba(201,162,39,.5)}
 .n-card .buy:hover{background:var(--brass-hi);border-color:var(--brass-hi)}
 .n-card .buy svg{width:13px;height:13px}
 .n-card .wa{background:transparent;color:var(--bone-dim);border:1px solid var(--edge);border-radius:var(--r-sm);padding:12px 10px;text-align:center;font-family:var(--font-m);font-size:11px;letter-spacing:.08em;text-transform:uppercase;transition:.2s var(--ease);display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;text-decoration:none}
 .n-card .wa:hover{border-color:#25D366;color:#25D366;background:rgba(37,211,102,.06)}
 .n-card .wa svg{width:13px;height:13px;color:#25D366}
+.n-card .reply-time{display:flex;align-items:center;justify-content:center;gap:7px;color:#a9e4c6;background:rgba(75,179,129,.1);border:1px solid rgba(75,179,129,.28);border-radius:7px;padding:7px 10px;font-family:var(--font-m);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.n-card .reply-time span{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px rgba(75,179,129,.12);animation:n-reply-pulse 2.2s ease-in-out infinite}
+@keyframes n-reply-pulse{50%{box-shadow:0 0 0 7px rgba(75,179,129,0)}}
+@media(max-width:380px){.n-card .cta-row{grid-template-columns:1fr}.n-card .reply-time{font-size:9px}}
+@media(prefers-reduced-motion:reduce){.n-card .reply-time span{animation:none}}
 .n-card .badge-corner{position:absolute;top:12px;left:12px;background:var(--brass);color:var(--ink);font-family:var(--font-m);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:5px 9px;border-radius:5px;z-index:2;box-shadow:0 4px 14px -4px rgba(0,0,0,.6)}
-
-/* Spare-parts compact price list */
-.parts-list{max-width:860px;margin:26px auto 0;border:1px solid var(--edge);border-radius:var(--r);overflow:hidden;background:var(--steel)}
-.part-row{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 18px;border-top:1px solid var(--edge);flex-wrap:wrap}
-.part-row:first-child{border-top:none}
-.part-row:hover{background:var(--steel-2)}
-.part-row .pl b{font-family:var(--font-d);font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:16px;color:var(--bone);display:block;line-height:1.15}
-.part-row .pl small{font-family:var(--font-m);font-size:11px;color:var(--smoke);letter-spacing:.04em}
-.part-row .pr{display:flex;align-items:center;gap:14px}
-.part-row .pp{font-family:var(--font-d);font-weight:800;font-size:19px;color:var(--brass)}
-.part-row .enq{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-m);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--bone-dim);border:1px solid var(--edge);padding:8px 12px;border-radius:20px;transition:.2s var(--ease);text-decoration:none}
-.part-row .enq:hover{border-color:#25D366;color:#25D366}
-.part-row .enq svg{width:12px;height:12px;color:#25D366}
 
 /* Category filter chips (products.html) */
 .n-filters{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:26px}

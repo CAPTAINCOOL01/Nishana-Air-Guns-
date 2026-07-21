@@ -272,6 +272,10 @@ header.nav.scrolled .wrap{padding-block:12px}
 .buy-wa{background:transparent;color:var(--bone-dim);border:1px solid var(--edge);border-radius:var(--r-sm);padding:13px 10px;text-align:center;font-family:var(--font-m);font-size:11px;letter-spacing:.1em;text-transform:uppercase;transition:.2s var(--ease);display:inline-flex;align-items:center;justify-content:center;gap:6px;line-height:1;cursor:pointer}
 .buy-wa:hover{border-color:#25D366;color:#25D366;background:rgba(37,211,102,.06)}
 .buy-wa svg{width:14px;height:14px;color:#25D366}
+.card .reply-time,.hero-reply{display:flex;align-items:center;justify-content:center;gap:7px;color:#a9e4c6;background:rgba(75,179,129,.1);border:1px solid rgba(75,179,129,.28);border-radius:7px;padding:7px 10px;font-family:var(--font-m);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.card .reply-time i,.hero-reply i{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px rgba(75,179,129,.12);animation:home-reply-pulse 2.2s ease-in-out infinite}
+.hero-reply{display:inline-flex;margin-top:10px}
+@keyframes home-reply-pulse{50%{box-shadow:0 0 0 7px rgba(75,179,129,0)}}
 @media(max-width:520px){
   .card .foot .cta-row{grid-template-columns:1fr 1fr}
   .assurance-mini{gap:10px}
@@ -390,14 +394,15 @@ header.nav.scrolled .wrap{padding-block:12px}
     <div class="wrap">
       <div class="hero-copy">
         <p class="eyebrow">Nishana (निशाना) — Hindi: aim · target</p>
-        <h1 class="display">One airgun.<br>Chosen well.<br><span class="accent">Star RX Gen 3.</span></h1>
-        <p class="lede">We focus on the Star RX Gen 3: a .177-calibre CO₂ semi-automatic air pistol supplied with a GST invoice, manufacturer warranty and pan-India delivery. One model means clearer advice, the right consumables and support that knows your setup.</p>
+        <h1 class="display">Airguns.<br>Chosen well.<br><span class="accent">Explained clearly.</span></h1>
+        <p class="lede">Compare CO₂ air pistols, pellets, capsules and genuine spares with researched specifications, real inventory photos and direct checkout. The Star RX Gen 3 remains our featured made-in-India setup.</p>
         <div class="cta">
-          <button class="btn" data-add-to-cart="star-rx-gen3">Buy the RX Gen 3
+          <button class="btn" data-add-to-cart="star-rx-gen3">Buy now
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
-          <a class="btn btn--ghost" href="#" data-wa="Hi Nishana! I'd like to talk to your sales team about the Star RX Gen 3.">Talk to our sales team</a>
+          <a class="btn btn--ghost" href="#" data-wa="Hi Nishana! I'd like to talk to you about the Star RX Gen 3.">Talk to us</a>
         </div>
+        <div class="hero-reply"><i aria-hidden="true"></i> Usually replies within 2 mins</div>
         <div class="assure">
           <span><b>Licence-exempt .177</b></span><span>·</span>
           <span><b>GST invoice</b></span><span>·</span>
@@ -412,13 +417,13 @@ header.nav.scrolled .wrap{padding-block:12px}
           <a class="hero-shot" href="product-rx-gen3.html" aria-label="View Star RX Gen 3 product details">
             <img id="heroShot" referrerpolicy="no-referrer"
                  src="https://camstarsports.com/products/star-rx-gen3-1.webp"
-                 alt="Camstar Star RX Gen 3 — CO₂ semi-automatic air pistol, .177 cal, 32-round magazine">
+                 alt="Camstar Star RX Gen 3 — .177 CO₂ semi-automatic air pistol with four 8-round magazines">
           </a>
           <img class="mirror" referrerpolicy="no-referrer" src="https://camstarsports.com/products/star-rx-gen3-1.webp" alt="" aria-hidden="true">
           <span class="f-badge">Semi-auto CO₂</span>
           <span class="f-chip c1"><b>CAL</b> .177</span>
-          <span class="f-chip c2"><b>400</b> FPS · CO₂</span>
-          <span class="f-chip c3"><b>32</b> RND MAG</span>
+          <span class="f-chip c2"><b>UP TO 3 J</b> · CO₂</span>
+          <span class="f-chip c3"><b>4 × 8</b> RND</span>
           <div class="f-price"><div class="p">₹25,000</div><div class="m">₹29,000</div></div>
         </div>
       </div>
@@ -450,13 +455,13 @@ header.nav.scrolled .wrap{padding-block:12px}
     <div class="wrap">
       <div class="slider-head">
         <div class="section-head reveal">
-          <p class="eyebrow">Our one-airgun catalogue</p>
-          <h2>Star RX Gen 3 — priced straight.</h2>
-          <p>See the real specification, current price and what comes in the box. Our sales team confirms live stock before you pay.</p>
+          <p class="eyebrow">The current catalogue</p>
+          <h2>Real details. Clear prices.</h2>
+          <p>Every current item opens into its own researched page and gives you the same two choices: Buy now or Talk to us.</p>
         </div>
       </div>
       <div class="rail" id="rail"></div>
-      <p class="mono" style="margin-top:8px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--smoke);text-align:center">Current listed price — live stock confirmed by our sales team.</p>
+      <p class="mono" style="margin-top:8px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--smoke);text-align:center">Current listed prices · Air-weapon dispatch subject to stock, KYC and dealer verification.</p>
     </div>
   </section>
 
@@ -509,13 +514,13 @@ header.nav.scrolled .wrap{padding-block:12px}
       </div>
       <a class="btn" href="#" data-wa="Hi Nishana! I'd like to talk to your sales team about the Star RX Gen 3.">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.8 5-1.3A10 10 0 1 0 12 2Zm4.4 12c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5 0a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-1 2.2 5.3 5.3 0 0 0 1.1 2.7 12 12 0 0 0 4.6 4c2.1.9 2.1.6 2.5.6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3Z"/></svg>
-        Talk to our sales team
+        Talk to us
       </a>
     </div>
     <div class="cols">
       <div>
         <div class="name"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.4" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="5.6" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="1.9" fill="currentColor"/></svg> Nishana Airguns</div>
-        <p style="margin-top:14px;max-width:34ch">One focused airgun storefront: the Star RX Gen 3, its consumables and support — delivered pan-India.</p>
+        <p style="margin-top:14px;max-width:34ch">Researched air pistols, compatible consumables and genuine spares — delivered pan-India.</p>
       </div>
       <div class="mono-lines">
         +91&nbsp;83296&nbsp;18409<br>
@@ -538,7 +543,7 @@ header.nav.scrolled .wrap{padding-block:12px}
 const WA_NUMBER = "918329618409"; // ← client's business WhatsApp, digits only
 const wa = t => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(t)}`;
 
-const BRANDS = ["Star RX Gen 3","CO₂ semi-auto",".177 calibre","32 loaded rounds","400 FPS","Made in India"];
+const BRANDS = ["Star RX Gen 3","CO₂ blowback",".177 calibre","Steel BB & pellets","Verified specifications","Pan-India"];
 
 // Catalogue rail is driven by the shared catalog in products.js —
 // edit products there once and every page (including this one) updates.
@@ -552,8 +557,8 @@ const PRODUCTS = (window.NISHANA_PRODUCTS || []).filter(p => p.href).map(p => ({
 const WHY = [
   {h:"Genuine, warranted", p:"Factory-sealed Star RX Gen 3 units with the manufacturer's warranty and a GST invoice."},
   {h:"Legal-first", p:"The .177-calibre, approximately 3-joule RX Gen 3 configuration is licence-exempt under the Arms Rules 2016. Target sport, done responsibly."},
-  {h:"One model, real expertise", p:"Because we focus on the RX Gen 3, our advice covers its magazines, pellets, CO₂ use, setup and care in useful detail."},
-  {h:"Humans on WhatsApp", p:"Talk to our sales team about live stock, delivery, paperwork or ownership — before and after you buy."},
+  {h:"Every product explained", p:"Dedicated pages separate manufacturer facts, inventory observations and details that still need physical verification."},
+  {h:"Humans on WhatsApp", p:"Talk to us about live stock, delivery, paperwork or ownership — before and after you buy."},
 ];
 
 const QUOTES = [
@@ -566,7 +571,7 @@ const FAQ = [
   {q:"Do I need an arms licence or any paperwork?", a:"The Star RX Gen 3 configuration we sell is .177 (4.5 mm) and approximately 3 joules, so it is licence-exempt under category III(f)(ii) of the Arms Rules 2016. A seller still needs to verify the buyer's identity and address, and local restrictions can apply."},
   {q:"How does delivery work?", a:"Pan-India through trackable courier partners, packed discreetly and securely. Timelines and charges are confirmed on WhatsApp when you order."},
   {q:"What about warranty and spares?", a:"The RX Gen 3 carries its manufacturer warranty, and we help with claims. Matching pellets, CO₂ cylinders and the genuine RX Gen 3 magazine are available through the same storefront."},
-  {q:"Which airgun can I buy here?", a:"We sell one airgun: the Camstar Star RX Gen 3. The catalogue also contains its matching pellets, CO₂ cylinders and replacement magazine."},
+  {q:"Which airguns can I buy here?", a:"The current catalogue includes seven CO₂ air pistols from Camstar, Aerosoft, ASG, Umarex Beretta and KWC, plus pellets, CO₂ cylinders and a genuine RX Gen 3 magazine assembly."},
 ];
 
 /* ============================================================
@@ -631,7 +636,7 @@ const ROUNDEL = '<svg class="ph" viewBox="0 0 24 24"><circle cx="12" cy="12" r="
     // Assurance strip (mirrors Camstar's placement above the buy button)
     if(!p.soon){
       foot.appendChild(el('div','assurance-mini',
-        `<span>${CHK} GST invoice</span><span>${CHK} Warranty</span><span>${CHK} Pan-India</span>`));
+        `<span>${CHK} GST invoice</span><span>${CHK} Secure checkout</span><span>${CHK} Pan-India</span>`));
     }
 
     const ctas = el('div','cta-row');
@@ -642,12 +647,13 @@ const ROUNDEL = '<svg class="ph" viewBox="0 0 24 24"><circle cx="12" cy="12" r="
       buy.type = 'button';
       buy.setAttribute('data-add-to-cart', p.id);
       ctas.appendChild(buy);
-      const w = el('a','buy-wa',`${WA_SVG} Sales team`);
-      w.href = wa(`Hi Nishana! I'd like to talk to your sales team about the ${p.name} (${p.price}).`);
+      const w = el('a','buy-wa',`${WA_SVG} Talk to us`);
+      w.href = wa(`Hi Nishana! I'd like to talk to you about the ${p.name} (${p.price}).`);
       w.target = "_blank"; w.rel = "noopener";
       ctas.appendChild(w);
     }
     foot.appendChild(ctas);
+    if(!p.soon) foot.appendChild(el('div','reply-time','<i aria-hidden="true"></i> Usually replies within 2 mins'));
 
     body.appendChild(foot); card.appendChild(body); rail.appendChild(card);
   });

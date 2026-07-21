@@ -17,100 +17,97 @@ window.NISHANA_PRODUCTS = [
   {
     id: "star-rx-gen3", brand: "Camstar", name: "Star RX Gen 3",
     category: "air-pistols", price: 25000, mrp: 29000, badge: "Semi-auto CO₂",
-    chips: [".177 CAL", "400 FPS", "CO₂ SEMI-AUTO", "32 RND MAG"],
-    desc: "India's first semi-automatic CO₂ air pistol. Black ₹25,000; Coyote Tan ₹26,000. Ships with four 8-round magazines, hard case + holster.",
+    chips: [".177 CAL", "UP TO 400 FPS", "CO₂ SEMI-AUTO", "4 × 8 RND"],
+    desc: "Made-in-India .177 CO₂ semi-automatic air pistol. Black ₹25,000; Coyote Tan ₹26,000, with four 8-round rotary magazines and a complete carry kit.",
     image: "https://camstarsports.com/products/star-rx-gen3-1.webp",
     href: "product-rx-gen3.html", buy: true,
   },
-  /* Dealer-backed listings: enquiry-only until each order's stock,
-     documentation, and applicable legal requirements are confirmed. */
+  /* Every published item has the same two clear actions: Buy now or Talk to us.
+     Air-weapon checkout remains subject to KYC and dealer verification. */
   {
     id: "aerosoft-x1", brand: "Aerosoft", name: "Aerosoft X1 CO₂ Air Pistol",
-    category: "air-pistols", price: 36000, mrp: 45000, badge: "Enquiry only",
-    chips: ["CO₂", "84FS STYLE", "DEALER SUPPLY"],
-    desc: "Dealer-backed CO₂ air-pistol listing. Ask our sales team to confirm the current price, availability and order requirements.",
+    category: "air-pistols", price: 36000, mrp: 45000, badge: "Compact CO₂",
+    chips: [".177 BB", "12 G CO₂", "SEMI-AUTO", "350 FPS LABEL"],
+    desc: "Compact .177 CO₂ BB pistol with a semi-automatic action. The supplied manual is labelled 350 FPS; exact performance varies with ammunition and conditions.",
     image: "img/products/aerosoft-x1/1.webp",
-    href: null, buy: false,
+    href: "product-aerosoft-x1.html", buy: true,
   },
   {
     id: "asg-x9-classic", brand: "ASG", name: "ASG X9 Classic CO₂ Air Pistol",
-    category: "air-pistols", price: 57000, mrp: 65000, badge: "Enquiry only",
-    chips: ["4.5 MM", ".177 STEEL BB", "BLOWBACK"],
-    desc: "Full-metal blowback CO₂ air-pistol configuration. Ask our sales team to confirm current availability and order requirements.",
+    category: "air-pistols", price: 57000, mrp: 65000, badge: "Full-metal blowback",
+    chips: ["4.5 MM BB", "12 G CO₂", "16 RND", "1.6 J"],
+    desc: "Full-metal, semi-automatic CO₂ pistol with hard blowback, a 16-round steel-BB magazine and slide hold-open after the last shot.",
     image: "img/products/asg-x9-classic/1.webp",
-    href: null, buy: false,
+    href: "product-asg-x9-classic.html", buy: true,
   },
   {
-    id: "beretta-84fs", brand: "Beretta", name: "Beretta Mod. 84 FS CO₂ Air Pistol",
-    category: "air-pistols", price: 72000, mrp: 85000, badge: "Enquiry only",
-    chips: ["4.5 MM", "BB", "CO₂"],
-    desc: "4.5 mm BB CO₂ air-pistol listing. Ask our sales team to confirm the current price, availability and order requirements.",
+    id: "beretta-84fs", brand: "Umarex · Beretta", name: "Beretta Mod. 84 FS CO₂ Air Pistol",
+    category: "air-pistols", price: 72000, mrp: 85000, badge: "Licensed replica",
+    chips: ["4.5 MM BB", "12 G CO₂", "17 RND", "BLOWBACK"],
+    desc: "Compact licensed Beretta replica by Umarex with all-metal construction, realistic blowback and a 17-round removable steel-BB magazine.",
     image: "img/products/beretta-84fs/1.webp",
-    href: null, buy: false,
+    href: "product-beretta-84fs.html", buy: true,
   },
   {
-    id: "beretta-m92-a1", brand: "Beretta", name: "Beretta M92 A1 CO₂ Air Pistol",
-    category: "air-pistols", price: 73000, mrp: 85000, badge: "Enquiry only",
-    chips: ["4.5 MM", ".177 BB", "CO₂"],
-    desc: "4.5 mm .177 BB CO₂ air-pistol listing. Ask our sales team to confirm the current price, availability and order requirements.",
+    id: "beretta-m92-a1", brand: "Umarex · Beretta", name: "Beretta M92 A1 CO₂ Air Pistol",
+    category: "air-pistols", price: 73000, mrp: 85000, badge: "Full-metal blowback",
+    chips: ["4.5 MM BB", "12 G CO₂", "18 RND", "SEMI-AUTO"],
+    desc: "Umarex 5.8144 configuration with full-metal construction, semi-automatic blowback, an 18-round steel-BB magazine and SA/DA trigger.",
     image: "img/products/beretta-m92-a1/1.webp",
-    href: null, buy: false,
+    href: "product-beretta-m92-a1.html", buy: true,
   },
   {
-    id: "kwc-k18", brand: "KWC", name: "KWC K18 4.5 mm BB CO₂ Pistol",
-    category: "air-pistols", price: 58000, mrp: 64000, badge: "Enquiry only",
-    chips: ["4.5 MM", "BB", "CO₂"],
-    desc: "Dealer-backed K18 CO₂ BB-pistol listing. Availability and all order requirements are confirmed by our sales team before any sale.",
+    id: "kwc-k18", brand: "KWC", name: "KWC K18 CO₂ Blowback BB Pistol",
+    category: "air-pistols", price: 58000, mrp: 64000, badge: "Select-fire blowback",
+    chips: ["4.5 MM BB", "18 RND", "SEMI + FULL", "1.6 J"],
+    desc: "KWC Model 20-series CO₂ pistol with a metal slide, full blowback, fixed hop-up and selectable semi-automatic or full-automatic fire.",
     image: "img/products/kwc-k18/FullSizeRender_5f838eab-803d-45e7-bfcf-87367fd94b79.webp",
-    href: null, buy: false,
+    href: "product-kwc-k18.html", buy: true,
   },
   {
-    id: "kwc-m92", brand: "KWC", name: "KWC M92 4.5 mm BB CO₂ Pistol",
-    category: "air-pistols", price: 62000, mrp: 65000, badge: "Enquiry only",
-    chips: ["4.5 MM", "BB", "CO₂"],
-    desc: "Dealer-backed M92 CO₂ BB-pistol listing. Availability and all order requirements are confirmed by our sales team before any sale.",
+    id: "kwc-m92", brand: "KWC", name: "KWC M92 CO₂ Blowback BB Pistol",
+    category: "air-pistols", price: 62000, mrp: 65000, badge: "Full-metal select-fire",
+    chips: ["4.5 MM BB", "18 RND", "SEMI + FULL", "1.5 J"],
+    desc: "Full-metal KWC Model 23-series CO₂ pistol with full blowback, an 18-round magazine and selectable semi-automatic or full-automatic fire.",
     image: "img/products/kwc-m92/FullSizeRender_b28aaf22-b99f-4a33-8ccb-8990e03e7c92.webp",
-    href: null, buy: false,
+    href: "product-kwc-m92.html", buy: true,
   },
   /* ---------------- ACCESSORIES ---------------- */
   {
     id: "co2-cylinders-5", brand: "Camstar", name: "CO₂ Cylinders — Pack of 5",
     category: "accessories", price: 550,
-    chips: ["12 G", "PACK OF 5", "RX GEN 3 READY"],
-    desc: "Standard 12 g CO₂ cylinders, pack of five, selected for the Star RX Gen 3.",
+    chips: ["12 G", "PACK OF 5", "SINGLE-USE"],
+    desc: "Five single-use 12 g CO₂ capsules for compatible airguns. Check your product manual for capsule size and installation instructions before use.",
     image: "https://camstarsports.com/products/co2-cylinders.jpg",
-    href: null, buy: true,
+    href: "product-co2-cylinders-5.html", buy: true,
   },
   {
     id: "star-match-pellets", brand: "Camstar", name: "Star Match Diabolo Pellets",
     category: "accessories", price: 450,
     chips: [".177 CAL", "0.524 G", "300 PCS/TIN"],
-    desc: "Match-grade .177 (4.5 mm) diabolo pellets, 300 per tin, suited to the Star RX Gen 3.",
+    desc: "Flat-head .177 (4.5 mm) diabolo pellets for paper-target practice. Manufacturer-labelled 0.524 g, supplied in a 300-count tin.",
     image: "https://camstarsports.com/products/star-match-diabolo.png",
-    href: null, buy: true,
+    href: "product-star-match-pellets.html", buy: true,
   },
   {
     id: "hn-hornet-pellets", brand: "H&N", name: "H&N Hornet Pellets",
-    category: "accessories", price: 1750, mrp: 1850, badge: "Enquiry only",
+    category: "accessories", price: 1750, mrp: 1850, badge: "Brass-tip pellet",
     chips: [".177 CAL", "9.57 GR", "225 CT", "POINTED"],
-    desc: "Pointed .177-calibre pellets, 225 per tin. Ask our sales team to confirm the current price and availability.",
+    desc: "Medium-weight .177 pointed pellets with an embedded brass tip, 0.62 g / 9.57 gr, 225 per tin. H&N specifies a minimum 7.5 J airgun energy.",
     image: "img/products/hn-hornet-pellets/FullSizeRender_301a35f3-1d50-4557-97be-1cbd2492cab8.webp",
-    href: null, buy: false,
+    href: "product-hn-hornet-pellets.html", buy: true,
   },
 
-  /* ---------------- SPARE PARTS (WhatsApp order) ---------------- */
+  /* ---------------- SPARE PARTS ---------------- */
   {
-    id: "rx-gen3-magazine", brand: "Camstar", name: "Star RX Gen 3 CO₂ Magazine",
+    id: "rx-gen3-magazine", brand: "Camstar", name: "Star RX Gen 3 CO₂ Magazine Assembly",
     category: "spare-parts", price: 6499,
-    chips: ["GENUINE", "FITS RX GEN 3"],
-    desc: "Genuine replacement CO₂ rotary magazine for the Star RX Gen 3 semi-automatic pistol.",
-    image: "https://camstarsports.com/products/star-rx-gen3-1.webp",
-    href: null, buy: false,
+    chips: ["GENUINE", "CO₂ ASSEMBLY", "RX GEN 3 ONLY"],
+    desc: "Genuine replacement CO₂ magazine assembly made specifically for the Camstar Star RX Gen 3 air pistol.",
+    image: "https://camstarsports.com/rx-gen3-co2-magazine.jpeg",
+    href: "product-rx-gen3-magazine.html", buy: true,
   },
 ];
-
-/* Additional RX Gen 3 parts are confirmed directly with the sales team. */
-window.NISHANA_SMALL_PARTS = [];
 
 /* ------------------------------------------------------------
    Card renderer
@@ -134,10 +131,8 @@ window.NISHANA_SMALL_PARTS = [];
     const title = p.href
       ? `<a href="${p.href}" class="tlink"><h3>${p.name}</h3></a>`
       : `<h3>${p.name}</h3>`;
-    const cta = p.buy
-      ? `<button class="buy" data-add-to-cart="${p.id}">Buy now ${ARROW}</button>
-         <a class="wa" href="${wa(`Hi Nishana! I'd like to talk to your sales team about the ${p.name} (${inr(p.price)}). Please confirm live stock.`)}" target="_blank" rel="noopener">${WA_SVG} Sales team</a>`
-      : `<a class="wa wa-wide" href="${wa(`Hi Nishana! I'd like to talk to your sales team about ${p.name} (${inr(p.price)}). Please confirm availability.`)}" target="_blank" rel="noopener">${WA_SVG} Talk to our sales team</a>`;
+    const cta = `<button class="buy" data-add-to-cart="${p.id}">Buy now ${ARROW}</button>
+      <a class="wa" href="${wa(`Hi Nishana! I'd like to talk to you about the ${p.name} (${inr(p.price)}). Please confirm live stock and order requirements.`)}" target="_blank" rel="noopener">${WA_SVG} Talk to us</a>`;
     return `
     <article class="n-card">
       ${imgWrap}
@@ -155,8 +150,9 @@ window.NISHANA_SMALL_PARTS = [];
             <div class="price">${inr(p.price)} ${p.mrp ? `<span class="mrp">${inr(p.mrp)}</span>` : ""}</div>
             ${off ? `<span class="save">Save ${off}%</span>` : ""}
           </div>
-          <div class="trust">${p.badge === "Enquiry only" ? "Price & availability confirmed by sales" : "GST invoice · Warranty · Pan-India delivery"}</div>
-          <div class="cta-row ${p.buy ? "" : "single"}">${cta}</div>
+          <div class="trust">GST invoice · Secure checkout · Pan-India delivery</div>
+          <div class="cta-row">${cta}</div>
+          <div class="reply-time"><span aria-hidden="true"></span> Usually replies within 2 mins</div>
         </div>
       </div>
     </article>`;
@@ -208,13 +204,14 @@ window.NISHANA_SMALL_PARTS = [];
         href:     r.pdp_url || null,
         buy:      r.buy_enabled !== false,
       }));
-      // Merge: Supabase supplies live catalogue metadata, but Git-defined
-      // price/MRP remain authoritative for known products. This keeps routine
-      // price changes deployable through Git without an admin-password prompt.
+      // Merge: Git-defined data remains authoritative for known products.
+      // This keeps prices, researched copy, PDP routes and Buy buttons
+      // deployable without an admin-password prompt. Supabase can still add
+      // newly published products that do not exist in this file.
       const bySlug = new Map(window.NISHANA_PRODUCTS.map(p => [p.id, p]));
       dbShaped.forEach(r => {
         const local = bySlug.get(r.id);
-        bySlug.set(r.id, local ? { ...r, price: local.price, mrp: local.mrp } : r);
+        bySlug.set(r.id, local ? { ...r, ...local } : r);
       });
       window.NISHANA_PRODUCTS = Array.from(bySlug.values());
       // Re-render every grid that was drawn from the hardcoded list.
@@ -231,17 +228,4 @@ window.NISHANA_SMALL_PARTS = [];
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mergeSupabaseProducts);
   else setTimeout(mergeSupabaseProducts, 0);
 
-  /* Compact spare-parts price list */
-  window.nishanaRenderParts = function (el) {
-    if (typeof el === "string") el = document.querySelector(el);
-    if (!el) return;
-    el.innerHTML = window.NISHANA_SMALL_PARTS.map(pt => `
-      <div class="part-row">
-        <div class="pl"><b>${pt.name}</b><small>Fits: ${pt.fits}</small></div>
-        <div class="pr">
-          <span class="pp">${inr(pt.price)}</span>
-          <a class="enq" target="_blank" rel="noopener" href="${wa(`Hi Nishana! I need a spare part: ${pt.name} (${inr(pt.price)}). Model: `)}">${WA_SVG} Enquire</a>
-        </div>
-      </div>`).join("");
-  };
 })();

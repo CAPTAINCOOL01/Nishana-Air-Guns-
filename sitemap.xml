@@ -68,7 +68,7 @@
 
   <url>
     <loc>https://nishanaairguns.com/product-rx-gen3.html</loc>
-    <lastmod>2026-07-18</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -87,6 +87,66 @@
       <image:loc>https://camstarsports.com/products/star-rx-gen3-hd-3.png</image:loc>
       <image:title>Camstar Star RX Gen 3 — high-resolution studio view 3</image:title>
     </image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/product-aerosoft-x1.html</loc>
+    <lastmod>2026-07-21</lastmod><changefreq>weekly</changefreq><priority>0.8</priority>
+    <image:image><image:loc>https://nishanaairguns.com/img/products/aerosoft-x1/1.webp</image:loc><image:title>Aerosoft X1 .177 CO₂ air pistol</image:title></image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/product-asg-x9-classic.html</loc>
+    <lastmod>2026-07-21</lastmod><changefreq>weekly</changefreq><priority>0.8</priority>
+    <image:image><image:loc>https://nishanaairguns.com/img/products/asg-x9-classic/1.webp</image:loc><image:title>ASG X9 Classic CO₂ blowback pistol</image:title></image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/product-beretta-84fs.html</loc>
+    <lastmod>2026-07-21</lastmod><changefreq>weekly</changefreq><priority>0.8</priority>
+    <image:image><image:loc>https://nishanaairguns.com/img/products/beretta-84fs/1.webp</image:loc><image:title>Umarex Beretta 84 FS CO₂ air pistol</image:title></image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/product-beretta-m92-a1.html</loc>
+    <lastmod>2026-07-21</lastmod><changefreq>weekly</changefreq><priority>0.8</priority>
+    <image:image><image:loc>https://nishanaairguns.com/img/products/beretta-m92-a1/1.webp</image:loc><image:title>Umarex Beretta M92 A1 CO₂ air pistol</image:title></image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/product-kwc-k18.html</loc>
+    <lastmod>2026-07-21</lastmod><changefreq>weekly</changefreq><priority>0.8</priority>
+    <image:image><image:loc>https://nishanaairguns.com/img/products/kwc-k18/FullSizeRender_5f838eab-803d-45e7-bfcf-87367fd94b79.webp</image:loc><image:title>KWC K18 CO₂ blowback BB pistol</image:title></image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/product-kwc-m92.html</loc>
+    <lastmod>2026-07-21</lastmod><changefreq>weekly</changefreq><priority>0.8</priority>
+    <image:image><image:loc>https://nishanaairguns.com/img/products/kwc-m92/FullSizeRender_b28aaf22-b99f-4a33-8ccb-8990e03e7c92.webp</image:loc><image:title>KWC M92 CO₂ blowback BB pistol</image:title></image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/product-co2-cylinders-5.html</loc>
+    <lastmod>2026-07-21</lastmod><changefreq>weekly</changefreq><priority>0.7</priority>
+    <image:image><image:loc>https://camstarsports.com/products/co2-cylinders.jpg</image:loc><image:title>12 g CO₂ cylinders pack of five</image:title></image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/product-star-match-pellets.html</loc>
+    <lastmod>2026-07-21</lastmod><changefreq>weekly</changefreq><priority>0.7</priority>
+    <image:image><image:loc>https://camstarsports.com/products/star-match-diabolo.png</image:loc><image:title>Star Match .177 flat-head diabolo pellets</image:title></image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/product-hn-hornet-pellets.html</loc>
+    <lastmod>2026-07-21</lastmod><changefreq>weekly</changefreq><priority>0.7</priority>
+    <image:image><image:loc>https://nishanaairguns.com/img/products/hn-hornet-pellets/FullSizeRender_301a35f3-1d50-4557-97be-1cbd2492cab8.webp</image:loc><image:title>H&amp;N Hornet .177 pointed pellets</image:title></image:image>
+  </url>
+
+  <url>
+    <loc>https://nishanaairguns.com/product-rx-gen3-magazine.html</loc>
+    <lastmod>2026-07-21</lastmod><changefreq>weekly</changefreq><priority>0.7</priority>
+    <image:image><image:loc>https://camstarsports.com/rx-gen3-co2-magazine.jpeg</image:loc><image:title>Star RX Gen 3 CO₂ magazine assembly</image:title></image:image>
   </url>
 
   <url>
