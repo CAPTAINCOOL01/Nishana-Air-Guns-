@@ -1,0 +1,306 @@
+{
+  "meta": {
+    "audit_date": "2026-07-20",
+    "auditor": "Claude Code seo-audit skill (inline, no subagents)",
+    "target": "https://nishanaairguns.com/",
+    "urls_analyzed": 29,
+    "previous_audit_date": "2026-07-19",
+    "score_delta_vs_previous": "-4 (75 → 71)",
+    "sample_scope": "sitemap.xml full (29 URLs) + robots.txt + llms.txt probe + host variants + 3 retired-URL redirect tests + 10 new stub-PDP content probes"
+  },
+  "summary": {
+    "health_score": 71,
+    "business_type": "single-brand-anchor multi-SKU e-commerce (Star RX Gen 3 anchor + 7 imported BB pistol SKUs + accessories), India-only, regulated category",
+    "top_findings": [
+      "10 new product PDPs (aerosoft-x1, asg-x9-classic, beretta-84fs/m92-a1, kwc-k18/m92, hn-hornet-pellets, co2-cylinders-5, star-match-pellets, rx-gen3-magazine) return ~2 KB SPA stubs with client-side rendering — sitemap advertises them but Google will index the empty shells and mark the site as thin-content",
+      "www.nishanaairguns.com STILL returns HTTP 000 (7-day-old regression from prior audit — same finding as 2026-07-19)",
+      "/llms.txt STILL returns 404 (7-day-old regression from prior audit — strategy doc committed to shipping this)",
+      "Category pages still thin: air-pistols.html 77 words, accessories.html 68 words, products.html 138 words, spare-parts.html 91 words — near-zero visible content, no H2 hierarchy, and STILL zero JSON-LD",
+      "Homepage still lacks an answer-block for AI Overview eligibility (unchanged from prior audit)"
+    ],
+    "quick_wins": [
+      "Add Vercel domain alias so www → apex (5 min, unchanged from prior audit)",
+      "Publish /llms.txt with the strategy-defined content (10 min, unchanged from prior audit)",
+      "Add basic Product + Offer + BreadcrumbList JSON-LD to the 10 new stub PDPs — even without rendering, the schema in the HTML gives Google enough to treat them as products (15 min per template)",
+      "Add ItemList + BreadcrumbList JSON-LD to accessories.html + products.html + spare-parts.html (10 min)",
+      "Add answer-box + Speakable schema to homepage (15 min)"
+    ],
+    "what_improved_since_2026_07_19": [
+      "PDP <title> superlative removed — now 'Camstar Star RX Gen 3 .177 CO₂ Air Pistol Price ₹25,000' (was 'India's First Semi-Auto CO₂ Air Pistol')",
+      "3 new blogs published: blog-airgun-safety-india, blog-rx-gen3-first-100-shots, blog-rx-gen3-hindi-guide (each 1750–2000 words, full schema + Speakable)",
+      "3 older blogs upgraded — star-rx-gen3-review, maintenance, home-range-setup now have en-IN + hreflang + robots meta + 2 JSON-LD blocks (were bare before)",
+      "Sitemap grew from 19 → 29 URLs; image entries 21 → 32",
+      "Product images self-hosted under /img/products/ — Codex committed the folder, no longer cross-origin from camstarsports.com for the new SKUs (the Camstar SKUs still hotlink)"
+    ],
+    "what_regressed_or_new_since_2026_07_19": [
+      "10 new product PDPs published as ~2 KB client-side-rendering stubs (major thin-content risk)",
+      "Codex added 7 new SKUs to products.js with prices identical to airpistolindia.com competitor listings — passing-off + trademark exposure logged in PROVENANCE.md but publish state kept live"
+    ]
+  },
+  "categories": [
+    {
+      "name": "Technical SEO",
+      "score": 72,
+      "weight": 22,
+      "what_works": [
+        "HTTP → HTTPS returns 308 correctly",
+        "HSTS header present (max-age=63072000)",
+        "Robots.txt allows 17 AI answer engines explicitly (GPTBot, OAI-SearchBot, ChatGPT-User, PerplexityBot, Perplexity-User, Google-Extended, ClaudeBot, Claude-Web, anthropic-ai, CCBot, Applebot, Applebot-Extended, Amazonbot, Bytespider, DuckAssistBot, cohere-ai, Meta-ExternalAgent)",
+        "Retired URLs still 308 to correct replacements (verified: air-rifles.html, product-mauser-x-matte.html, blog-airgun-laws-india.html)",
+        "sitemap.xml uses xmlns:image with 32 image:image entries across 29 URLs (up from 21/19)",
+        "hreflang=en-IN + x-default self-alternates on every public page; Hindi guide uses hi-IN correctly",
+        "Every page carries robots meta with max-image-preview:large + max-snippet:-1"
+      ],
+      "findings": [
+        {
+          "title": "www subdomain STILL unreachable (7-day-old regression)",
+          "severity": "Critical",
+          "description": "curl -I https://www.nishanaairguns.com/ returns HTTP 000 (no response). Same finding as 2026-07-19 audit — no fix action taken. Users typing 'www' see a browser error; search-engine crawlers hitting the www hostname via backlinks dead-end.",
+          "recommendation": "Vercel → Project → Settings → Domains → Add www.nishanaairguns.com → configure as Redirect to apex. Verify: curl -I https://www.nishanaairguns.com/ should return HTTP/2 308 Location: https://nishanaairguns.com/."
+        },
+        {
+          "title": "10 new product PDPs are ~2 KB SPA stubs — sitemap-advertised, content-free at HTML level",
+          "severity": "High",
+          "description": "Every /product-<slug>.html except product-rx-gen3.html returns a ~2 KB HTML shell containing just <main data-product-detail=\"<slug>\"> and no visible copy. Product data (specs, price display, images, descriptions) is populated by product-detail.js client-side. These 10 URLs are in sitemap.xml at priority 0.9 with weekly changefreq — Google will crawl them, and while Googlebot does render JS, (a) other crawlers (Bing, Applebot, LLM bots) don't reliably render, (b) even Googlebot's rendering queue can be slow for new low-authority domains, and (c) even after render the JSON-LD is client-injected and doesn't count as reliably as HTML-source JSON-LD. Net effect: 10 URLs get indexed as thin/near-duplicate stubs, which can drag the whole domain's quality signal down.",
+          "recommendation": "Two options. (1) Best: server-render these PDPs at build time — Vercel supports build-time HTML generation via a small Node script that reads Supabase products + product_photos and writes /product-<slug>.html files. (2) Fastest: hand-write minimal but real HTML for each PDP with visible spec table + description + JSON-LD, matching the pattern used by product-rx-gen3.html. Either way, each PDP should have ≥ 800 words visible + Product/Offer/Breadcrumb JSON-LD in the raw HTML source (not client-injected)."
+        },
+        {
+          "title": "Security headers minimal",
+          "severity": "Medium",
+          "description": "Only HSTS is present. Missing X-Content-Type-Options, Referrer-Policy, Permissions-Policy. Unchanged from prior audit.",
+          "recommendation": "Add a headers block to vercel.json — X-Content-Type-Options: nosniff, Referrer-Policy: strict-origin-when-cross-origin, Permissions-Policy: geolocation=(), camera=(), microphone=()."
+        }
+      ]
+    },
+    {
+      "name": "Content Quality",
+      "score": 62,
+      "weight": 23,
+      "what_works": [
+        "8 blogs at 1700–2000 words with 4–6 FAQ Qs each (6 primary + 2 new: safety-india, first-100-shots)",
+        "Hindi-language guide published (blog-rx-gen3-hindi-guide.html, 1748 words) — competitors are English-only in this niche",
+        "New blogs carry article:modified_time = 2026-07-18",
+        "PDP <title> superlative retired — 'India's First' dropped in favor of factual product description",
+        "Older 3 blogs (star-rx-gen3-review, maintenance, home-range-setup) now upgraded with 2 JSON-LD blocks + en-IN"
+      ],
+      "findings": [
+        {
+          "title": "10 new PDPs have near-zero visible content in HTML source",
+          "severity": "High",
+          "description": "Duplicate of Technical finding — flagged here because the perceived content depth from Google's crawl (before JS render) is ~50 words per PDP. That's below Google's thin-content quality threshold. If Googlebot skips the JS render for even a few crawls, the pages get indexed as low-quality."
+        },
+        {
+          "title": "Category pages still very thin (unchanged from prior audit, still no fix)",
+          "severity": "High",
+          "description": "air-pistols.html = 77 words with 0 H2; accessories.html = 68 words with 1 H2; products.html = 138 words with 0 H2; spare-parts.html = 91 words with 2 H2. These pages exist in the sitemap at 0.7–0.8 priority but have no chance of ranking for their head terms.",
+          "recommendation": "Expand each category page to 500–800 words above the grid: category intro, buyer FAQ (3–5 Qs), safety block, delivery block, dealer-verification block. Reuse content from blog-rx-gen3-buying-guide with fresh angles. Add H2 structure."
+        },
+        {
+          "title": "No author byline anywhere",
+          "severity": "Medium",
+          "description": "Every Article JSON-LD still sets author to Organization 'Nishana Editorial Desk'. Zero Person schema on the site (unchanged from prior audit).",
+          "recommendation": "Create /authors/ramayana-singh.html with Person schema (name, jobTitle, sameAs LinkedIn/Twitter), and reference from every blog's author field."
+        },
+        {
+          "title": "3 older blogs still lack article:modified_time + answer-box + Speakable",
+          "severity": "Medium",
+          "description": "blog-star-rx-gen3-review, blog-airgun-maintenance, blog-home-range-setup have 0 answer-box hits and no modified_time. Codex upgraded them structurally (en-IN + hreflang) but not editorially.",
+          "recommendation": "Add an .answer-box at the top of each + Speakable JSON-LD block + set dateModified to today. ~15 min per post."
+        }
+      ]
+    },
+    {
+      "name": "On-Page SEO",
+      "score": 78,
+      "weight": 20,
+      "what_works": [
+        "Every page has unique <title>, meta description, canonical, hreflang, robots meta",
+        "Every page has exactly one <h1>",
+        "OpenGraph article:published_time + modified_time on all new blogs",
+        "Blog articles use answer-box pattern extensively (6 primary posts)"
+      ],
+      "findings": [
+        {
+          "title": "10 stub PDPs have OG tags but missing schema in HTML source",
+          "severity": "High",
+          "description": "The new PDPs (product-aerosoft-x1.html etc.) each include a title, meta description, canonical, robots meta, and OG tags in the ~2 KB HTML. But no JSON-LD in the source. The Product schema is presumably injected by product-detail.js at render time — which Google may or may not process reliably.",
+          "recommendation": "In each PDP template, add a static <script type='application/ld+json'> Product block with the SKU's basic fields (name, brand, image, description placeholder, offer.price if published, availability). Even a minimal static block gives Google a strong signal before JS runs."
+        },
+        {
+          "title": "Homepage still lacks an answer-block for AI Overview eligibility",
+          "severity": "Medium",
+          "description": "Homepage has 5 solid H2s but no explicit 60–100 word factual answer block near the top. Unchanged from prior audit.",
+          "recommendation": "Add a .answer-box in the hero with a quotable RX Gen 3 summary + last-reviewed date + Speakable JSON-LD referencing the block."
+        }
+      ]
+    },
+    {
+      "name": "Schema / Structured Data",
+      "score": 78,
+      "weight": 10,
+      "what_works": [
+        "product-rx-gen3.html: 3 JSON-LD blocks — Product + Brand + Offer + FAQPage + BreadcrumbList + ListItem + Organization + Answer + Question (9 types)",
+        "Every new blog has Article + FAQPage + Speakable + WebPage (7 types)",
+        "Homepage: Organization + WebSite + ContactPoint (3 types)",
+        "About + Contact: AboutPage / ContactPage + Organization + WebSite + ContactPoint (4 types each)"
+      ],
+      "findings": [
+        {
+          "title": "10 new stub PDPs have ZERO JSON-LD in HTML source",
+          "severity": "High",
+          "description": "Verified for all 10: product-aerosoft-x1, product-asg-x9-classic, product-beretta-84fs, product-beretta-m92-a1, product-kwc-k18, product-kwc-m92, product-hn-hornet-pellets, product-co2-cylinders-5, product-star-match-pellets, product-rx-gen3-magazine. No <script type='application/ld+json'> in the shipped HTML. Presumably product-detail.js injects one after render.",
+          "recommendation": "Static Product JSON-LD in the HTML template. See On-Page finding for details."
+        },
+        {
+          "title": "3 category pages still have zero schema (unchanged)",
+          "severity": "High",
+          "description": "accessories.html, products.html, spare-parts.html: 0 JSON-LD blocks. air-pistols.html has only ItemList with likely 1 item.",
+          "recommendation": "Add ItemList + BreadcrumbList to each. Reference all SKUs in the category, not just the first one."
+        },
+        {
+          "title": "No Person schema anywhere",
+          "severity": "Medium",
+          "description": "Same as Content finding — creating /authors/ramayana-singh.html with Person JSON-LD would fix both."
+        }
+      ]
+    },
+    {
+      "name": "Performance (Core Web Vitals)",
+      "score": 70,
+      "weight": 10,
+      "what_works": [
+        "Static HTML, minimal JS",
+        "Google Fonts preconnected with crossorigin",
+        "Small file sizes (homepage 60 KB, blogs 12–25 KB, category pages 3–5 KB)"
+      ],
+      "findings": [
+        {
+          "title": "No CrUX field data yet (site still too new)",
+          "severity": "Info",
+          "description": "Unchanged from prior audit — needs ~200+ daily users for 28 days before CrUX reports field LCP/INP/CLS."
+        },
+        {
+          "title": "Camstar SKUs still cross-origin hotlink (7 SKUs)",
+          "severity": "Medium",
+          "description": "Star RX Gen 3 hero + accessories + spare parts still reference camstarsports.com for hero images. Only the 7 new imported-BB SKUs have self-hosted images under /img/products/. Mixed dependency risk remains for the Camstar-branded SKUs.",
+          "recommendation": "Download the 4 star-rx-gen3-*.webp/png images + co2-cylinders.jpg + star-match-diabolo.png to /img/products/ and update products.js references."
+        },
+        {
+          "title": "No responsive srcset on any <img>",
+          "severity": "Low",
+          "description": "All images rely on browser default sizing. Adding srcset with 400/800/1200 variants would cut mobile bytes ~60%."
+        }
+      ]
+    },
+    {
+      "name": "AI Search Readiness (GEO)",
+      "score": 72,
+      "weight": 10,
+      "what_works": [
+        "17 AI crawlers allowlisted in robots.txt",
+        "Speakable JSON-LD on 5+ blogs (added to first-100-shots + safety-india + hindi-guide since last audit)",
+        "FAQPage schema on 8 blogs — extractable Q&A pairs",
+        "Dated statements throughout ('as observed on 18 July 2026')",
+        "Hindi guide expands language coverage (competitors: English-only)",
+        "3 new answer-block-heavy blogs shipped since last audit"
+      ],
+      "findings": [
+        {
+          "title": "/llms.txt STILL 404 (7-day-old regression)",
+          "severity": "High",
+          "description": "Unchanged from prior audit. curl -I https://nishanaairguns.com/llms.txt returns HTTP/2 404. Codex hasn't shipped this despite it being in the earlier ACTION-PLAN and in the strategy doc.",
+          "recommendation": "See prior audit findings/geo.md for the drop-in content template. Trivial ship — one new file at site root."
+        },
+        {
+          "title": "Homepage still no answer-block",
+          "severity": "Medium",
+          "description": "Duplicate of On-Page finding. Highest single homepage-to-AI-Overview gap."
+        },
+        {
+          "title": "No original data assets published yet",
+          "severity": "Medium",
+          "description": "Unchanged from prior audit. Highest-AI-citation asset (state-by-state Arms Rules tracker) hasn't shipped."
+        }
+      ]
+    },
+    {
+      "name": "Images",
+      "score": 60,
+      "weight": 5,
+      "what_works": [
+        "Product images for 7 new SKUs are self-hosted under /img/products/<slug>/ — Codex committed the folder (big improvement over prior audit)",
+        "sitemap.xml image entries: 32 (up from 21)"
+      ],
+      "findings": [
+        {
+          "title": "Camstar SKU images still cross-origin",
+          "severity": "Medium",
+          "description": "star-rx-gen3-*, co2-cylinders, star-match-diabolo — all still hotlink camstarsports.com. Self-hosted for the imported SKUs but not the anchor product line.",
+          "recommendation": "Migrate the 6 remaining Camstar images to /img/products/. Update products.js references. Camstar URLs remain valid as fallbacks."
+        },
+        {
+          "title": "No responsive srcset",
+          "severity": "Medium",
+          "description": "Duplicate of Performance finding — every <img> uses default sizing."
+        },
+        {
+          "title": "10 new stub PDPs don't include <img> in HTML source",
+          "severity": "Medium",
+          "description": "The hero images are likely injected via JS by product-detail.js. Same crawlability concern as the schema: bots without JS rendering see no images.",
+          "recommendation": "Include the primary <img> tag (with width/height + alt) in each PDP's static HTML."
+        }
+      ]
+    }
+  ],
+  "action_plan": {
+    "phases": [
+      {
+        "name": "Phase 1: Critical Fixes (this week)",
+        "timeframe": "Days 1-3",
+        "items": [
+          "Fix the 10 stub PDPs: either build-time server-render them from Supabase products data, OR write static HTML with a spec table + Product JSON-LD per SKU. Blocking risk = thin-content penalty for the whole domain.",
+          "Fix www subdomain — Vercel domain alias + 308 redirect (STILL not done; same finding as 2026-07-19)",
+          "Ship /llms.txt at site root (STILL not done)",
+          "Add ItemList + BreadcrumbList JSON-LD to the 4 category pages"
+        ]
+      },
+      {
+        "name": "Phase 2: High-Impact Improvements (next 2 weeks)",
+        "timeframe": "Weeks 2-3",
+        "items": [
+          "Expand 4 category pages to 500-800 words each with H2 structure + FAQ + safety/delivery blocks",
+          "Self-host the 6 remaining Camstar-branded product images",
+          "Add answer-box + Speakable JSON-LD to homepage",
+          "Retrofit 3 older blogs (review, maintenance, home-range) with modified_time + answer-box + Speakable",
+          "Add security headers to vercel.json"
+        ]
+      },
+      {
+        "name": "Phase 3: Content & Authority (month 2)",
+        "timeframe": "Weeks 4-8",
+        "items": [
+          "Create /authors/ramayana-singh.html with Person schema; switch blog authorship",
+          "Publish state-by-state Arms Rules 2016 airgun tracker (counsel-reviewed)",
+          "Publish 2 more Hindi guides (safety, purchase decision)",
+          "Add responsive srcset to self-hosted images"
+        ]
+      },
+      {
+        "name": "Phase 4: Monitoring & Iteration (ongoing)",
+        "timeframe": "Weeks 4+",
+        "items": [
+          "Weekly manual AI-citation checks logged in geo_observations (12 baseline prompts, per earlier findings/geo.md)",
+          "Monthly refresh of dated price research post",
+          "Quarterly rerun of this audit to catch drift",
+          "GSC + Bing WMT weekly review once traffic data appears"
+        ]
+      }
+    ]
+  },
+  "artifacts": {
+    "findings_dir": "findings/",
+    "raw_html_dir": "raw/",
+    "urls_status": "status.txt",
+    "previous_audit_report": "FULL-AUDIT-REPORT.md.bak (rotated if this run overwrites)"
+  }
+}

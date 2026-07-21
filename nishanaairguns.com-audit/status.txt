@@ -1,0 +1,22 @@
+200 59862 
+200 5487 products.html
+200 3092 air-pistols.html
+200 3642 accessories.html
+200 3760 spare-parts.html
+200 26908 product-rx-gen3.html
+200 14254 blog.html
+200 23524 blog-rx-gen3-price-india.html
+200 23928 blog-rx-gen3-buying-guide.html
+200 21534 blog-rx-gen3-running-cost.html
+200 22683 blog-legal-no-licence-airguns-india.html
+200 25069 blog-rx-gen3-hindi-guide.html
+200 18224 blog-rx-gen3-first-100-shots.html
+200 19768 blog-airgun-safety-india.html
+200 13417 blog-star-rx-gen3-review.html
+200 12760 blog-airgun-maintenance.html
+200 13190 blog-home-range-setup.html
+200 9916 about.html
+200 7944 contact.html
+200 1163 robots.txt
+200 12065 sitemap.xml
+404 79 llms.txt
