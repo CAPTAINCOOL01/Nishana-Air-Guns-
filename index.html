@@ -240,9 +240,13 @@ header.nav.scrolled .wrap{padding-block:12px}
 .rail::-webkit-scrollbar{display:none}
 
 /* ---------- product card ---------- */
-.card{flex:0 0 340px;scroll-snap-align:start;display:flex;flex-direction:column;
+.card{flex:0 0 340px;scroll-snap-align:start;display:flex;flex-direction:column;position:relative;
   background:var(--steel);border:1px solid var(--edge);border-radius:var(--r);overflow:hidden;
   transition:transform .35s var(--ease),border-color .35s var(--ease),box-shadow .35s var(--ease)}
+/* Whole card links to the product page; Buy / Talk to us stay clickable above it */
+.card .card-link{position:absolute;inset:0;z-index:1}
+.card .foot .cta-row{position:relative;z-index:2}
+.card:hover h3{color:var(--brass-hi)}
 @media(max-width:400px){.card{flex:0 0 88vw}}
 .card:hover{transform:translateY(-6px);border-color:rgba(201,162,39,.55);box-shadow:var(--shadow)}
 .card .shot-area{position:relative;height:210px;background:radial-gradient(120% 120% at 50% 0%,var(--steel-2),var(--ink));display:grid;place-items:center;overflow:hidden}
@@ -614,8 +618,10 @@ const ROUNDEL = '<svg class="ph" viewBox="0 0 24 24"><circle cx="12" cy="12" r="
       dl.href=p.href;
       dl.style.cssText='font-family:var(--font-m);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);text-decoration:none;display:inline-block;margin-bottom:6px';
       body.appendChild(dl);
-      shot.style.cursor='pointer';
-      shot.addEventListener('click',()=>{location.href=p.href;});
+      const link=el('a','card-link');
+      link.href=p.href;
+      link.setAttribute('aria-label',p.name+' — full details');
+      card.appendChild(link);
     }
     const foot=el('div','foot');
 

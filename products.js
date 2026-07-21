@@ -135,6 +135,7 @@ window.NISHANA_PRODUCTS = [
       <a class="wa" href="${wa(`Hi Nishana! I'd like to talk to you about the ${p.name} (${inr(p.price)}). Please confirm live stock and order requirements.`)}" target="_blank" rel="noopener">${WA_SVG} Talk to us</a>`;
     return `
     <article class="n-card">
+      ${p.href ? `<a class="card-link" href="${p.href}" aria-label="${p.name} — full details"></a>` : ""}
       ${imgWrap}
         ${p.badge ? `<span class="badge-corner">${p.badge}</span>` : ""}
         <img src="${p.image}" alt="${p.brand} ${p.name} — buy online in India" referrerpolicy="no-referrer" loading="lazy">
