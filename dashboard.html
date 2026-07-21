@@ -459,6 +459,7 @@ code{font-family:var(--font-m);font-size:.88em;background:var(--steel);border:1p
             </div>
             <div style="display:flex;gap:8px;align-items:center">
               <span class="chip" id="prodCount">— total</span>
+              <button class="top-btn" id="prodBulkBtn" title="Drop an entire folder of subfolders (one per SKU) to bulk-create products with photos">📁 Bulk import</button>
               <button class="top-btn" id="prodNewBtn">+ New product</button>
             </div>
           </div>
@@ -490,6 +491,81 @@ code{font-family:var(--font-m);font-size:.88em;background:var(--steel);border:1p
       <div class="prod-mod" id="prodMod">
         <div class="prod-mod-box" id="prodModBox">
           <!-- injected by JS -->
+        </div>
+      </div>
+
+      <!-- Bulk import modal — pick a folder, preview one row per
+           subfolder, edit slug/name inline, hit Import → each folder
+           becomes (or merges into) a Draft product with all its
+           photos uploaded to Supabase Storage. -->
+      <div class="prod-mod" id="prodBulkMod">
+        <div class="prod-mod-box" id="prodBulkBox" style="max-width:1080px">
+          <div class="phd">
+            <div>
+              <h3>Bulk import from folder</h3>
+              <p>Pick a folder that contains one subfolder per SKU. Each subfolder's images become that product's photos. Duplicates (existing slugs) get photos attached; metadata is left alone.</p>
+            </div>
+            <button class="pclose" id="prodBulkClose" aria-label="Close">×</button>
+          </div>
+
+          <div style="padding:22px">
+            <!-- Step 1: folder picker -->
+            <div id="prodBulkStep1">
+              <label class="pgdrop" style="grid-column:1/-1;padding:36px;display:block;cursor:pointer" id="prodBulkDrop">
+                📁 Click to choose your Products folder
+                <small>Or drag a folder onto this area. Each subfolder = one SKU. Non-image files are skipped.</small>
+                <input type="file" id="prodBulkFile" webkitdirectory directory multiple hidden>
+              </label>
+              <div style="margin-top:14px;font-size:12.5px;color:var(--smoke);line-height:1.55">
+                <b style="color:var(--bone-dim)">Behaviour:</b><br>
+                • New slug → creates a <b>Draft</b> product (unpublished, no price yet)<br>
+                • Existing slug → attaches photos to that product without touching its price, description, or publish state<br>
+                • Every upload records your admin email + timestamp against <code>uploaded_by</code> for the audit trail
+              </div>
+            </div>
+
+            <!-- Step 2: preview + edit -->
+            <div id="prodBulkStep2" hidden>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:10px">
+                <div style="font-family:var(--font-m);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--smoke)" id="prodBulkSummary">— folders · — photos</div>
+                <div style="display:flex;gap:8px">
+                  <button class="cancel" id="prodBulkBack" style="padding:8px 14px;border-radius:var(--r-sm);font-family:var(--font-m);font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;border:1px solid var(--edge);background:var(--steel);color:var(--bone-dim)">← Back</button>
+                  <button class="save" id="prodBulkImport" style="padding:8px 18px;border-radius:var(--r-sm);font-family:var(--font-m);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;cursor:pointer;border:1px solid var(--brass);background:var(--brass);color:var(--ink)">Import all →</button>
+                </div>
+              </div>
+              <div class="tbl-scroll" style="max-height:52vh;overflow-y:auto">
+                <table style="width:100%;font-size:13px">
+                  <thead>
+                    <tr style="background:var(--steel);position:sticky;top:0;z-index:2">
+                      <th style="text-align:left;padding:10px 12px;font-family:var(--font-m);font-size:10px;letter-spacing:.14em;color:var(--smoke)">Folder</th>
+                      <th style="text-align:left;padding:10px 12px;font-family:var(--font-m);font-size:10px;letter-spacing:.14em;color:var(--smoke)">Slug (edit)</th>
+                      <th style="text-align:left;padding:10px 12px;font-family:var(--font-m);font-size:10px;letter-spacing:.14em;color:var(--smoke)">Display name (edit)</th>
+                      <th style="text-align:center;padding:10px 12px;font-family:var(--font-m);font-size:10px;letter-spacing:.14em;color:var(--smoke)">Photos</th>
+                      <th style="text-align:center;padding:10px 12px;font-family:var(--font-m);font-size:10px;letter-spacing:.14em;color:var(--smoke)">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="prodBulkTbody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Step 3: progress -->
+            <div id="prodBulkStep3" hidden>
+              <div style="font-family:var(--font-m);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-bottom:12px" id="prodBulkProgLabel">Uploading…</div>
+              <div style="height:8px;background:var(--steel);border:1px solid var(--edge);border-radius:20px;overflow:hidden;margin-bottom:14px">
+                <div id="prodBulkProgBar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--brass),var(--brass-hi));transition:width .3s var(--ease)"></div>
+              </div>
+              <div id="prodBulkLog" style="max-height:44vh;overflow-y:auto;font-family:var(--font-m);font-size:11.5px;color:var(--bone-dim);line-height:1.7;background:var(--steel);border:1px solid var(--edge);border-radius:var(--r-sm);padding:12px 14px"></div>
+            </div>
+
+            <!-- Step 4: done -->
+            <div id="prodBulkStep4" hidden>
+              <div id="prodBulkResult"></div>
+              <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:18px">
+                <button class="save" id="prodBulkDone" style="padding:10px 18px;border-radius:var(--r-sm);font-family:var(--font-m);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;cursor:pointer;border:1px solid var(--brass);background:var(--brass);color:var(--ink)">Close</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -951,6 +1027,278 @@ document.getElementById("prodSearch")?.addEventListener("input", e => { productS
 document.getElementById("prodCatFilter")?.addEventListener("change", e => { productCatFilter = e.target.value; renderProducts(); });
 document.getElementById("prodStatusFilter")?.addEventListener("change", e => { productStatusFilter = e.target.value; renderProducts(); });
 document.getElementById("prodNewBtn")?.addEventListener("click", () => openProductEditor(null));
+
+// -------- Bulk import from folder --------
+// Reads a directory selection via <input webkitdirectory>, groups files
+// by their top-level folder name, lets the admin edit slug/name per
+// folder, then creates (or merges into) products and uploads photos
+// to Supabase Storage in one pass. Metadata for existing slugs is
+// left untouched — this only attaches photos.
+const prodBulkMod = document.getElementById("prodBulkMod");
+const prodBulkClose = document.getElementById("prodBulkClose");
+document.getElementById("prodBulkBtn")?.addEventListener("click", () => openBulkImport());
+prodBulkClose?.addEventListener("click", () => closeBulkImport());
+prodBulkMod?.addEventListener("click", (e) => { if (e.target === prodBulkMod) closeBulkImport(); });
+
+function openBulkImport(){
+  showBulkStep(1);
+  prodBulkMod.classList.add("on");
+}
+function closeBulkImport(){
+  prodBulkMod.classList.remove("on");
+  document.getElementById("prodBulkFile").value = "";
+  document.getElementById("prodBulkTbody").innerHTML = "";
+  document.getElementById("prodBulkLog").innerHTML = "";
+  document.getElementById("prodBulkProgBar").style.width = "0%";
+  showBulkStep(1);
+}
+function showBulkStep(n){
+  [1,2,3,4].forEach(i => {
+    const el = document.getElementById("prodBulkStep" + i);
+    if (el) el.hidden = i !== n;
+  });
+}
+
+// Folder-name → slug helper. Lowercase ASCII, hyphenated, max 50 chars.
+// Strips common noise tails like "by airpistolindia" before slugging.
+function folderToSlug(folder){
+  let s = folder.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  s = s.replace(/\s*by\s+airpistolindia\s*/gi, "");
+  s = s.replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  return s.slice(0, 50).replace(/-+$/g, "");
+}
+function folderToName(folder){
+  return folder
+    .replace(/\s*by\s+airpistolindia\s*/gi, "")
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 80);
+}
+function isImageFile(f){
+  return /^image\//.test(f.type) || /\.(jpe?g|png|webp|gif|avif)$/i.test(f.name);
+}
+
+// Folder-picker click / drop → parse into a per-folder plan
+const prodBulkDrop = document.getElementById("prodBulkDrop");
+const prodBulkFile = document.getElementById("prodBulkFile");
+prodBulkFile?.addEventListener("change", (e) => handleBulkFiles([...e.target.files]));
+prodBulkDrop?.addEventListener("dragover", (e) => { e.preventDefault(); prodBulkDrop.classList.add("dragover"); });
+prodBulkDrop?.addEventListener("dragleave", () => prodBulkDrop.classList.remove("dragover"));
+prodBulkDrop?.addEventListener("drop", async (e) => {
+  e.preventDefault();
+  prodBulkDrop.classList.remove("dragover");
+  // Drag-drop of folders needs webkitGetAsEntry recursion.
+  const items = [...e.dataTransfer.items];
+  const files = [];
+  for (const item of items) {
+    const entry = item.webkitGetAsEntry?.();
+    if (entry) await walkEntry(entry, "", files);
+  }
+  if (files.length) handleBulkFiles(files);
+  else alert("Drop a folder (not individual files) to bulk-import.");
+});
+
+async function walkEntry(entry, path, out){
+  if (entry.isFile) {
+    await new Promise(res => entry.file(f => {
+      f.webkitRelativePath = f.webkitRelativePath || (path + entry.name);
+      out.push(f);
+      res();
+    }));
+  } else if (entry.isDirectory) {
+    const reader = entry.createReader();
+    const kids = await new Promise(res => reader.readEntries(res));
+    for (const k of kids) await walkEntry(k, path + entry.name + "/", out);
+  }
+}
+
+function handleBulkFiles(files){
+  const images = files.filter(isImageFile);
+  if (!images.length) { alert("No image files found in that folder."); return; }
+  // Group by top-level folder relative to what was dropped.
+  const groups = new Map();
+  images.forEach(f => {
+    const rel = f.webkitRelativePath || f.name;
+    const parts = rel.split("/").filter(Boolean);
+    // If depth 1: file at root (no folder). If depth ≥ 2: use FIRST segment
+    // when user selects the parent, or SECOND-LAST when depth is deeper.
+    // Simplest: if depth == 1, folder = "(root)"; else folder = parts[0] if
+    // user picked the parent, but that misclassifies when they dropped a
+    // single SKU folder. Safer: use the file's IMMEDIATE parent as folder.
+    const folder = parts.length >= 2 ? parts[parts.length - 2] : "(root)";
+    if (!groups.has(folder)) groups.set(folder, []);
+    groups.get(folder).push(f);
+  });
+  const plan = [...groups.entries()].map(([folder, fs]) => {
+    const slug = folderToSlug(folder);
+    const existing = productsList.find(p => p.slug === slug);
+    return {
+      folder,
+      slug,
+      name: folderToName(folder),
+      files: fs,
+      exists: !!existing,
+    };
+  }).filter(row => row.slug);   // drop folders that slug to empty
+  renderBulkPreview(plan);
+  showBulkStep(2);
+}
+
+let bulkPlan = [];
+function renderBulkPreview(plan){
+  bulkPlan = plan;
+  const tbody = document.getElementById("prodBulkTbody");
+  const totalPhotos = plan.reduce((s, r) => s + r.files.length, 0);
+  document.getElementById("prodBulkSummary").textContent = `${plan.length} folder${plan.length===1?"":"s"} · ${totalPhotos} image${totalPhotos===1?"":"s"} · ${plan.filter(r=>r.exists).length} will merge with existing SKUs`;
+  tbody.innerHTML = plan.map((r, i) => `
+    <tr style="border-top:1px solid var(--edge)">
+      <td style="padding:10px 12px;color:var(--bone-dim);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${escAttr(r.folder)}">${escHtml(r.folder)}</td>
+      <td style="padding:8px 12px"><input data-bulk-slug="${i}" value="${escAttr(r.slug)}" style="width:100%;background:var(--steel);border:1px solid var(--edge);border-radius:6px;padding:6px 10px;color:var(--bone);font-family:var(--font-m);font-size:12px" /></td>
+      <td style="padding:8px 12px"><input data-bulk-name="${i}" value="${escAttr(r.name)}" style="width:100%;background:var(--steel);border:1px solid var(--edge);border-radius:6px;padding:6px 10px;color:var(--bone);font-family:var(--font-b);font-size:12.5px" /></td>
+      <td style="padding:10px 12px;text-align:center;font-family:var(--font-m);color:var(--brass);font-weight:600">${r.files.length}</td>
+      <td style="padding:10px 12px;text-align:center;font-family:var(--font-m);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:${r.exists?"var(--warn)":"var(--ok)"}">${r.exists?"Merge":"New draft"}</td>
+    </tr>
+  `).join("");
+  tbody.querySelectorAll("[data-bulk-slug]").forEach(inp => inp.addEventListener("input", e => {
+    const i = +e.target.dataset.bulkSlug;
+    bulkPlan[i].slug = folderToSlug(e.target.value);
+    e.target.value = bulkPlan[i].slug;
+    // Re-check exists
+    const existing = productsList.find(p => p.slug === bulkPlan[i].slug);
+    bulkPlan[i].exists = !!existing;
+    // Cheap way to refresh only the status cell
+    const row = e.target.closest("tr");
+    const statusCell = row.children[row.children.length - 1];
+    statusCell.style.color = bulkPlan[i].exists ? "var(--warn)" : "var(--ok)";
+    statusCell.textContent = bulkPlan[i].exists ? "Merge" : "New draft";
+  }));
+  tbody.querySelectorAll("[data-bulk-name]").forEach(inp => inp.addEventListener("input", e => {
+    bulkPlan[+e.target.dataset.bulkName].name = e.target.value;
+  }));
+}
+document.getElementById("prodBulkBack")?.addEventListener("click", () => showBulkStep(1));
+document.getElementById("prodBulkImport")?.addEventListener("click", () => runBulkImport());
+document.getElementById("prodBulkDone")?.addEventListener("click", () => closeBulkImport());
+
+async function runBulkImport(){
+  // Validate slugs are unique within plan + non-empty
+  const seen = new Set();
+  for (const r of bulkPlan) {
+    if (!r.slug) { alert("A row has an empty slug. Please fix before importing."); return; }
+    if (seen.has(r.slug)) { alert("Duplicate slug in your plan: " + r.slug + ". Each slug must be unique."); return; }
+    seen.add(r.slug);
+  }
+  showBulkStep(3);
+  const log = document.getElementById("prodBulkLog");
+  const bar = document.getElementById("prodBulkProgBar");
+  const label = document.getElementById("prodBulkProgLabel");
+  const totalSteps = bulkPlan.reduce((s, r) => s + 1 + r.files.length, 0);   // 1 upsert + N photos per row
+  let stepsDone = 0;
+  const bump = (msg) => {
+    stepsDone++;
+    const pct = Math.round((stepsDone / totalSteps) * 100);
+    bar.style.width = pct + "%";
+    label.textContent = `Uploading… ${pct}% · ${stepsDone} of ${totalSteps} steps`;
+    if (msg) log.insertAdjacentHTML("beforeend", msg + "<br>");
+    log.scrollTop = log.scrollHeight;
+  };
+
+  const results = { created: 0, merged: 0, photos: 0, errors: [] };
+
+  for (const row of bulkPlan) {
+    // Upsert product
+    if (!row.exists) {
+      const { error: upErr } = await supabase.from("products").insert({
+        slug: row.slug,
+        name: row.name || row.slug,
+        category: "air-pistols",   // safe default; admin can change in editor
+        is_published: false,        // always draft on bulk import
+        buy_enabled: false,
+        sort_order: 500,
+        updated_by: session.user.email,
+      });
+      if (upErr) {
+        results.errors.push(`${row.slug}: create failed — ${upErr.message}`);
+        bump(`✗ <span style="color:var(--signal)">${escHtml(row.slug)}</span> create failed: ${escHtml(upErr.message)}`);
+        continue;
+      }
+      results.created++;
+      bump(`✓ Created draft <b>${escHtml(row.slug)}</b>`);
+    } else {
+      results.merged++;
+      bump(`↻ Merging into existing <b>${escHtml(row.slug)}</b>`);
+    }
+
+    // Upload photos
+    let firstPhotoUrl = null;
+    for (const file of row.files) {
+      const ext = (file.name.split(".").pop() || "webp").toLowerCase().replace(/[^a-z0-9]/g, "");
+      const path = `${row.slug}/${crypto.randomUUID()}.${ext}`;
+      const { error: sErr } = await supabase.storage.from(PRODUCTS_BUCKET).upload(path, file, {
+        cacheControl: "31536000", contentType: file.type || "image/webp", upsert: false,
+      });
+      if (sErr) {
+        results.errors.push(`${row.slug}/${file.name}: ${sErr.message}`);
+        bump(`  ✗ ${escHtml(file.name)}: ${escHtml(sErr.message)}`);
+        continue;
+      }
+      const { data: urlData } = supabase.storage.from(PRODUCTS_BUCKET).getPublicUrl(path);
+      const publicUrl = urlData.publicUrl;
+      const { error: insErr } = await supabase.from("product_photos").insert({
+        product_slug: row.slug,
+        storage_path: path,
+        public_url: publicUrl,
+        alt_text: row.name || row.slug,
+        bytes: file.size,
+        uploaded_by: session.user.email,
+      });
+      if (insErr) {
+        results.errors.push(`${row.slug}/${file.name}: index failed — ${insErr.message}`);
+        bump(`  ✗ ${escHtml(file.name)}: index failed — ${escHtml(insErr.message)}`);
+        continue;
+      }
+      results.photos++;
+      if (!firstPhotoUrl) firstPhotoUrl = publicUrl;
+      bump(`  ✓ ${escHtml(file.name)}`);
+    }
+
+    // If new product OR existing product had no hero yet, set first uploaded as primary
+    if (firstPhotoUrl) {
+      const { data: existingPrimary } = await supabase.from("product_photos")
+        .select("id").eq("product_slug", row.slug).eq("is_primary", true).limit(1);
+      if (!existingPrimary || !existingPrimary.length) {
+        const { data: firstPhoto } = await supabase.from("product_photos")
+          .select("id").eq("product_slug", row.slug).order("created_at").limit(1);
+        if (firstPhoto && firstPhoto[0]) {
+          await supabase.from("product_photos").update({ is_primary: true }).eq("id", firstPhoto[0].id);
+          await supabase.from("products").update({
+            hero_photo_url: firstPhotoUrl, updated_at: new Date().toISOString(), updated_by: session.user.email,
+          }).eq("slug", row.slug);
+        }
+      }
+    }
+  }
+
+  // Result screen
+  const resDiv = document.getElementById("prodBulkResult");
+  resDiv.innerHTML = `
+    <div style="padding:22px;background:linear-gradient(180deg, rgba(75,179,129,0.08), transparent);border:1px solid rgba(75,179,129,0.4);border-radius:var(--r);margin-bottom:14px">
+      <div style="font-family:var(--font-d);font-weight:800;text-transform:uppercase;font-size:20px;color:var(--ok);margin-bottom:8px">✓ Import complete</div>
+      <div style="color:var(--bone-dim);font-size:14px;line-height:1.7">
+        <b style="color:var(--bone)">${results.created}</b> new draft product${results.created===1?"":"s"} created ·
+        <b style="color:var(--bone)">${results.merged}</b> existing SKU${results.merged===1?"":"s"} merged ·
+        <b style="color:var(--bone)">${results.photos}</b> photo${results.photos===1?"":"s"} uploaded to Supabase Storage
+      </div>
+      ${results.errors.length ? `<div style="margin-top:14px;padding:12px 14px;background:rgba(228,87,46,0.14);border:1px solid rgba(228,87,46,0.4);border-radius:var(--r-sm);color:#ffcbb9;font-size:12.5px;line-height:1.6"><b>${results.errors.length} error${results.errors.length===1?"":"s"}:</b><br>${results.errors.slice(0,10).map(e => escHtml(e)).join("<br>")}${results.errors.length>10?"<br>… and "+(results.errors.length-10)+" more":""}</div>` : ""}
+      <div style="margin-top:14px;font-size:13px;color:var(--smoke);line-height:1.6">
+        All new products are in <b style="color:var(--warn)">Draft</b>. Click any card to add price, description, category, provenance attestation, and then Publish to storefront.
+      </div>
+    </div>`;
+  showBulkStep(4);
+  await loadProducts();
+}
+// -------- /Bulk import --------
 
 // -------- Editor --------
 const prodMod = document.getElementById("prodMod");
