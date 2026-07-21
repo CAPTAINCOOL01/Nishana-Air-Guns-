@@ -12,7 +12,7 @@
   const CATALOG = {};
   (window.NISHANA_PRODUCTS || [{
     id:"star-rx-gen3", brand:"Camstar", name:"Star RX Gen 3",
-    price:24000, mrp:27500,
+    price:25000, mrp:29000,
     image:"https://camstarsports.com/products/star-rx-gen3-1.webp",
   }]).forEach(p => {
     if (p.buy === false) return; // WhatsApp-only items never enter the cart
@@ -299,7 +299,7 @@
           const email = modal.querySelector("#nEmail").value.trim();
           if (!email) return show("err", "Enter your email above first.");
           const s = await sb();
-          const { error } = await s.auth.resetPasswordForEmail(email, { redirectTo: location.origin + "/login.html" });
+          const { error } = await s.auth.resetPasswordForEmail(email, { redirectTo: location.origin + "/login.html?recovery=1" });
           if (error) return show("err", error.message);
           show("ok", "Password reset email sent.");
         });

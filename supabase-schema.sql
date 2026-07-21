@@ -457,7 +457,7 @@ insert into public.products (
   legal_calibre_mm, legal_projectile, legal_action, legal_licence_exempt,
   provenance_attestation, provenance_by, provenance_at
 ) values
-  ('star-rx-gen3', 'Star RX Gen 3', 'Camstar', 'air-pistols', 24000, 27500, 'Semi-auto CO₂',
+  ('star-rx-gen3', 'Star RX Gen 3', 'Camstar', 'air-pistols', 25000, 29000, 'Semi-auto CO₂',
    '[".177 CAL","400 FPS","CO₂ SEMI-AUTO","32 RND MAG"]'::jsonb,
    'India''s first semi-automatic CO₂ air pistol. 32-round rotary magazine, five colourways, ships with hard case + holster.',
    'product-rx-gen3.html', 'https://camstarsports.com/products/star-rx-gen3-1.webp', true, true, 1,

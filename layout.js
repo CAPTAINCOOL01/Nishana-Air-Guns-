@@ -145,6 +145,16 @@ window.NISHANA_TRACKING = {
           ad_personalization: decision === "granted" ? "granted" : "denied",
           analytics_storage:  decision === "granted" ? "granted" : "denied",
         });
+        // Re-fire page_view now that consent is granted, so GA4 Realtime
+        // sees the user immediately instead of waiting for the next
+        // navigation/scroll event.
+        if (decision === "granted" && cfg.GA4_MEASUREMENT_ID) {
+          gtag("event", "page_view", {
+            page_location: location.href,
+            page_title:    document.title,
+            page_path:     location.pathname,
+          });
+        }
         bar.remove();
       });
       document.body.appendChild(bar);
@@ -162,7 +172,7 @@ window.NISHANA_TRACKING = {
   const wa = t => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(t)}`;
 
   const CATEGORIES = [
-    { id:"air-pistols",  label:"Star RX Gen 3", href:"product-rx-gen3.html", count:"Our only airgun", icon:'<path d="M4 12c0-1 .5-2 2-2h10l4-3v9h-4v3l-4-3H6c-1 0-2-.5-2-2z"/>' },
+    { id:"air-pistols",  label:"Air Pistols", href:"air-pistols.html", count:"CO₂ & BB listings", icon:'<path d="M4 12c0-1 .5-2 2-2h10l4-3v9h-4v3l-4-3H6c-1 0-2-.5-2-2z"/>' },
     { id:"spare-parts",  label:"RX Gen 3 Spares", href:"spare-parts.html", count:"Magazine & support", icon:'<circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.2 4.2l4.3 4.3M15.5 15.5l4.3 4.3M1 12h6M17 12h6M4.2 19.8l4.3-4.3M15.5 8.5l4.3-4.3"/>' },
     { id:"accessories",  label:"Accessories",  href:"accessories.html",  count:"Pellets & CO₂", icon:'<path d="M4 7l8-4 8 4-8 4z"/><path d="M4 12l8 4 8-4"/><path d="M4 17l8 4 8-4"/>' },
   ];
@@ -535,7 +545,7 @@ window.NISHANA_TRACKING = {
               ${LOGO_SVG}
               <div><div class="name">NISHANA</div><small>AIRGUNS · INDIA</small></div>
             </div>
-            <p class="about">Star RX Gen 3 specialist for India, with GST invoice, manufacturer warranty and pan-India delivery. Our .177-calibre, approximately 3-joule air pistol is licence-exempt under the Arms Rules 2016.</p>
+            <p class="about">Air pistols, shooting essentials and dedicated Star RX Gen 3 support for India. Prices, availability and order requirements are confirmed by our sales team before sale.</p>
             <a class="n-btn n-btn--wa" href="${wa("Hi Nishana! I'd like to talk to your sales team about the Star RX Gen 3.")}" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.8 5-1.3A10 10 0 1 0 12 2Zm4.4 12c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5 0a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-1 2.2 5.3 5.3 0 0 0 1.1 2.7 12 12 0 0 0 4.6 4c2.1.9 2.1.6 2.5.6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3Z"/></svg>
               Talk to our sales team
@@ -561,7 +571,7 @@ window.NISHANA_TRACKING = {
           </div>
           <div class="col">
             <h5>Legal</h5>
-            <p style="color:var(--smoke);font-size:13px;line-height:1.55">The Star RX Gen 3 configuration sold here is .177 cal, approximately 3 J, and licence-exempt under India's Arms Rules 2016. Buyer verification still applies.</p>
+            <p style="color:var(--smoke);font-size:13px;line-height:1.55">Individual product configurations and buyer verification requirements are confirmed before sale. Check each listing and speak with our sales team before ordering.</p>
           </div>
         </div>
         <div class="bot">

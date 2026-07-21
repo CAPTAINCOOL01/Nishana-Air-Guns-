@@ -16,11 +16,61 @@ window.NISHANA_PRODUCTS = [
   /* ---------------- AIR PISTOLS ---------------- */
   {
     id: "star-rx-gen3", brand: "Camstar", name: "Star RX Gen 3",
-    category: "air-pistols", price: 24000, mrp: 27500, badge: "Semi-auto CO₂",
+    category: "air-pistols", price: 25000, mrp: 29000, badge: "Semi-auto CO₂",
     chips: [".177 CAL", "400 FPS", "CO₂ SEMI-AUTO", "32 RND MAG"],
-    desc: "India's first semi-automatic CO₂ air pistol. 32-round rotary magazine, five colourways, ships with hard case + holster.",
+    desc: "India's first semi-automatic CO₂ air pistol. Black ₹25,000; Coyote Tan ₹26,000. Ships with four 8-round magazines, hard case + holster.",
     image: "https://camstarsports.com/products/star-rx-gen3-1.webp",
     href: "product-rx-gen3.html", buy: true,
+  },
+  /* Dealer-backed listings: enquiry-only until each order's stock,
+     documentation, and applicable legal requirements are confirmed. */
+  {
+    id: "aerosoft-x1", brand: "Aerosoft", name: "Aerosoft X1 CO₂ Air Pistol",
+    category: "air-pistols", price: 36000, mrp: 45000, badge: "Enquiry only",
+    chips: ["CO₂", "84FS STYLE", "DEALER SUPPLY"],
+    desc: "Dealer-backed CO₂ air-pistol listing. Ask our sales team to confirm the current price, availability and order requirements.",
+    image: "img/products/aerosoft-x1/1.webp",
+    href: null, buy: false,
+  },
+  {
+    id: "asg-x9-classic", brand: "ASG", name: "ASG X9 Classic CO₂ Air Pistol",
+    category: "air-pistols", price: 57000, mrp: 65000, badge: "Enquiry only",
+    chips: ["4.5 MM", ".177 STEEL BB", "BLOWBACK"],
+    desc: "Full-metal blowback CO₂ air-pistol configuration. Ask our sales team to confirm current availability and order requirements.",
+    image: "img/products/asg-x9-classic/1.webp",
+    href: null, buy: false,
+  },
+  {
+    id: "beretta-84fs", brand: "Beretta", name: "Beretta Mod. 84 FS CO₂ Air Pistol",
+    category: "air-pistols", price: 72000, mrp: 85000, badge: "Enquiry only",
+    chips: ["4.5 MM", "BB", "CO₂"],
+    desc: "4.5 mm BB CO₂ air-pistol listing. Ask our sales team to confirm the current price, availability and order requirements.",
+    image: "img/products/beretta-84fs/1.webp",
+    href: null, buy: false,
+  },
+  {
+    id: "beretta-m92-a1", brand: "Beretta", name: "Beretta M92 A1 CO₂ Air Pistol",
+    category: "air-pistols", price: 73000, mrp: 85000, badge: "Enquiry only",
+    chips: ["4.5 MM", ".177 BB", "CO₂"],
+    desc: "4.5 mm .177 BB CO₂ air-pistol listing. Ask our sales team to confirm the current price, availability and order requirements.",
+    image: "img/products/beretta-m92-a1/1.webp",
+    href: null, buy: false,
+  },
+  {
+    id: "kwc-k18", brand: "KWC", name: "KWC K18 4.5 mm BB CO₂ Pistol",
+    category: "air-pistols", price: 58000, mrp: 64000, badge: "Enquiry only",
+    chips: ["4.5 MM", "BB", "CO₂"],
+    desc: "Dealer-backed K18 CO₂ BB-pistol listing. Availability and all order requirements are confirmed by our sales team before any sale.",
+    image: "img/products/kwc-k18/FullSizeRender_5f838eab-803d-45e7-bfcf-87367fd94b79.webp",
+    href: null, buy: false,
+  },
+  {
+    id: "kwc-m92", brand: "KWC", name: "KWC M92 4.5 mm BB CO₂ Pistol",
+    category: "air-pistols", price: 62000, mrp: 65000, badge: "Enquiry only",
+    chips: ["4.5 MM", "BB", "CO₂"],
+    desc: "Dealer-backed M92 CO₂ BB-pistol listing. Availability and all order requirements are confirmed by our sales team before any sale.",
+    image: "img/products/kwc-m92/FullSizeRender_b28aaf22-b99f-4a33-8ccb-8990e03e7c92.webp",
+    href: null, buy: false,
   },
   /* ---------------- ACCESSORIES ---------------- */
   {
@@ -38,6 +88,14 @@ window.NISHANA_PRODUCTS = [
     desc: "Match-grade .177 (4.5 mm) diabolo pellets, 300 per tin, suited to the Star RX Gen 3.",
     image: "https://camstarsports.com/products/star-match-diabolo.png",
     href: null, buy: true,
+  },
+  {
+    id: "hn-hornet-pellets", brand: "H&N", name: "H&N Hornet Pellets",
+    category: "accessories", price: 1750, mrp: 1850, badge: "Enquiry only",
+    chips: [".177 CAL", "9.57 GR", "225 CT", "POINTED"],
+    desc: "Pointed .177-calibre pellets, 225 per tin. Ask our sales team to confirm the current price and availability.",
+    image: "img/products/hn-hornet-pellets/FullSizeRender_301a35f3-1d50-4557-97be-1cbd2492cab8.webp",
+    href: null, buy: false,
   },
 
   /* ---------------- SPARE PARTS (WhatsApp order) ---------------- */
@@ -97,7 +155,7 @@ window.NISHANA_SMALL_PARTS = [];
             <div class="price">${inr(p.price)} ${p.mrp ? `<span class="mrp">${inr(p.mrp)}</span>` : ""}</div>
             ${off ? `<span class="save">Save ${off}%</span>` : ""}
           </div>
-          <div class="trust">GST invoice · Warranty · Pan-India delivery</div>
+          <div class="trust">${p.badge === "Enquiry only" ? "Price & availability confirmed by sales" : "GST invoice · Warranty · Pan-India delivery"}</div>
           <div class="cta-row ${p.buy ? "" : "single"}">${cta}</div>
         </div>
       </div>
@@ -108,9 +166,70 @@ window.NISHANA_SMALL_PARTS = [];
   window.nishanaRenderGrid = function (el, filter) {
     if (typeof el === "string") el = document.querySelector(el);
     if (!el) return;
-    const list = window.NISHANA_PRODUCTS.filter(filter || (() => true));
+    // Remember what to redraw so the async Supabase merge (below) can re-render.
+    el._nishanaFilter = filter || (() => true);
+    const list = window.NISHANA_PRODUCTS.filter(el._nishanaFilter);
     el.innerHTML = list.map(window.nishanaProductCard).join("");
+    _grids.add(el);
   };
+
+  /* ------------------------------------------------------------
+     Supabase merge — pulls published rows from public.products and
+     merges them into window.NISHANA_PRODUCTS, then re-draws every
+     grid that has already been rendered. Safe to fail silently:
+     if Supabase is unreachable we fall back to the hardcoded list.
+     Non-blocking — grids paint from the hardcoded list first, then
+     upgrade when the API returns.
+     ------------------------------------------------------------ */
+  const _grids = new Set();
+
+  async function mergeSupabaseProducts() {
+    if (!window.NISHANA_AUTH?.SUPABASE_URL || window.NISHANA_AUTH.SUPABASE_URL.startsWith("PASTE_")) return;
+    try {
+      const supabase = await window.getNishanaSupabase();
+      const { data, error } = await supabase
+        .from("products")
+        .select("slug,name,brand,category,price,mrp,badge,chips,short_desc,pdp_url,hero_photo_url,buy_enabled,sort_order,is_published")
+        .eq("is_published", true)
+        .order("category").order("sort_order").order("name");
+      if (error || !data) return;
+      // Convert DB rows to the products.js shape the card renderer expects.
+      const dbShaped = data.map(r => ({
+        id:       r.slug,
+        brand:    r.brand || "",
+        name:     r.name,
+        category: r.category,
+        price:    Number(r.price) || 0,
+        mrp:      r.mrp ? Number(r.mrp) : undefined,
+        badge:    r.badge || undefined,
+        chips:    Array.isArray(r.chips) ? r.chips : [],
+        desc:     r.short_desc || "",
+        image:    r.hero_photo_url || "",
+        href:     r.pdp_url || null,
+        buy:      r.buy_enabled !== false,
+      }));
+      // Merge: Supabase supplies live catalogue metadata, but Git-defined
+      // price/MRP remain authoritative for known products. This keeps routine
+      // price changes deployable through Git without an admin-password prompt.
+      const bySlug = new Map(window.NISHANA_PRODUCTS.map(p => [p.id, p]));
+      dbShaped.forEach(r => {
+        const local = bySlug.get(r.id);
+        bySlug.set(r.id, local ? { ...r, price: local.price, mrp: local.mrp } : r);
+      });
+      window.NISHANA_PRODUCTS = Array.from(bySlug.values());
+      // Re-render every grid that was drawn from the hardcoded list.
+      _grids.forEach(el => {
+        if (!document.body.contains(el)) { _grids.delete(el); return; }
+        const list = window.NISHANA_PRODUCTS.filter(el._nishanaFilter);
+        el.innerHTML = list.map(window.nishanaProductCard).join("");
+      });
+    } catch (e) {
+      console.debug("[nishana products] Supabase merge skipped:", e?.message || e);
+    }
+  }
+  // Fire the merge on next tick so hardcoded content paints first.
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mergeSupabaseProducts);
+  else setTimeout(mergeSupabaseProducts, 0);
 
   /* Compact spare-parts price list */
   window.nishanaRenderParts = function (el) {
