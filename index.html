@@ -23,6 +23,9 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebSite","name":"Nishana Airguns","url":"https://nishanaairguns.com/"}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","url":"https://nishanaairguns.com/","name":"Nishana Airguns — Air pistols, chosen well","speakable":{"@type":"SpeakableSpecification","cssSelector":["#answer-title","#answer .answer-box p"]}}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -339,6 +342,17 @@ header.nav.scrolled .wrap{padding-block:12px}
   *{animation-duration:.001ms!important;animation-delay:0ms!important;transition-duration:.001ms!important}
   html{scroll-behavior:auto}
 }
+
+/* Answer block — for AI Overview / Speakable eligibility */
+.n-answer{padding:10px 0 40px}
+.n-answer .wrap{max-width:920px}
+.n-answer .answer-box{border-left:3px solid var(--brass);background:linear-gradient(90deg,rgba(201,162,39,.11),rgba(201,162,39,.025));padding:22px 26px;margin:0;border-radius:0 var(--r-sm) var(--r-sm) 0}
+.n-answer .answer-box .label{display:block;font-family:var(--font-m);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--brass);margin-bottom:9px}
+.n-answer .answer-box p{font-size:17px;line-height:1.65;color:var(--bone);margin:0 0 10px}
+.n-answer .answer-box p:last-child{margin-bottom:0}
+.n-answer .answer-box a{color:var(--brass-hi);text-decoration:underline;text-decoration-color:rgba(201,162,39,.4);text-underline-offset:3px}
+.n-answer .answer-box a:hover{text-decoration-color:var(--brass-hi)}
+@media(max-width:640px){.n-answer .answer-box{padding:18px 20px}.n-answer .answer-box p{font-size:15.5px}}
 </style>
 </head>
 <body>
@@ -430,6 +444,17 @@ header.nav.scrolled .wrap{padding-block:12px}
           <span class="f-chip c3"><b>4 × 8</b> RND</span>
           <div class="f-price"><div class="p">₹25,000</div><div class="m">₹29,000</div></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANSWER BLOCK — AI Overview / Speakable target -->
+  <section class="n-answer" id="answer" aria-labelledby="answer-title">
+    <div class="wrap">
+      <div class="answer-box">
+        <span class="label" id="answer-title">Quick answer — air gun licence in India</span>
+        <p>You do <b>not</b> need an arms licence for a .177 (4.5&nbsp;mm) air pistol or air rifle in India provided its muzzle energy stays under 20 joules — the Star RX Gen 3 is built and sold in this licence-exempt configuration under India's <b>Arms Rules 2016</b>. You must be 18 or older, buy from a verified dealer, and use it only on private property or a licensed range.</p>
+        <p><a href="blog-legal-no-licence-airguns-india.html">Read the full licence-exempt rules →</a> · <a href="product-rx-gen3.html">See the Star RX Gen 3 →</a></p>
       </div>
     </div>
   </section>
